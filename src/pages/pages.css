@@ -1,0 +1,45 @@
+
+.Admindp {
+    background-image: url('./images/Admin.jpg'); /* Replace with your image file name */
+    background-position: center;
+    background-size: cover;
+    opacity: 0.35;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh; /* set the height to 100% of the viewport */
+    width: 50vw; /* set the width to 100% of the viewport */
+    margin-top: 5%;
+    padding-right: 25%;
+  }
+  /* .wrapper{
+    height: 80vh;
+  } */
+
+  .holder{
+    background-color: #7672dc;
+    height: 100vh; 
+  }
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    height: 300px; /* Adjust the height as needed */
+  }
+
+  .n1 {
+    flex: 1;
+    max-width: 300px; /* Adjust the max-width as needed */
+    height: 100%;
+    margin: 0 10px; /* Adjust the margin as needed */
+    background-color: lightblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    margin-top: 30%;
+  }
