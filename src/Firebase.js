@@ -24,6 +24,7 @@ import { getDatabase } from 'firebase/database';
 const firebaseConfig = {
   apiKey: "AIzaSyC3gMBeYl7pd9Z1CLfacz8iVlaDVYUpEkk",
   authDomain: "delta-apparels-dee67.firebaseapp.com",
+  databaseURL: "https://delta-apparels-dee67-default-rtdb.asia-southeast1.firebasedatabase.app",
   projectId: "delta-apparels-dee67",
   storageBucket: "delta-apparels-dee67.appspot.com",
   messagingSenderId: "740626810954",

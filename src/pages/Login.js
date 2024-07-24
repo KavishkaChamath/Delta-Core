@@ -6,6 +6,7 @@ import './pages.css';
 export default function Login() {
   const navigate = useNavigate();
   const handleClick = () => navigate('/pages/AdminLogin');
+  const handleClick1= () => navigate('/components/LineLoginForm');
   return (
     <div className='holder'>
         <Titlepic/>
@@ -20,14 +21,14 @@ export default function Login() {
             </Link>
           </div>
           <div className='n1'> 
-            <Link className='l1' to="/pages/AdminLogin" onClick={() => handleClick()}>
+            <Link className='l1' to="/pages/AdminLogin" onClick={() => handleClick1()}>
             
               It Section
               
             </Link>
           </div>
           <div className='n1'>
-            <Link className='l1' to="/pages/AdminLogin" onClick={() => handleClick()}>
+            <Link className='l1' to="/components/LineLoginForm" onClick={() => handleClick()}>
             
               Line Manager 
               
