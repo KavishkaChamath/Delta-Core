@@ -12,7 +12,7 @@ const SignOut = () => {
     auth.signOut()
       .then(() => {
         console.log('User signed out');
-        navigate('/pages/Login', { replace: true }); // navigate to sign-in page and replace history
+        navigate('/pages/Home', { replace: true }); // navigate to sign-in page and replace history
       })
       .catch((error) => {
         console.error('Error signing out:', error);

@@ -1,22 +1,29 @@
 import React from 'react'
 import Titlepic from '../components/Titlepic'
-import { useNavigate } from 'react-router-dom';
+
 import LoginButton from '../components/LoginButton';
 import './pages.css'
 
 
-export default function Home() {
-    const navigate = useNavigate();
 
-  const handleClick = () => navigate('/pages/AdminLogin');
+export default function Home() {
+    
   return (
+    <div className='wrapper3'>
     <div className='all'>
     <div className='back'>
-        <Titlepic/>
+
+        {/* <Titlepic/> */}
         <LoginButton/>
-        <button className='newuser' onClick={handleClick}>Admin Login</button>  
+        {/* <img src={img} alt="Description of the image" className='homepic'/> */}
     </div>
     </div>
+    <div className='logo-box'></div>
+    <div className="footer">
+    <p>&copy; 2024 Delta Apparels</p>
+  </div>
+    </div>
+
   )
 }
 
