@@ -103,7 +103,7 @@ export const Signup = () => {
                 onChange={(e) => setOccupation(e.target.value)}
                 required
               >
-                {/* <option value=''>Occupation</option> */}
+                <option value=''>Select Occupation</option> 
                 <option value='Admin'>Admin</option>
                 <option value='IT Section'>IT Section</option>
                 <option value='Line Manager'>Line Manager</option>
