@@ -10,7 +10,7 @@ import { database } from '../Firebase';
 export const AdminLog = () => {
 
   const navigate = useNavigate();
-  const pageHandle = () => navigate('/pages/AdminHome');
+  const pageHandle = () => navigate('/pages/Admin');
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
