@@ -112,8 +112,6 @@
 
   .wrapper3 {
     display: flex;
-    justify-content: center;
-    align-items: center;
     height: 100vh;
   
     /* background: url('./Images/img26.jpg') rgb(211, 211, 211) 50%  / cover no-repeat; */
@@ -145,14 +143,13 @@
 
   .logo-box {
     background-image: url('../components/pic.png');
-    background-position: center;
     background-size: 100%;
     background-color: rgba(255, 255, 255, 0.232);
-      align-items: center;
       width: 60%; /* Adjust width as needed */
       max-width: 500px; /* Adjust maximum width as needed */
       height: 25%; 
       max-height: 250px;
+      padding-left: 0em;
     }
 
 .Ithome{
@@ -165,17 +162,110 @@
 .empbutton, .orderbutton {
   margin: 0 10px; /* Add some space between the buttons */
   padding: 20px; /* Increase padding to make the buttons larger */
-  font-size: 20px; /* Increase font size */
-  width: 200px; /* Set a fixed width for the buttons */
-  height: 100px; /* Set a fixed height for the buttons */
+  font-size: 30px; /* Increase font size */
+  width: 250px; /* Set a fixed width for the buttons */
+  height: 400px; /* Set a fixed height for the buttons */
   text-align: center;
+  font-weight: 900;
   border: none; /* Optional: remove the default button border */
   border-radius: 5px; /* Optional: add rounded corners */
-  background-color: #007bff; /* Optional: change the background color */
+  background-color: rgba(37, 96, 148, 0.795); /* Optional: change the background color */
   color: white; /* Optional: change the text color */
   cursor: pointer; /* Optional: change cursor to pointer on hover */
 }
 
 .empbutton:hover, .orderbutton:hover {
-  background-color: #0056b3; /* Optional: change background color on hover */
+  background-color: rgba(50, 132, 205, 0.795); /* Optional: change background color on hover */
+}
+
+.adminbutton {
+  margin: 0 10px; /* Add some space between the buttons */
+  padding: 20px; /* Increase padding to make the buttons larger */
+  font-size: 30px; /* Increase font size */
+  width: 35%;
+  max-width: 300px; /* Adjust the max-width as needed */
+  height: 400px;
+  max-height: 800px;
+  text-align: center;
+  font-weight: 900;
+  border: none; /* Optional: remove the default button border */
+  border-radius: 20px; /* Optional: add rounded corners */
+  background: url('../components/Images/img24.png');
+  color: white; /* Optional: change the text color */
+  cursor: pointer; /* Optional: change cursor to pointer on hover */
+  background-color: lightblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  background-position: center;
+  background-size: 100%;
+}
+.itsecbutton{
+  margin: 0 10px; /* Add some space between the buttons */
+  padding: 20px; /* Increase padding to make the buttons larger */
+  font-size: 30px; /* Increase font size */
+  width: 35%;
+  max-width: 300px; /* Adjust the max-width as needed */
+  height: 400px;
+  max-height: 800px;
+  text-align: center;
+  font-weight: 900;
+  border: none; /* Optional: remove the default button border */
+  border-radius: 20px; /* Optional: add rounded corners */
+  background: url('../components/Images/img25.png');
+  color: white; /* Optional: change the text color */
+  cursor: pointer; /* Optional: change cursor to pointer on hover */
+  background-color: lightblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  background-position: center;
+  background-size: 100%;
+}
+.linebutton {
+  margin: 0 10px; /* Add some space between the buttons */
+  padding: 20px; /* Increase padding to make the buttons larger */
+  font-size: 30px; /* Increase font size */
+  width: 35%;
+  max-width: 300px; /* Adjust the max-width as needed */
+  height: 400px;
+  max-height: 800px;
+  text-align: center;
+  font-weight: 900;
+  border: none; /* Optional: remove the default button border */
+  border-radius: 20px; /* Optional: add rounded corners */
+  background: url('../components/Images/img13.png');
+  color: white; /* Optional: change the text color */
+  cursor: pointer; /* Optional: change cursor to pointer on hover */
+  background-color: lightblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  background-position: center;
+  background-size: 100%;
+}
+
+.adminbutton:hover{
+  background: url('../components/Images/img24.png');
+  background-size: 120%;
+  background-position: center;
+}
+.itsecbutton:hover{
+  background: url('../components/Images/img25.png');
+  background-size: 120%;
+  background-position: center;
+}
+.linebutton:hover{
+  background: url('../components/Images/img13.png');
+  background-size: 120%;
+  background-position: center;
 }

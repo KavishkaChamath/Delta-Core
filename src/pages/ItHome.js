@@ -11,6 +11,7 @@ export default function ItHome(){
     const handleClick1 = () => navigate('/pages/OrderHome');
 
     return(
+        <div className="holder">
         <div>
             <Titlepic/>
             <SignOut/>
@@ -18,6 +19,10 @@ export default function ItHome(){
             <button className="empbutton" onClick={handleClick}>Employee Detalis</button>
             <button className="orderbutton" onClick={handleClick1}>Order Detalis</button>
             </div>
+        </div>
+        <div className="footer">
+        <p>&copy; 2024 Delta Apparels</p>
+      </div>
         </div>
     )
 }
