@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { database } from '../Firebase';
 import { ref, onValue } from 'firebase/database';
+import Titlepic from './Titlepic';
+import SignOut from './SignOut';
 
 const ShowOrder = () => {
   const [orders, setOrders] = useState([]);
@@ -31,6 +33,8 @@ const ShowOrder = () => {
 
   return (
     <div>
+      <Titlepic/>
+      <SignOut/>
       <h2>Order List</h2>
       <div>
         <input
