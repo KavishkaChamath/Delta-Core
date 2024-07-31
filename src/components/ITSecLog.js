@@ -1,6 +1,7 @@
 import React,{useState} from 'react';
 import './LoginForm.css'; // Make sure this path is correct based on your project structure
 import img21 from './Images/img21.png';
+import { useNavigate } from 'react-router-dom';
 import { auth } from '../Firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { ref, query, orderByChild, equalTo, get } from 'firebase/database';
@@ -8,8 +9,8 @@ import { database } from '../Firebase';
 
 export const ITSecLog = () => {
 
-  // const navigate = useNavigate();
-  // const pageHandle = () => navigate('/pages/LineHome');
+  const navigate = useNavigate();
+  const pageHandle = () => navigate('/pages/ItHome');
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -40,7 +41,7 @@ export const ITSecLog = () => {
               // Check if the occupation is 'Admin'
               if (userData.occupation === 'IT Section') {
                 console.log('User is a line manager:', userData);
-                //pageHandle();  //Call the pageHandle function to navigate or perform further actions
+                pageHandle();  //Call the pageHandle function to navigate or perform further actions
                 alert('IT loged in.');
               } else {
                 console.error('User is not a line manager');

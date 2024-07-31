@@ -3,7 +3,9 @@ import './EmployeeForm.css';
 //import deltaapperal2 from './path/to/deltaapperal2.jpg'; // Ensure you have the correct path to your image
 import { database } from '../Firebase';
 import { ref, push } from 'firebase/database';
-import ShowData from './ShowData';
+import SignOut from './SignOut';
+import Titlepic from './Titlepic';
+
 
 export const EmployeeForm = () => {
 
@@ -57,6 +59,8 @@ export const EmployeeForm = () => {
   };
   return (
     <div>
+      <Titlepic/>
+      <SignOut/>
       {/* Header with photo and gradient background */}
       <header className="header">
         {/* <img src={deltaapperal2} alt="Logo" className="header-logo" /> */}
@@ -145,6 +149,12 @@ export const EmployeeForm = () => {
                 <option value='Line 4'>Line 4</option>
                 <option value='Line 5'>Line 5</option>
                 <option value='Line 6'>Line 6</option>
+                <option value='Line 1'>Line 1</option>
+                <option value='Line 2'>Line 2</option>
+                <option value='Line 3'>Line 3</option>
+                <option value='Line 4'>Line 4</option>
+                <option value='Line 5'>Line 5</option>
+                <option value='Line 6'>Line 6</option>
               {/* Add options as needed */}
             </select>
           </div>
@@ -152,7 +162,6 @@ export const EmployeeForm = () => {
         </form>
       </div>
       </div>
-      <ShowData/>
     </div>
   );
 };

@@ -101,6 +101,8 @@ import React, { useState } from 'react';
 import './Orderdetails.css'; 
 import { database } from '../Firebase';
 import { ref, push } from 'firebase/database';
+import Titlepic from './Titlepic';
+import SignOut from './SignOut';
 
 export const Orderdetails = () => {
   const [orderNumber, setOrderNumber] = useState('');
@@ -166,6 +168,8 @@ export const Orderdetails = () => {
 
   return (
     <div>
+      <Titlepic/>
+      <SignOut/>
       {/* Header with photo and gradient background */}
       <header className="header">
         <div className="header-content">
