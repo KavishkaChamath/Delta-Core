@@ -96,7 +96,7 @@ input[type='password'] {
     align-items: center;
     justify-content:flex-start;
     width: 70%; /* Adjust width as needed */
-    max-width: 350px; /* Adjust maximum width as needed */
+    max-width: 500px; /* Adjust maximum width as needed */
     height: 75%; 
   }
 
@@ -181,7 +181,7 @@ input[type='password'] {
       align-items: center;
       justify-content:flex-start;
       width: 70%; /* Adjust width as needed */
-      max-width: 350px; /* Adjust maximum width as needed */
+      max-width: 500px; /* Adjust maximum width as needed */
       height: 75%; 
     }
   

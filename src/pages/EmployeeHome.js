@@ -10,10 +10,12 @@ export default function EmployeeHome(){
     
 
     return(
+        <div className="holder">
         <div>
             <SignOut/>
             <ShowData/>
             <button className="" onClick={handleClick}>Add Employee</button>
+        </div>
         </div>
     )
 }

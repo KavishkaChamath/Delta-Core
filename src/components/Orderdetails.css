@@ -1,11 +1,4 @@
-body {
-  margin: 0;
-  font-family: "Poppins", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: #f0f0f0;
-  color: #333;
-}
+
 
 /* Header styles */
 .header {
@@ -39,8 +32,28 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-
-  /* background: url('./Images/img26.jpg') rgb(211, 211, 211) 50%  / cover no-repeat; */
+background: url('../components/Images/img30.jpg') no-repeat center 30% fixed;
+    background-size: 100vw 100vh; /* cover the entire viewport */
+    background-size: cover; /* add this to ensure the image is stretched to fit the full height */
+    width: auto; /* set width to 100% of viewport width */
+    height: 85vh; /* set height to 100% of viewport height */
+    flex-shrink: 0;
+    margin: 0; /* remove any margin */
+    padding: 0; /* remove any padding */
+    overflow: hidden; /* add this to prevent the page from becoming scrollable */
+    background-attachment: fixed;
+    background-size: cover;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    /* Add a whitish overlay */
+    background-color: rgba(177, 248, 253, 0.311);
+    background-blend-mode: lighten;
+}
+.holder{
+  background: url('../components/Images/img30.jpg') no-repeat center 30% fixed;
   background-size: 100vw 100vh; /* cover the entire viewport */
   background-size: cover; /* add this to ensure the image is stretched to fit the full height */
   width: auto; /* set width to 100% of viewport width */
@@ -50,16 +63,13 @@ body {
   padding: 0; /* remove any padding */
   overflow: hidden; /* add this to prevent the page from becoming scrollable */
   background-attachment: fixed;
-background: url('./Images/img30.jpg') no-repeat center 30% fixed;
-background-size: cover;
-width: 100vw;
-height: 100vh;
-margin: 0;
-padding: 0;
-overflow: hidden;
-/* Add a whitish overlay */
-background-color: rgba(177, 248, 253, 0.311);
-background-blend-mode: lighten;
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+
+  /* Add a whitish overlay */
+  background-color: rgba(177, 248, 253, 0.311);
+  background-blend-mode: lighten;
 }
 
 
@@ -85,7 +95,7 @@ h2 {
   flex-wrap: wrap;
   width: 100%;
   max-width: 900px;
-  background: white;
+  background: rgba(255, 255, 255, 0.527);
   padding: 2em;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);

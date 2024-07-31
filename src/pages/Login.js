@@ -12,31 +12,11 @@ export default function Login() {
     <div className='holder'>
         <Titlepic/>
            <center>
-        <nav>
-          <div className='container'>
-          <div className='n1'>
-            <Link className='l1' to="/components/AdminLog" onClick={() => handleClick()}>
-            
-             Admin
-             
-            </Link>
-          </div>
-          <div className='n2'> 
-            <Link className='l1' to="/components/ITSecLog" onClick={() => handleClick1()}>
-            
-              IT Section
-              
-            </Link>
-          </div>
-          <div className='n3'>
-            <Link className='l1' to="/components/LoginForm" onClick={() => handleClick2()}>
-            
-              Line Manager 
-              
-            </Link>
-          </div>
-          </div>
-        </nav>
+           <div className="Ithome">
+            <button className="adminbutton" onClick={handleClick}>Admin</button>
+            <button className="itsecbutton" onClick={handleClick1}>IT Section</button>
+            <button className="linebutton" onClick={handleClick2}>Line Manager</button>
+            </div>
       </center>
       <div className="footer">
         <p>&copy; 2024 Delta Apparels</p>

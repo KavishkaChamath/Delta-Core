@@ -116,9 +116,9 @@ export const Orderdetails = () => {
   const [smv, setSmv] = useState('');
   const [ithalyPO, setIthalyPO] = useState('');
   const [orderQuantity, setOrderQuantity] = useState('');
-  const [psd, setPsd] = useState('');
   const [colourCode, setColourCode] = useState('');
   const [productionPO, setProductionPO] = useState('');
+  const [psd, setPsd] = useState('');
   const [ped, setPed] = useState('');
 
   const handleSubmit = (e) => {
@@ -136,9 +136,9 @@ export const Orderdetails = () => {
       smv,
       ithalyPO,
       orderQuantity,
-      psd,
       colourCode,
       productionPO,
+      psd,
       ped
     };
     push(orderRef, newOrder)
@@ -156,9 +156,9 @@ export const Orderdetails = () => {
         setSmv('');
         setIthalyPO('');
         setOrderQuantity('');
-        setPsd('');
         setColourCode('');
         setProductionPO('');
+        setPsd('');
         setPed('');
       })
       .catch((error) => {
@@ -171,13 +171,10 @@ export const Orderdetails = () => {
       <Titlepic/>
       <SignOut/>
       {/* Header with photo and gradient background */}
-      <header className="header">
-        <div className="header-content">
-          <h1>Order Details</h1>
-        </div>
-      </header>
+
 
       {/* Order details */}
+      <div className='holder'>
       <div className='wrapper'>
         <div className="transparent-box">
           <h2>Add Order</h2>
@@ -244,11 +241,6 @@ export const Orderdetails = () => {
                 onChange={(e) => setOrderQuantity(e.target.value)} required />
             </div>
             <div className='form-group1'>
-              <label>PSD</label>
-              <input type='text' placeholder='PSD' value={psd}
-                onChange={(e) => setPsd(e.target.value)} required />
-            </div>
-            <div className='form-group1'>
               <label>Colour Code</label>
               <input type='text' placeholder='Colour Code' value={colourCode}
                 onChange={(e) => setColourCode(e.target.value)} required />
@@ -259,6 +251,11 @@ export const Orderdetails = () => {
                 onChange={(e) => setProductionPO(e.target.value)} required />
             </div>
             <div className='form-group1'>
+              <label>PSD</label>
+              <input type='text' placeholder='PSD' value={psd}
+                onChange={(e) => setPsd(e.target.value)} required />
+            </div>
+            <div className='form-group1'>
               <label>PED</label>
               <input type='text' placeholder='PED' value={ped}
                 onChange={(e) => setPed(e.target.value)} required />
@@ -267,6 +264,7 @@ export const Orderdetails = () => {
           </form>
         </div>
       </div>
+    </div>
     </div>
   );
 };
