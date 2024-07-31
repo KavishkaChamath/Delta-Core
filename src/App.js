@@ -13,6 +13,7 @@ import ItHome from './pages/ItHome';
 import AddEmployee from './pages/AddEmployee';
 import EmployeeHome from './pages/EmployeeHome';
 import OrderHome from './pages/OderHome';
+import Admin from './pages/Admin';
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
        <Route path="/pages/AdminHome" element={<AdminHome />} />
        <Route path="/pages/ItHome" element={<ItHome />} />
        <Route path="/pages/LineHome" element={<LineHome />} />
+       <Route path="/pages/Admin" element={<Admin />} />
        <Route path="/pages/EmployeeHome" element={<EmployeeHome />} />
        <Route path="/pages/OrderHome" element={<OrderHome />} />
        <Route path="/components/Orderdetails" element={<Orderdetails />} />

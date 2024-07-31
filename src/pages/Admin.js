@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import './Admin.css';
 import { useNavigate } from 'react-router-dom';
+import SignOut from '../components/SignOut';
+
 
 function App() {
   const navigate = useNavigate();
@@ -14,15 +16,17 @@ function App() {
     { id: 6, efficiency: "58%", incentive: "67/=", quality: "1" },
   ]);
 
-  const pageChanger = () => navigate('/components/Employee');
-  const pageChanger2 = () => navigate('/components/Orderdetails');
+  const pageChanger = () => navigate('/pages/EmployeeHome');
+  const pageChanger2 = () => navigate('/pages/OrderHome');
 
   const handleChange = (id, field, value) => {
     setLines(lines.map(line => line.id === id ? { ...line, [field]: value } : line));
   };
 
   return (
+    
     <div className="App">
+      <SignOut/>
       <header className="App-header">
         <h1>Admin Home</h1>
       </header>
