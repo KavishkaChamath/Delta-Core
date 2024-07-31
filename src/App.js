@@ -9,6 +9,11 @@ import {LoginForm} from './components/LoginForm';
 import { ITSecLog } from './components/ITSecLog';
 import LineHome from './pages/LineHome';
 import Orderdetails from './components/Orderdetails';
+import ItHome from './pages/ItHome';
+import AddEmployee from './pages/AddEmployee';
+import EmployeeHome from './pages/EmployeeHome';
+import OrderHome from './pages/OderHome';
+
 
 function App() {
   return (
@@ -21,8 +26,12 @@ function App() {
        <Route path="/pages/Login" element={<Login />} />
        <Route path="/pages/Home" element={<Home />} />
        <Route path="/pages/AdminHome" element={<AdminHome />} />
+       <Route path="/pages/ItHome" element={<ItHome />} />
        <Route path="/pages/LineHome" element={<LineHome />} />
+       <Route path="/pages/EmployeeHome" element={<EmployeeHome />} />
+       <Route path="/pages/OrderHome" element={<OrderHome />} />
        <Route path="/components/Orderdetails" element={<Orderdetails />} />
+       <Route path="/pages/AddEmployee" element={<AddEmployee />} />
        <Route path="/" element={<Home />} />
       </Routes>
     </Router>
