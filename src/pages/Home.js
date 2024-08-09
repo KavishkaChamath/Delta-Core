@@ -6,6 +6,8 @@ import './pages.css'
 
 
 
+
+
 export default function Home() {
     
   return (
@@ -19,9 +21,11 @@ export default function Home() {
     </div>
     </div>
     <div className='logo-box'></div>
+    
     <div className="footer">
     <p>&copy; 2024 Delta Apparels</p>
   </div>
+  
     </div>
 
   )

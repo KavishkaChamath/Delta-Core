@@ -2,6 +2,11 @@ import React, { useState } from 'react';
 import './Admin.css';
 import { useNavigate } from 'react-router-dom';
 import SignOut from '../components/SignOut';
+import Titlepic from '../components/Titlepic';
+import AddNewLine from '../components/Admin/AddNewLine'
+import OrderQualityIncrementor from '../components/IncrementBy1';
+import Signup from '../components/Signup';
+
 
 
 function App() {
@@ -26,6 +31,7 @@ function App() {
   return (
     
     <div className="App">
+      <Titlepic/>
       <SignOut/>
       <header className="App-header">
         <h1>Admin Home</h1>
@@ -71,6 +77,9 @@ function App() {
           </div>
         ))}
       </div>
+      <AddNewLine/>
+      <OrderQualityIncrementor/>
+      <Signup/>
     </div>
   );
 }

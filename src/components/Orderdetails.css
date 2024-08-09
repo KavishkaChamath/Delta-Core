@@ -108,6 +108,18 @@ h2 {
   margin: 0 2.5% 1em 2.5%; /* Add horizontal margin for spacing */
 }
 
+.form-group2 {
+  display: flex;
+  width: 80%; /* Adjust the width to fit two columns */
+  margin: 0 2.5% 1em 2.5%; /* Add horizontal margin for spacing */
+}
+
+.cutform{
+  display: flex;
+  width: 80%; /* Adjust the width to fit two columns */
+  margin: 0 2.5% 1em 2.5%; /* Add horizontal margin for spacing */
+}
+
 label {
   font-weight: bold;
   
@@ -163,6 +175,7 @@ button[type='submit'] {
   transition: background-color 0.3s;
 }
 
+
 button[type='submit']:hover {
   background-color: #5d5c5f;
 }
@@ -180,4 +193,12 @@ button[type='submit']:hover {
 
 
 
+.AddEmp{
+  float: right;
+  margin-top: 0;
+}
 
+.AddOrder{
+  float: right;
+  margin-top: 0;
+}
