@@ -1,6 +1,5 @@
 import React, {useState,useRef} from 'react';
 import './EmployeeForm.css'; 
-//import deltaapperal2 from './path/to/deltaapperal2.jpg'; // Ensure you have the correct path to your image
 import { database } from '../Firebase';
 import { ref, push } from 'firebase/database';
 import SignOut from './SignOut';
@@ -314,13 +313,3 @@ export const EmployeeForm = () => {
 };
 
 export default EmployeeForm;
-
-
-
-
-
-
-
-
-
-  
