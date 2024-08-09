@@ -1,16 +1,14 @@
-import React, {useState,useRef} from 'react';
-import './EmployeeForm.css'; 
-//import deltaapperal2 from './path/to/deltaapperal2.jpg'; // Ensure you have the correct path to your image
-import { database } from '../Firebase';
-import { ref, push } from 'firebase/database';
-import SignOut from './SignOut';
+import React, { useState, useEffect } from 'react';
+import { useLocation,useNavigate } from 'react-router-dom';
+import { ref, update } from 'firebase/database';
+import { database } from '../Firebase'; 
+
 import Titlepic from './Titlepic';
-import './Orderdetails.css'; 
-import QRCode from 'qrcode.react';
-import { useNavigate } from 'react-router-dom';
+import SignOut from './SignOut';
 
-
-export const EmployeeForm = () => {
+const EditEmployeeData = () => {
+  const location = useLocation();
+  const { employeeData } = location.state || {};
 
   const [employeeNumber, setEmployeeNumber] = useState('');
   const [fullName, setFullName] = useState('');
@@ -23,50 +21,53 @@ export const EmployeeForm = () => {
   const [designation, setDesignation] = useState('');
   const [workType, setWorkType] = useState('');
   const [lineAllocation, setLineAllocation] = useState('');
-  const [showQRCode, setShowQRCode] = useState(false);
 
-  
-  const qrRef = useRef();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (employeeData) {
+      setEmployeeNumber(employeeData.employeeNumber || '');
+      setFullName(employeeData.fullName || '');
+      setCallingName(employeeData.callingName || '');
+      setHomeAddress(employeeData.homeAddress || '');
+      setContactNumber1(employeeData.contactNumber1 || '');
+      setContactNumber2(employeeData.contactNumber2 || '');
+      setDateJoined(employeeData.dateJoined || '');
+      setGender(employeeData.gender || '');
+      setDesignation(employeeData.designation || '');
+      setWorkType(employeeData.workType || '');
+      setLineAllocation(employeeData.lineAllocation || '');
+    }
+  }, [employeeData]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // handlePhoneNumberChange();
-    const employeeRef = ref(database, 'employees');
-    const newEmployee = {
-      employeeNumber,
-      fullName,
-      callingName,
-      homeAddress,
-      contactNumber1,
-      contactNumber2,
-      dateJoined,
-      gender,
-      designation,
-      workType,
-      lineAllocation
-    };
-    push(employeeRef, newEmployee)
-    .then(() => {
-      console.log('Data added successfully');
-      // Optionally, reset the form
-      setEmployeeNumber('');
-      setFullName('');
-      setCallingName('');
-      setHomeAddress('');
-      setContactNumber1('');
-      setContactNumber2('');
-      setDateJoined('');
-      setGender('');
-      setDesignation('');
-      workType('');
-      setLineAllocation('');
-    })
-    .catch((error) => {
-      console.error('Error adding data: ', error);
-    });
-    navigate('/pages/EmployeeHome');
+    
+    if (employeeData && employeeData.id) {
+      const employeeRef = ref(database, `employees/${employeeData.id}`);
+      update(employeeRef, {
+        employeeNumber,
+        fullName,
+        callingName,
+        homeAddress,
+        contactNumber1,
+        contactNumber2,
+        dateJoined,
+        gender,
+        designation,
+        workType,
+        lineAllocation
+      })
+      .then(() => {
+        alert('Employee data updated successfully');
+        navigate('/pages/EmployeeHome');
+      })
+      .catch((error) => {
+        console.error('Error updating employee data:', error);
+      });
+    }
   };
+
 
   const handleCheckboxChange = (type) => {
     if (type === 'Direct') {
@@ -106,48 +107,9 @@ export const EmployeeForm = () => {
     }
   };
 
-  // const handleGenerateQRCode = () => {
-  //   setShowQRCode(true);
-  // };
-
-  // const handleDownloadQRCode = () => {
-  //   const canvas = qrRef.current.querySelector('canvas');
-  //   const url = canvas.toDataURL('image/png');
-  //   const a = document.createElement('a');
-  //   a.href = url;
-  //   a.download = `${employeeNumber}_${callingName}_QRCode.png`;
-  //   a.click();
-  // };
-
-  // // const generateQRCodeValue = () => {
-  // //   const qrData = `ID: ${employeeNumber}, Name: ${callingName}`;
-  // //   console.log('QR Code Data:', qrData); // Debugging line to check QR code value
-  // //   return qrData;
-  // // };
-  // const generateQRCodeValue = () => {
-  //   console.log('Number',employeeNumber)
-  //   return employeeNumber; // Simplified to just employeeNumber for testing
-  // };
-  
-  const handleGenerateQRCode = () => {
-    setShowQRCode(true);
-    setTimeout(handleDownloadQRCode, 100); // Delay to ensure QR code renders before download
-  };
-
-  const handleDownloadQRCode = () => {
-    const canvas = qrRef.current.querySelector('canvas');
-    const url = canvas.toDataURL('image/png');
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${employeeNumber}_${callingName}_QRCode.png`;
-    a.click();
-  };
-
-  const generateQRCodeValue = () => {
-    return `Employee Number: ${employeeNumber}, Calling Name: ${callingName}`;
-  };
 
   return (
+    
     <div>
       <Titlepic/>
       <SignOut/>
@@ -162,7 +124,7 @@ export const EmployeeForm = () => {
       {/* Employee Form */}
       <div className='holder'>
       <div className="transparent-box">
-        <center><h2>Add Employee</h2></center>
+        <center><h2>Edit Employee Data</h2></center>
         <form className='employee-form' onSubmit={handleSubmit}>
           <div className='form-group2'>
             <label>Employee Number</label>
@@ -293,34 +255,12 @@ export const EmployeeForm = () => {
               {/* Add options as needed */}
             </select>
           </div>
-          <button
-        type='button'
-        className='generate-qr-code'
-        onClick={handleGenerateQRCode}
-      >
-        Generate & Download QR Code
-      </button>
-      {showQRCode && (
-        <div className='qr-code' ref={qrRef} style={{ display: 'none' }}>
-          <QRCode value={generateQRCodeValue()} size={256} level="H" /> 
-        </div>
-      )}
-          <button type='submit'>Add</button>
+          <button type='submit'>Save</button>
         </form>
       </div>
       </div>
     </div>
-  );
+    );
 };
 
-export default EmployeeForm;
-
-
-
-
-
-
-
-
-
-  
+export default EditEmployeeData;

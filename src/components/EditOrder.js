@@ -1,111 +1,15 @@
-// import React from 'react';
-// import './Orderdetails.css'; 
+import React, { useState, useEffect } from 'react';
+import { useLocation,useNavigate } from 'react-router-dom';
+import { ref, update } from 'firebase/database';
+import { database } from '../Firebase'; 
 
-
-
-// export const Orderdetails = () => {
-//   return (
-//     <div>
-      
-//       {/* Header with photo and gradient background */}
-//       <header className="header">
-//         <div className="header-content">
-//           <h1>Order Details</h1>
-//         </div>
-//       </header>
-
-//       {/* Order details */}
-//       <div className='wrapper'>
-//         <div className="transparent-box">
-//           <h2>Add Order</h2>
-//           <form className='order-form'>
-//             <div className='form-group1'>
-//               <label>Order Number </label>
-//               <input type='text' placeholder='Order Number' required />
-//             </div>
-//             <div className='form-group1'>
-//               <label>Customer </label>
-//               <input type='text' placeholder='Customer' required />
-//             </div>
-//             <div className='form-group1'>
-//               <label>Order type  </label>
-//               <select required>
-//                 <option value=''>Select Designation</option>
-//               </select>
-//             </div>
-//             <div className='form-group1'>
-//               <label>Order Category</label>
-//               <select required>
-//                 <option value=''>Select Designation</option>
-//               </select>
-//             </div>
-//             <div className='form-group1'>
-//               <label>Style Number </label>
-//               <input type='text' placeholder='Style Number' required />
-//             </div>
-//             <div className='form-group1'>
-//               <label>Product Category</label>
-//               <input type='text' placeholder='Product Category' required />
-//             </div>
-//             <div className='form-group1'>
-//               <label>Colour  </label>
-//               <input type='text' placeholder='Colour' required />
-//             </div>
-//             <div className='form-group1'>
-//               <label>Size</label>
-//               <input type='text' placeholder='Size' required />
-//             </div>
-//             <div className='form-group1'>
-//               <label>SMV</label>
-//               <input type='text' placeholder='SMV' required />
-//             </div>
-//             <div className='form-group1'>
-//               <label>Ithaly PO</label>
-//               <input type='text' placeholder='Ithaly PO' required />
-//             </div>
-//             <div className='form-group1'>
-//               <label>Order Quantity</label>
-//               <input type='text' placeholder='Order Quantity' required />
-//             </div>
-//             <div className='form-group1'>
-//               <label>PSD</label>
-//               <input type='text' placeholder='PSD' required />
-//             </div>
-//             <div className='form-group1'>
-//               <label>Colour Code</label>
-//               <input type='text' placeholder='Colour Code' required />
-//             </div>
-//             <div className='form-group1'>
-//               <label>Production PO</label>
-//               <input type='text' placeholder='Production PO' required />
-//             </div>
-//             <div className='form-group1'>
-//               <label>PED</label>
-//                <input type='text' placeholder='PED' required />
-//             </div>
-//             <button type='submit'>Add</button>
-//           </form>
-//         </div>
-//       </div>
-    
-//     </div>
-//   );
-// };
-
-// export default Orderdetails;
-
-
-
-
-import React, { useState } from 'react';
-import './Orderdetails.css'; 
-import { database } from '../Firebase';
-import { ref, push } from 'firebase/database';
 import Titlepic from './Titlepic';
 import SignOut from './SignOut';
-import { useNavigate } from 'react-router-dom';
 
-export const Orderdetails = () => {
+const EditOrder = () => {
+  const location = useLocation();
+  const { orderData } = location.state || {};
+
   const [orderNumber, setOrderNumber] = useState('');
   const [customer, setCustomer] = useState('');
   const [orderType, setOrderType] = useState('');
@@ -128,52 +32,58 @@ export const Orderdetails = () => {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (orderData) {
+     setOrderNumber(orderData.orderNumber || '');
+     setCustomer(orderData.customer || '');
+     setOrderType(orderData.orderType || '');
+     setCustomOrderType(orderData.customOrderType || '');
+     setOrderCategory(orderData.orderCategory || '');
+     setCustomOrderCategory(orderData.customOrderCategory || '');
+     setStyleNumber(orderData.styleNumber || '');
+     setProductCategory(orderData.productCategory|| '');
+     setColour(orderData.colour || '');
+     setSize(orderData.size || '');
+     setSmv(orderData.smv || '');
+     setIthalyPO(orderData.ithalyPO || '');
+     setOrderQuantity(orderData.orderQuantity|| '');
+     setColourCode(orderData.colourCode|| '');
+     setProductionPO(orderData.productionPO|| '');
+     setPsd(orderData.psd|| '');
+     setPed(orderData.ped|| '');
+    }
+  }, [orderData]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const orderRef = ref(database, 'orders');
-    const newOrder = {
-      orderNumber,
-      customer,
-      orderType: showCustomOrderTypeInput ? customOrderType : orderType,
-      orderCategory: showCustomOrderCategoryInput ? customOrderCategory : orderCategory,
-      styleNumber,
-      productCategory,
-      colour,
-      size,
-      smv,
-      ithalyPO,
-      orderQuantity,
-      colourCode,
-      productionPO,
-      psd,
-      ped
-    };
-    push(orderRef, newOrder)
+    
+    if (orderData && orderData.id) {
+      const orderRef = ref(database, `orders/${orderData.id}`);
+      update(orderRef, {
+        orderNumber,
+        customer,
+        orderType: showCustomOrderTypeInput ? customOrderType : orderType,
+        orderCategory: showCustomOrderCategoryInput ? customOrderCategory : orderCategory,
+        styleNumber,
+        productCategory,
+        colour,
+        size,
+        smv,
+        ithalyPO,
+        orderQuantity,
+        colourCode,
+        productionPO,
+        psd,
+        ped
+      })
       .then(() => {
-        console.log('Order added successfully');
-        // Optionally, reset the form
-        setOrderNumber('');
-        setCustomer('');
-        setOrderType('');
-        setCustomOrderType('');
-        setOrderCategory('');
-        setCustomOrderCategory('');
-        setStyleNumber('');
-        setProductCategory('');
-        setColour('');
-        setSize('');
-        setSmv('');
-        setIthalyPO('');
-        setOrderQuantity('');
-        setColourCode('');
-        setProductionPO('');
-        setPsd('');
-        setPed('');
+        alert('Order data updated successfully');
+        navigate('/pages/OrderHome');
       })
       .catch((error) => {
-        console.error('Error adding order: ', error);
+        console.error('Error updating order data:', error);
       });
-      navigate('/pages/OrderHome');
+    }
   };
 
   const handleOrderTypeChange = (e) => {
@@ -209,13 +119,10 @@ export const Orderdetails = () => {
   };
 
   return (
+    
     <div>
       <Titlepic/>
       <SignOut/>
-      {/* Header with photo and gradient background */}
-
-
-      {/* Order details */}
       <div className='holder'>
       <div className='wrapper'>
         <div className="transparent-box">
@@ -231,17 +138,6 @@ export const Orderdetails = () => {
               <input type='text' placeholder='Customer' value={customer}
                 onChange={(e) => setCustomer(e.target.value)} required />
             </div>
-            {/* <div className='form-group1'>
-              <label>Order Type</label>
-              <select value={orderType} onChange={(e) => setOrderType(e.target.value)} required>
-                <option value=''>Select Order Type</option>
-                <option value='External'>External</option>
-                <option value='Internal'>Internal</option>
-                <option value='Other'>Other</option>
-                {/* Add options as needed 
-              </select>
-            </div> */}
-
          {/* Order Type Field */}
          <div className='form-group1'>
                 <label>Order Type</label>
@@ -283,15 +179,6 @@ export const Orderdetails = () => {
                   </select>
                 )}
               </div>
-
-            {/* <div className='form-group1'>
-              <label>Order Category</label>
-              <select value={orderCategory} onChange={(e) => setOrderCategory(e.target.value)} required>
-                <option value=''>Select Order Category</option>
-                <option value='category'>category</option>
-                {/* Add options as needed 
-              </select>
-            </div> */}
             <div className='form-group1'>
               <label>Style Number</label>
               <input type='text' placeholder='Style Number' value={styleNumber}
@@ -353,16 +240,13 @@ export const Orderdetails = () => {
                 required 
                 max="9999-12-31" />
             </div>
-            <button type='submit'>Add</button>
+            <button type='submit'>Save</button>
           </form>
         </div>
       </div>
     </div>
     </div>
-  );
+    );
 };
 
-export default Orderdetails;
-
-
-
+export default EditOrder;

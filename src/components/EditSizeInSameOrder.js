@@ -1,111 +1,15 @@
-// import React from 'react';
-// import './Orderdetails.css'; 
-
-
-
-// export const Orderdetails = () => {
-//   return (
-//     <div>
-      
-//       {/* Header with photo and gradient background */}
-//       <header className="header">
-//         <div className="header-content">
-//           <h1>Order Details</h1>
-//         </div>
-//       </header>
-
-//       {/* Order details */}
-//       <div className='wrapper'>
-//         <div className="transparent-box">
-//           <h2>Add Order</h2>
-//           <form className='order-form'>
-//             <div className='form-group1'>
-//               <label>Order Number </label>
-//               <input type='text' placeholder='Order Number' required />
-//             </div>
-//             <div className='form-group1'>
-//               <label>Customer </label>
-//               <input type='text' placeholder='Customer' required />
-//             </div>
-//             <div className='form-group1'>
-//               <label>Order type  </label>
-//               <select required>
-//                 <option value=''>Select Designation</option>
-//               </select>
-//             </div>
-//             <div className='form-group1'>
-//               <label>Order Category</label>
-//               <select required>
-//                 <option value=''>Select Designation</option>
-//               </select>
-//             </div>
-//             <div className='form-group1'>
-//               <label>Style Number </label>
-//               <input type='text' placeholder='Style Number' required />
-//             </div>
-//             <div className='form-group1'>
-//               <label>Product Category</label>
-//               <input type='text' placeholder='Product Category' required />
-//             </div>
-//             <div className='form-group1'>
-//               <label>Colour  </label>
-//               <input type='text' placeholder='Colour' required />
-//             </div>
-//             <div className='form-group1'>
-//               <label>Size</label>
-//               <input type='text' placeholder='Size' required />
-//             </div>
-//             <div className='form-group1'>
-//               <label>SMV</label>
-//               <input type='text' placeholder='SMV' required />
-//             </div>
-//             <div className='form-group1'>
-//               <label>Ithaly PO</label>
-//               <input type='text' placeholder='Ithaly PO' required />
-//             </div>
-//             <div className='form-group1'>
-//               <label>Order Quantity</label>
-//               <input type='text' placeholder='Order Quantity' required />
-//             </div>
-//             <div className='form-group1'>
-//               <label>PSD</label>
-//               <input type='text' placeholder='PSD' required />
-//             </div>
-//             <div className='form-group1'>
-//               <label>Colour Code</label>
-//               <input type='text' placeholder='Colour Code' required />
-//             </div>
-//             <div className='form-group1'>
-//               <label>Production PO</label>
-//               <input type='text' placeholder='Production PO' required />
-//             </div>
-//             <div className='form-group1'>
-//               <label>PED</label>
-//                <input type='text' placeholder='PED' required />
-//             </div>
-//             <button type='submit'>Add</button>
-//           </form>
-//         </div>
-//       </div>
-    
-//     </div>
-//   );
-// };
-
-// export default Orderdetails;
-
-
-
-
-import React, { useState } from 'react';
-import './Orderdetails.css'; 
-import { database } from '../Firebase';
+import React, { useState, useEffect } from 'react';
+import { useLocation,useNavigate } from 'react-router-dom';
 import { ref, push } from 'firebase/database';
+import { database } from '../Firebase'; 
+
 import Titlepic from './Titlepic';
 import SignOut from './SignOut';
-import { useNavigate } from 'react-router-dom';
 
-export const Orderdetails = () => {
+const EditOrder = () => {
+  const location = useLocation();
+  const { orderData } = location.state || {};
+
   const [orderNumber, setOrderNumber] = useState('');
   const [customer, setCustomer] = useState('');
   const [orderType, setOrderType] = useState('');
@@ -127,6 +31,31 @@ export const Orderdetails = () => {
   const [showCustomOrderCategoryInput, setShowCustomOrderCategoryInput] = useState(false);
 
   const navigate = useNavigate();
+
+  const [isChangeClicked, setIsChangeClicked] = useState(false);
+
+  useEffect(() => {
+    if (orderData) {
+     setOrderNumber(orderData.orderNumber || '');
+     setCustomer(orderData.customer || '');
+     setOrderType(orderData.orderType || '');
+     setCustomOrderType(orderData.customOrderType || '');
+     setOrderCategory(orderData.orderCategory || '');
+     setCustomOrderCategory(orderData.customOrderCategory || '');
+     setStyleNumber(orderData.styleNumber || '');
+     setProductCategory(orderData.productCategory|| '');
+     setColour(orderData.colour || '');
+     setSize(orderData.size || '');
+     setSmv(orderData.smv || '');
+     setIthalyPO(orderData.ithalyPO || '');
+     setOrderQuantity(orderData.orderQuantity|| '');
+     setColourCode(orderData.colourCode|| '');
+     setProductionPO(orderData.productionPO|| '');
+     setPsd(orderData.psd|| '');
+     setPed(orderData.ped|| '');
+
+    }
+  }, [orderData]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -176,6 +105,10 @@ export const Orderdetails = () => {
       navigate('/pages/OrderHome');
   };
 
+  const handleChangeClick = () => {
+    setIsChangeClicked(!isChangeClicked);
+  };
+
   const handleOrderTypeChange = (e) => {
     const selectedType = e.target.value;
     setOrderType(selectedType);
@@ -209,15 +142,19 @@ export const Orderdetails = () => {
   };
 
   return (
+    
     <div>
       <Titlepic/>
       <SignOut/>
-      {/* Header with photo and gradient background */}
-
-
-      {/* Order details */}
       <div className='holder'>
+
+      <button onClick={handleChangeClick}>
+        {isChangeClicked ? 'Change size only ' : 'Edit all data'}
+      </button>
+
       <div className='wrapper'>
+        {/* Conditionally render the forms based on isChangeClicked */}
+      {isChangeClicked ? (
         <div className="transparent-box">
           <h2>Add Order</h2>
           <form className='order-form' onSubmit={handleSubmit}>
@@ -231,17 +168,6 @@ export const Orderdetails = () => {
               <input type='text' placeholder='Customer' value={customer}
                 onChange={(e) => setCustomer(e.target.value)} required />
             </div>
-            {/* <div className='form-group1'>
-              <label>Order Type</label>
-              <select value={orderType} onChange={(e) => setOrderType(e.target.value)} required>
-                <option value=''>Select Order Type</option>
-                <option value='External'>External</option>
-                <option value='Internal'>Internal</option>
-                <option value='Other'>Other</option>
-                {/* Add options as needed 
-              </select>
-            </div> */}
-
          {/* Order Type Field */}
          <div className='form-group1'>
                 <label>Order Type</label>
@@ -283,15 +209,6 @@ export const Orderdetails = () => {
                   </select>
                 )}
               </div>
-
-            {/* <div className='form-group1'>
-              <label>Order Category</label>
-              <select value={orderCategory} onChange={(e) => setOrderCategory(e.target.value)} required>
-                <option value=''>Select Order Category</option>
-                <option value='category'>category</option>
-                {/* Add options as needed 
-              </select>
-            </div> */}
             <div className='form-group1'>
               <label>Style Number</label>
               <input type='text' placeholder='Style Number' value={styleNumber}
@@ -307,35 +224,16 @@ export const Orderdetails = () => {
               <input type='text' placeholder='Colour' value={colour}
                 onChange={(e) => setColour(e.target.value)} required />
             </div>
-            <div className='form-group1'>
-              <label>Size</label>
-              <input type='text' placeholder='Size' value={size}
-                onChange={(e) => setSize(e.target.value)} required />
-            </div>
+            
             <div className='form-group1'>
               <label>SMV</label>
               <input type='text' placeholder='SMV' value={smv}
                 onChange={(e) => setSmv(e.target.value)} required />
             </div>
             <div className='form-group1'>
-              <label>Ithaly PO</label>
-              <input type='text' placeholder='Ithaly PO' value={ithalyPO}
-                onChange={(e) => setIthalyPO(e.target.value)} required />
-            </div>
-            <div className='form-group1'>
-              <label>Order Quantity</label>
-              <input type='text' placeholder='Order Quantity' value={orderQuantity}
-                onChange={(e) => setOrderQuantity(e.target.value)} required />
-            </div>
-            <div className='form-group1'>
               <label>Colour Code</label>
               <input type='text' placeholder='Colour Code' value={colourCode}
                 onChange={(e) => setColourCode(e.target.value)} required />
-            </div>
-            <div className='form-group1'>
-              <label>Production PO</label>
-              <input type='text' placeholder='Production PO' value={productionPO}
-                onChange={(e) => setProductionPO(e.target.value)} required />
             </div>
             <div className='form-group1'>
               <label>PSD</label>
@@ -353,16 +251,117 @@ export const Orderdetails = () => {
                 required 
                 max="9999-12-31" />
             </div>
-            <button type='submit'>Add</button>
+            <div className='form-group1'>
+              <label>Size</label>
+              <input type='text' placeholder='Size' 
+                onChange={(e) => setSize(e.target.value)} required />
+            </div>
+            <div className='form-group1'>
+              <label>Ithaly PO</label>
+              <input type='text' placeholder='Ithaly PO' 
+                onChange={(e) => setIthalyPO(e.target.value)} required />
+            </div>
+            <div className='form-group1'>
+              <label>Order Quantity</label>
+              <input type='text' placeholder='Order Quantity' 
+                onChange={(e) => setOrderQuantity(e.target.value)} required />
+            </div>
+            <div className='form-group1'>
+              <label>Production PO</label>
+              <input type='text' placeholder='Production PO' 
+                onChange={(e) => setProductionPO(e.target.value)} required />
+            </div>
+            <button type='submit'>Add New Order</button>
           </form>
         </div>
+         ) : (
+            
+<div className="transparent-box">
+          <h2>Add Order</h2>
+          <form className='order-form' onSubmit={handleSubmit}>
+            <div className='form-group1'>
+              <label>Order Number</label>
+              <label>{orderNumber}</label>
+            </div>
+            <div className='form-group1'>
+              <label>Customer</label>
+              <label>{customer}</label>
+            </div>
+         {/* Order Type Field */}
+         <div className='form-group1'>
+                <label>Order Type</label>
+                <label>{orderType} </label>
+              </div>
+
+                    {/* Order Category Field */}
+                    <div className='form-group1'>
+                <label>Order Category</label>
+                <label>{orderCategory} </label>
+              </div>
+            <div className='form-group1'>
+              <label>Style Number</label>
+              <label>{styleNumber}</label>
+            </div>
+            <div className='form-group1'>
+              <label>Product Category</label>
+              <label>{productCategory}</label>
+            </div>
+            <div className='form-group1'>
+              <label>Colour</label>
+              <label>{colour}</label>
+            </div>
+            
+            <div className='form-group1'>
+              <label>SMV</label>
+              <label>{smv}</label>
+            </div>
+            
+            
+            <div className='form-group1'>
+              <label>Colour Code</label>
+              <label>{colourCode}</label>
+            </div>
+            
+            <div className='form-group1'>
+              <label>PSD</label>
+              <label>{psd}</label>
+            </div>
+            <div className='form-group1'>
+              <label>PED</label>
+              <label>{ped}</label>
+            </div>
+
+
+            <div className='form-group1'>
+              <label>Size</label>
+              <input type='text' placeholder='Size' 
+                onChange={(e) => setSize(e.target.value)} required />
+            </div>
+            <div className='form-group1'>
+              <label>Ithaly PO</label>
+              <input type='text' placeholder='Ithaly PO' 
+                onChange={(e) => setIthalyPO(e.target.value)} required />
+            </div>
+            <div className='form-group1'>
+              <label>Order Quantity</label>
+              <input type='text' placeholder='Order Quantity' 
+                onChange={(e) => setOrderQuantity(e.target.value)} required />
+            </div>
+            <div className='form-group1'>
+              <label>Production PO</label>
+              <input type='text' placeholder='Production PO' 
+                onChange={(e) => setProductionPO(e.target.value)} required />
+            </div>
+            <button type='submit'>Add New Size</button>
+          </form>
+        </div>
+          )}
+          
       </div>
     </div>
+    
     </div>
-  );
+    );
 };
 
-export default Orderdetails;
-
-
-
+export default EditOrder;

@@ -42,7 +42,6 @@ export const ITSecLog = () => {
               if (userData.occupation === 'IT Section') {
                 console.log('User is a line manager:', userData);
                 pageHandle();  //Call the pageHandle function to navigate or perform further actions
-                alert('IT loged in.');
               } else {
                 console.error('User is not a line manager');
                 // Optionally, you can sign out the user if they are not a line manager

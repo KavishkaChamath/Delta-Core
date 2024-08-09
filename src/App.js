@@ -4,7 +4,6 @@ import Home from './pages/Home';
 import {AdminLog} from './components/AdminLog';
 import Login from './pages/Login';
 import AdminHome from './pages/AdminHome';
-import Test from './components/Test';
 import {LoginForm} from './components/LoginForm';
 import { ITSecLog } from './components/ITSecLog';
 import LineHome from './pages/LineHome';
@@ -14,6 +13,9 @@ import AddEmployee from './pages/AddEmployee';
 import EmployeeHome from './pages/EmployeeHome';
 import OrderHome from './pages/OderHome';
 import Admin from './pages/Admin';
+import EditEmployeeData from './components/EditEmployeeData';
+import EditOrder from './components/EditOrder';
+import EditSizeInSameOrder from './components/EditSizeInSameOrder';
 
 
 function App() {
@@ -34,6 +36,9 @@ function App() {
        <Route path="/pages/OrderHome" element={<OrderHome />} />
        <Route path="/components/Orderdetails" element={<Orderdetails />} />
        <Route path="/pages/AddEmployee" element={<AddEmployee />} />
+       <Route path="/edit-employee" element={<EditEmployeeData />} />
+       <Route path="/editOrder" element={<EditOrder />} />
+       <Route path="/addSizeInSameOrder" element={<EditSizeInSameOrder />} />
        <Route path="/" element={<Home />} />
       </Routes>
     </Router>
