@@ -16,7 +16,7 @@ import Admin from './pages/Admin';
 import EditEmployeeData from './components/EditEmployeeData';
 import EditOrder from './components/EditOrder';
 import EditSizeInSameOrder from './components/EditSizeInSameOrder';
-
+import CutHome from './pages/CutHome';
 
 function App() {
   return (
@@ -33,7 +33,8 @@ function App() {
        <Route path="/pages/LineHome" element={<LineHome />} />
        <Route path="/pages/Admin" element={<Admin />} />
        <Route path="/pages/EmployeeHome" element={<EmployeeHome />} />
-       <Route path="/pages/OrderHome" element={<OrderHome />} />
+      <Route path="/pages/OrderHome" element={<OrderHome />} />
+      <Route path="/pages/CutHome" element={<CutHome />} />
        <Route path="/components/Orderdetails" element={<Orderdetails />} />
        <Route path="/pages/AddEmployee" element={<AddEmployee />} />
        <Route path="/edit-employee" element={<EditEmployeeData />} />

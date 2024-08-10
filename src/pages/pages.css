@@ -159,7 +159,7 @@
   height: 100vh;
 }
 
-.empbutton, .orderbutton {
+.empbutton, .orderbutton, .cuttingbutton {
   margin: 0 10px; /* Add some space between the buttons */
   padding: 20px; /* Increase padding to make the buttons larger */
   font-size: 30px; /* Increase font size */
