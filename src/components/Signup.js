@@ -1,51 +1,18 @@
-// import React, { useState } from 'react';
-// import { auth } from '../Firebase';
-// import { createUserWithEmailAndPassword } from 'firebase/auth';
-
-// export const Signup= () => {
-//   const [email, setEmail] = useState('');
-//   const [password, setPassword] = useState('');
-
-//   const handleSignUp = (e) => {
-//     e.preventDefault();
-//     createUserWithEmailAndPassword(auth, email, password)
-//       .then((userCredential) => {
-//         console.log('User signed up:', userCredential.user);
-//       })
-//       .catch((error) => {
-//         console.error('Error signing up:', error.code, error.message);
-//       });
-//   };
-
-//   return (
-//     <form onSubmit={handleSignUp}>
-//       <input
-//         type="email"
-//         value={email}
-//         onChange={(e) => setEmail(e.target.value)}
-//         placeholder="Email"
-//       />
-//       <input
-//         type="password"
-//         value={password}
-//         onChange={(e) => setPassword(e.target.value)}
-//         placeholder="Password"
-//       />
-//       <button type="submit">Sign Up</button>
-//     </form>
-//   );
-// };
-
 import React, { useState } from 'react';
 import { auth, database } from '../Firebase'; // Ensure you have configured and exported Firebase properly
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { ref, set } from 'firebase/database';
+import { useNavigate } from 'react-router-dom';
+import Titlepic from './Titlepic';
+import SignOut from './SignOut';
 
 export const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   // const [username, setUsername] = useState('');
   const [occupation, setOccupation] = useState('');
+
+  const navigate = useNavigate();
 
   const handleSignUp = (e) => {
     e.preventDefault();
@@ -63,6 +30,8 @@ export const Signup = () => {
         })
         .then(() => {
           console.log('User data added to database');
+          alert('New user added suceesfully');
+          navigate('/pages/Admin');
         })
         .catch((error) => {
           console.error('Error adding user data to database:', error);
@@ -75,9 +44,11 @@ export const Signup = () => {
 
   return (
     <div>
-    <br/>
-    add new user
-    <br/>
+      <Titlepic/>
+      <SignOut/>
+    
+    <center><h3>Add new user to the system </h3></center>
+    
     <form onSubmit={handleSignUp}>
       <input
         type="text"

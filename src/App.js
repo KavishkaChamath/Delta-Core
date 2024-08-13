@@ -16,6 +16,7 @@ import Admin from './pages/Admin';
 import EditEmployeeData from './components/EditEmployeeData';
 import EditOrder from './components/EditOrder';
 import EditSizeInSameOrder from './components/EditSizeInSameOrder';
+import Signup from './components/Signup';
 
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
        <Route path="/edit-employee" element={<EditEmployeeData />} />
        <Route path="/editOrder" element={<EditOrder />} />
        <Route path="/addSizeInSameOrder" element={<EditSizeInSameOrder />} />
+       <Route path="/components/AddNewUser" element={<Signup />} />
        <Route path="/" element={<Home />} />
       </Routes>
     </Router>
