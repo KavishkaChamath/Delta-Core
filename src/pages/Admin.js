@@ -3,9 +3,7 @@ import './Admin.css';
 import { useNavigate } from 'react-router-dom';
 import SignOut from '../components/SignOut';
 import Titlepic from '../components/Titlepic';
-import AddNewLine from '../components/Admin/AddNewLine'
-import OrderQualityIncrementor from '../components/IncrementBy1';
-import Signup from '../components/Signup';
+
 
 
 
@@ -21,8 +19,9 @@ function App() {
     { id: 6, efficiency: "58%", incentive: "67/=", quality: "1" },
   ]);
 
-  const pageChanger = () => navigate('/pages/EmployeeHome');
-  const pageChanger2 = () => navigate('/pages/OrderHome');
+  
+  const pageChanger = (path) => navigate(path);
+
 
   const handleChange = (id, field, value) => {
     setLines(lines.map(line => line.id === id ? { ...line, [field]: value } : line));
@@ -37,11 +36,12 @@ function App() {
         <h1>Admin Home</h1>
       </header>
       <div className="sidebar">
-        <button className="sidebar-button" onClick={pageChanger}>Employee Details</button>
-        <button className="sidebar-button" onClick={pageChanger2}>Orderdetails</button>
+        <button className="sidebar-button" onClick={() => pageChanger('/pages/EmployeeHome')}>Employee Details</button>
+        <button className="sidebar-button" onClick={() => pageChanger('/pages/OrderHome')}>Orderdetails</button>
         <button className="sidebar-button">Cutting</button>
         <button className="sidebar-button">Bundle</button>
         <button className="sidebar-button">Shift</button>
+        <button className="sidebar-button" onClick={() => pageChanger('/components/AddNewUser')}>Add new User</button>
       </div>
       <div className="main-content">
         <div className="line-item">
@@ -77,9 +77,6 @@ function App() {
           </div>
         ))}
       </div>
-      <AddNewLine/>
-      <OrderQualityIncrementor/>
-      <Signup/>
     </div>
   );
 }
