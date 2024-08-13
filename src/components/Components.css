@@ -74,7 +74,7 @@ background-blend-mode: lighten;
 /* Container to hold the label, dropdown, and button */
 
 /* General container styling */
-.container {
+.select-line-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -83,33 +83,29 @@ background-blend-mode: lighten;
   background-color: #A5B9F4; /* Matches the background color in the image */
 }
 
-/* Container for the buttons and textbox */
-.button-container {
-  margin: 10px 0;
+.select-line-label {
+  margin-bottom: 10px;
 }
 
-/* Button styling */
-.select-line-button {
-  background-color: #4B95EC; /* Matches the button color in the image */
-  border: none;
-  color: white;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-  border-radius: 5px; /* Rounded corners */
-}
-
-/* Textbox styling */
-.textbox {
+.select-line-select {
   height: 30px;
   width: 240px; /* Set width according to the image */
-  margin-left: 10px; /* Space between button and textbox */
+  margin-left: 10px; /* Space between label and select */
   padding: 5px;
   border-radius: 5px; /* Rounded corners */
   border: 1px solid #ccc;
+}
+
+.select-line-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between; /* Add this line */
+  height: 100vh;
+  background-color: #A5B9F4; /* Matches the background color in the image */
+}
+
+.select-line-button {
+  margin-top: auto; /* Add this line */
 }
 
