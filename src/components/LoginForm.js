@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import './LoginForm.css'; // Make sure this path is correct based on your project structure
 import img21 from './Images/img21.png';
 import { auth } from '../Firebase';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
 import { ref, query, orderByChild, equalTo, get } from 'firebase/database';
 import { database } from '../Firebase';
 import { useNavigate } from 'react-router-dom';
@@ -70,6 +70,22 @@ export const LoginForm = () => {
       });
   };
 
+  const handleForgotPassword = () => {
+    if (!email) {
+      alert('Please enter your email address to reset your password.');
+      return;
+    }
+
+    sendPasswordResetEmail(auth, email)
+      .then(() => {
+        alert('Password reset email sent. Please check your inbox.');
+      })
+      .catch((error) => {
+        console.error('Error sending password reset email:', error);
+        alert('Error sending password reset email. Please try again.');
+      });
+  };
+
   return (
     <div>
       {/* Header with photo and gradient background */}
@@ -97,7 +113,7 @@ export const LoginForm = () => {
           {/* Transparent box under username-password section */}
           
           <div className="remember-forgot">            
-           <a href='#'>Forgot Password</a>
+              <a href="#" onClick={handleForgotPassword}>Forgot Password</a>
           </div>
           <button type='submit'>Login</button>
           

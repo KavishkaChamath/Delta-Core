@@ -3,7 +3,7 @@ import './LoginForm.css'; // Make sure this path is correct based on your projec
 import img21 from './Images/img21.png';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../Firebase';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, sendPasswordResetEmail  } from 'firebase/auth';
 import { ref, query, orderByChild, equalTo, get } from 'firebase/database';
 import { database } from '../Firebase';
 
@@ -38,12 +38,12 @@ export const ITSecLog = () => {
               });
               console.log('User data retrieved:', userData);
 
-              // Check if the occupation is 'Admin'
+              // Check if the occupation is 'IT'
               if (userData.occupation === 'IT Section') {
-                console.log('User is a line manager:', userData);
+                console.log('User is a IT:', userData);
                 pageHandle();  //Call the pageHandle function to navigate or perform further actions
               } else {
-                console.error('User is not a line manager');
+                console.error('User is not a IT');
                 // Optionally, you can sign out the user if they are not a line manager
                 auth.signOut();
                 alert('You are not authorized to access this system.');
@@ -65,6 +65,22 @@ export const ITSecLog = () => {
       .catch((error) => {
         console.error('Error signing in:', error.code, error.message);
         alert(`Error signing in: ${error.message}`);
+      });
+  };
+
+  const handleForgotPassword = () => {
+    if (!email) {
+      alert('Please enter your email address to reset your password.');
+      return;
+    }
+
+    sendPasswordResetEmail(auth, email)
+      .then(() => {
+        alert('Password reset email sent. Please check your inbox.');
+      })
+      .catch((error) => {
+        console.error('Error sending password reset email:', error);
+        alert('Error sending password reset email. Please try again.');
       });
   };
 
@@ -96,8 +112,8 @@ export const ITSecLog = () => {
           {/* Transparent box under username-password section */}
           
           <div className="remember-forgot">            
-           <a href='#'>Forgot Password</a>
-          </div>
+              <a href="#" onClick={handleForgotPassword}>Forgot Password</a>
+            </div>
           <button type='submit'>Login</button>
           
         </form>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { auth } from '../Firebase';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import img21 from './Images/img21.png';
 import './LoginForm.css';
@@ -80,6 +80,22 @@ export const AdminLog = () => {
       });
   };
 
+  const handleForgotPassword = () => {
+    if (!email) {
+      alert('Please enter your email address to reset your password.');
+      return;
+    }
+
+    sendPasswordResetEmail(auth, email)
+      .then(() => {
+        alert('Password reset email sent. Please check your inbox.');
+      })
+      .catch((error) => {
+        console.error('Error sending password reset email:', error);
+        alert('Error sending password reset email. Please try again.');
+      });
+  };
+
   return (
     <div>
       {/* Header with photo and gradient background
@@ -115,15 +131,11 @@ export const AdminLog = () => {
             </div>
             {/* Transparent box under username-password section */}
 
-            <div className="remember-forgot">
-              {' '}
-              <a href='#'>Forgot Password</a>
+            <div className="remember-forgot">            
+              <a href="#" onClick={handleForgotPassword}>Forgot Password</a>
             </div>
             <button type="submit">Sign In</button>
-            {/* <div className="register-link">
-              <p>Don't have an account? <a href='#' onClick={handleRegister}>Register</a></p>
-            </div>
-            {error && <p style={{ color: 'ed' }}>{error}</p>} */}
+            
           </form>
         </div>
         <div className="footer">

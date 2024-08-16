@@ -18,6 +18,8 @@ import EditOrder from './components/EditOrder';
 import EditSizeInSameOrder from './components/EditSizeInSameOrder';
 import CutHome from './pages/CutHome';
 import SelectLine from './components/SelectLine';
+
+
 function App() {
   return (
     <div className="App">
@@ -41,6 +43,7 @@ function App() {
        <Route path="/edit-employee" element={<EditEmployeeData />} />
        <Route path="/editOrder" element={<EditOrder />} />
        <Route path="/addSizeInSameOrder" element={<EditSizeInSameOrder />} />
+       <Route path="/components/AddNewUser" element={<Signup />} />
        <Route path="/" element={<Home />} />
       </Routes>
     </Router>
