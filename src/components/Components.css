@@ -73,9 +73,8 @@ background-blend-mode: lighten;
 }
 /* Container to hold the label, dropdown, and button */
 
-/* General container styling */
 .select-line-container {
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -83,29 +82,58 @@ background-blend-mode: lighten;
   background-color: #A5B9F4; /* Matches the background color in the image */
 }
 
+.select-line-frame {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 400px; /* Adjusted width to make the frame longer */
+  text-align: center;
+}
+
+.select-line-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
 .select-line-label {
-  margin-bottom: 10px;
+  margin-right: 10px;
 }
 
 .select-line-select {
   height: 30px;
-  width: 240px; /* Set width according to the image */
-  margin-left: 10px; /* Space between label and select */
+  width: 200px; /* Set width for the select dropdown */
   padding: 5px;
-  border-radius: 5px; /* Rounded corners */
+  border-radius: 5px;
   border: 1px solid #ccc;
 }
 
-.select-line-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between; /* Add this line */
-  height: 100vh;
-  background-color: #A5B9F4; /* Matches the background color in the image */
+.select-line-button1 {
+  background-color: #007bff; /* Blue color for the Proceed button */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-.select-line-button {
-  margin-top: auto; /* Add this line */
+.select-line-button1:hover {
+  background-color: #0056b3; /* Darker blue when hovering */
 }
+
+.select-line-container button{
+  background-color: #007bff; /* Blue color for the Proceed button */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.select-line-container button:hover {
+  background-color: #0056b3; /* Darker blue when hovering */
+}
+
+
 

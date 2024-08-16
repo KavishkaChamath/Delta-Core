@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import './Components.css'  // Import the CSS file
-//import SelectLine from './components/SelectLine';
+import './Components.css';  // Import the CSS file
 
 const SelectLine = () => {
   const [selectedValue, setSelectedValue] = useState('');
@@ -20,18 +19,24 @@ const SelectLine = () => {
 
   return (
     <div className="select-line-container">
-      <label htmlFor="select-line" className="select-line-label">Choose a line: </label>
-      <select id="select-line" className="select-line-select" value={selectedValue} onChange={handleSelectChange}>
-        <option value=""></option>
-        {Array.from({ length: 12 }, (_, i) => (
-          <option key={i + 1} value={i + 1}>
-            {i + 1}
-          </option>
-        ))}
-      </select>
-      <button className="select-line-button" onClick={handleProceed}>Proceed</button>
+      <div className="select-line-frame">
+        <div className="select-line-row">
+          <label htmlFor="select-line" className="select-line-label">Choose a line:</label>
+          <select id="select-line" className="select-line-select" value={selectedValue} onChange={handleSelectChange}>
+            <option value=""></option>
+            {Array.from({ length: 12 }, (_, i) => (
+              <option key={i + 1} value={i + 1}>
+                {i + 1}
+              </option>
+            ))}
+          </select>
+        </div>
+        <button onClick={handleProceed}>Proceed</button>
+      </div>
     </div>
   );
 };
 
 export default SelectLine;
+
+
