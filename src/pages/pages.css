@@ -156,8 +156,32 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 85vh;
+
 }
+@media (max-width: 885px) {
+  .Ithome {
+    display: table-row;
+    margin-top: 10%;
+
+  }
+}
+@media (max-width: 885px) {
+  .Ithome button{
+    height: 100px;
+    width: 600px;
+    margin-top: 10%;
+  }
+}
+@media (max-width: 600px) {
+  .Ithome button{
+    height: 90px;
+    width: 350px;
+    margin-top: 10%;
+  }
+}
+
+
 
 .empbutton, .orderbutton {
   margin: 0 10px; /* Add some space between the buttons */
@@ -182,8 +206,8 @@
   margin: 0 10px; /* Add some space between the buttons */
   padding: 20px; /* Increase padding to make the buttons larger */
   font-size: 30px; /* Increase font size */
-  width: 35%;
-  max-width: 300px; /* Adjust the max-width as needed */
+  width: 25%;
+  /*max-width: 300px; /* Adjust the max-width as needed */
   height: 400px;
   max-height: 800px;
   text-align: center;
@@ -207,8 +231,8 @@
   margin: 0 10px; /* Add some space between the buttons */
   padding: 20px; /* Increase padding to make the buttons larger */
   font-size: 30px; /* Increase font size */
-  width: 35%;
-  max-width: 300px; /* Adjust the max-width as needed */
+  width: 25%;
+ /* max-width: 300px; /* Adjust the max-width as needed */
   height: 400px;
   max-height: 800px;
   text-align: center;
@@ -232,15 +256,15 @@
   margin: 0 10px; /* Add some space between the buttons */
   padding: 20px; /* Increase padding to make the buttons larger */
   font-size: 30px; /* Increase font size */
-  width: 35%;
-  max-width: 300px; /* Adjust the max-width as needed */
+  width: 25%;
+  /*max-width: 300px; /* Adjust the max-width as needed */
   height: 400px;
   max-height: 800px;
   text-align: center;
   font-weight: 900;
   border: none; /* Optional: remove the default button border */
   border-radius: 20px; /* Optional: add rounded corners */
-  background: url('../components/Images/img13.png');
+  background: url('../components/Images/img13.png')  no-repeat;
   color: white; /* Optional: change the text color */
   cursor: pointer; /* Optional: change cursor to pointer on hover */
   background-color: lightblue;
