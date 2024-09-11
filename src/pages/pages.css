@@ -161,8 +161,9 @@
 }
 @media (max-width: 885px) {
   .Ithome {
-    display: table-row;
-    margin-top: 10%;
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    justify-items: center;
 
   }
 }
@@ -170,20 +171,51 @@
   .Ithome button{
     height: 100px;
     width: 600px;
-    margin-top: 10%;
+
   }
 }
 @media (max-width: 600px) {
   .Ithome button{
     height: 90px;
     width: 350px;
-    margin-top: 10%;
+
+  }
+}
+
+
+.Ithome2{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 85vh;
+
+}
+@media (max-width: 885px) {
+  .Ithome2 {
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  justify-items: center;
+
+  }
+}
+@media (max-width: 885px) {
+  .Ithome2 button{
+    height: 100px;
+    width: 600px;
+    
+  }
+}
+@media (max-width: 600px) {
+  .Ithome2 button{
+    height: 90px;
+    width: 350px;
+
   }
 }
 
 
 
-.empbutton, .orderbutton {
+.empbutton, .orderbutton, .cutbutton {
   margin: 0 10px; /* Add some space between the buttons */
   padding: 20px; /* Increase padding to make the buttons larger */
   font-size: 30px; /* Increase font size */
@@ -198,7 +230,7 @@
   cursor: pointer; /* Optional: change cursor to pointer on hover */
 }
 
-.empbutton:hover, .orderbutton:hover {
+.empbutton:hover, .orderbutton:hover, .cutbutton:hover {
   background-color: rgba(50, 132, 205, 0.795); /* Optional: change background color on hover */
 }
 
