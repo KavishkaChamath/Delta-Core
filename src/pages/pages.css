@@ -216,6 +216,7 @@
 
 
 .empbutton, .orderbutton, .cutbutton {
+
   margin: 0 10px; /* Add some space between the buttons */
   padding: 20px; /* Increase padding to make the buttons larger */
   font-size: 30px; /* Increase font size */
@@ -324,4 +325,35 @@
   background: url('../components/Images/img13.png');
   background-size: 120%;
   background-position: center;
+}
+.select-line-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.select-line-label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.select-line-select {
+  padding: 5px;
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.select-line-button {
+  padding: 5px 15px;
+  font-size: 16px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.select-line-button:hover {
+  background-color: #45a049;
 }

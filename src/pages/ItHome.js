@@ -10,7 +10,6 @@ export default function ItHome(){
     const handleClick = () => navigate('/pages/EmployeeHome');
     const handleClick1 = () => navigate('/pages/OrderHome');
     const handleClick2 = () => navigate('/pages/OrderHome');
-
     return(
         <div className="holder">
         <div>
@@ -19,7 +18,9 @@ export default function ItHome(){
             <div className="Ithome2">
             <button className="empbutton" onClick={handleClick}>Employee Detalis</button>
             <button className="orderbutton" onClick={handleClick1}>Order Detalis</button>
+
             <button className="cutbutton" onClick={handleClick2}>Cut Detalis</button>
+
             </div>
         </div>
         <div className="footer">
