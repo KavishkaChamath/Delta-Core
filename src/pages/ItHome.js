@@ -18,7 +18,7 @@ export default function ItHome(){
             <div className="Ithome">
             <button className="empbutton" onClick={handleClick}>Employee Detalis</button>
             <button className="orderbutton" onClick={handleClick1}>Order Detalis</button>
-            <button className="cuttingbutton" onClick={handleClick2}>Cut Detalis</button>
+            <button className="cutbutton" onClick={handleClick2}>Order Detalis</button>
             </div>
         </div>
         <div className="footer">
