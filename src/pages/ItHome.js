@@ -9,16 +9,16 @@ export default function ItHome(){
     const navigate = useNavigate();
     const handleClick = () => navigate('/pages/EmployeeHome');
     const handleClick1 = () => navigate('/pages/OrderHome');
-    const handleClick2 = () => navigate('/pages/CutHome');
+    const handleClick2 = () => navigate('/pages/OrderHome');
     return(
         <div className="holder">
         <div>
             <Titlepic/>
             <SignOut/>
-            <div className="Ithome">
+            <div className="Ithome2">
             <button className="empbutton" onClick={handleClick}>Employee Detalis</button>
             <button className="orderbutton" onClick={handleClick1}>Order Detalis</button>
-            <button className="cutbutton" onClick={handleClick2}>Order Detalis</button>
+            <button className="cutbutton" onClick={handleClick2}>Cut Detalis</button>
             </div>
         </div>
         <div className="footer">
