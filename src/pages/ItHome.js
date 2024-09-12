@@ -9,7 +9,7 @@ export default function ItHome(){
     const navigate = useNavigate();
     const handleClick = () => navigate('/pages/EmployeeHome');
     const handleClick1 = () => navigate('/pages/OrderHome');
-    const handleClick2 = () => navigate('/pages/OrderHome');
+    const handleClick2 = () => navigate('/pages/CutHome');
     return(
         <div className="holder">
         <div>
