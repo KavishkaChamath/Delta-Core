@@ -17,8 +17,8 @@ import EditEmployeeData from './components/EditEmployeeData';
 import EditOrder from './components/EditOrder';
 import EditSizeInSameOrder from './components/EditSizeInSameOrder';
 import Signup from './components/Signup';
-import SelectLine from './components/Line/SelectLine';
-import AssignEmployee from './components/Line/AssignEmployee';
+
+
 import CuttingDetailsForm from './components/Cutting';
 import Bundle from './components/Bundle';
 import Cutting from './components/Cutting';
@@ -39,7 +39,7 @@ function App() {
        <Route path="/pages/AdminHome" element={<AdminHome />} />
        <Route path="/pages/ItHome" element={<ItHome />} />
        <Route path="/pages/LineHome" element={<LineHome />} />
-       <Route path="/pages/SelectLine" element={<SelectLine />} />
+       
        <Route path="/pages/Admin" element={<Admin />} />
        <Route path="/pages/EmployeeHome" element={<EmployeeHome />} />
        <Route path="/pages/OrderHome" element={<OrderHome />} />
@@ -50,8 +50,8 @@ function App() {
        <Route path="/editOrder" element={<EditOrder />} />
        <Route path="/addSizeInSameOrder" element={<EditSizeInSameOrder />} />
        <Route path="/components/AddNewUser" element={<Signup />} />
-       <Route path="/line/selectLine" element={<SelectLine />} />
-       <Route path="/line/AssignEmp" element={<AssignEmployee />} />
+
+
        <Route path="/comp/cutting" element={<CuttingDetailsForm />} />
        <Route path="/comp/bundle" element={<Bundle/>} />
        <Route path="/comp/cutting" element={<Cutting/>} />
