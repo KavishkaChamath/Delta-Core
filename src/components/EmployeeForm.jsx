@@ -199,7 +199,7 @@ export const EmployeeForm = () => {
               type='text'
               placeholder='Contact Number 2 (Optional)'
               value={contactNumber2}
-              onChange={(e) => handlePhoneNumberChange(e, setContactNumber2)} onBlur={() => handlePhoneNumberBlur(contactNumber2)} />
+              onChange={(e) => handlePhoneNumberChange(e, setContactNumber2)}/>
           </div>
           <div className='form-group2'>
             <label>Date of Joined</label>
@@ -292,6 +292,7 @@ export const EmployeeForm = () => {
               {/* Add options as needed */}
             </select>
           </div>
+          <button type='submit'>Add</button> 
           <button
         type='button'
         className='generate-qr-code'
@@ -299,12 +300,13 @@ export const EmployeeForm = () => {
       >
         Generate & Download QR Code
       </button>
+      
       {showQRCode && (
         <div className='qr-code' ref={qrRef} style={{ display: 'none' }}>
           <QRCode value={generateQRCodeValue()} size={256} level="H" /> 
         </div>
       )}
-          <button type='submit'>Add</button>
+         
         </form>
       </div>
       </div>
