@@ -42,10 +42,16 @@ const InqueueTable = () => {
 
       for (const bundleId of Object.keys(bundles)) {
         const bundle = bundles[bundleId];
-        const orderNumber = bundle.orderNumber;
+        //const orderNumber = bundle.orderNumber;
+        const { orderNumber, italyPo, productionPo } = bundle;
+
+      if (!orderNumber || !italyPo || !productionPo) {
+        console.warn('Missing data in bundle:', bundle);
+        continue;
+      }
 
         // Fetch additional order details from the 'orders' node using the orderNumber
-        const orderDetails = await fetchOrderDetails(orderNumber);
+        const orderDetails = await fetchOrderDetails(orderNumber,italyPo,productionPo);
 
         // Merge the additional order details into the bundle data
         updatedLinesData[lineKey][bundleId] = {
@@ -61,7 +67,7 @@ const InqueueTable = () => {
   };
 
   // Function to fetch order details based on orderNumber
-const fetchOrderDetails = async (orderNumber) => {
+const fetchOrderDetails = async (orderNumber,italyPo,productionPo) => {
     const ordersRef = ref(database, 'orders'); // Reference to all orders
     try {
       const snapshot = await get(ordersRef);
@@ -70,12 +76,14 @@ const fetchOrderDetails = async (orderNumber) => {
         // Loop through the orders to find the matching orderNumber
         for (const orderId in ordersData) {
           const order = ordersData[orderId];
-          if (order.orderNumber === orderNumber) {
+          if (order.orderNumber === orderNumber &&
+            order.italyPO === italyPo &&
+            order.productionPO === productionPo) {
             // Order found, return the details
             return {
               styleNumber: order.styleNumber || 'N/A',
-              italypo: order.ithalyPO || 'N/A',
-              productionpo: order.productionPO || 'N/A',
+              italypo: order.italyPO || 'N/A',
+               productionpo: order.productionPO || 'N/A',
               color: order.colour || 'N/A',
               colorCode: order.colourCode || 'N/A',
             };
@@ -85,8 +93,6 @@ const fetchOrderDetails = async (orderNumber) => {
         console.warn(`No order details found for Order Number: ${orderNumber}`);
         return {
           styleNumber: 'N/A',
-          italypo: 'N/A',
-          productionpo: 'N/A',
           color: 'N/A',
           colorCode: 'N/A',
         };
@@ -94,8 +100,6 @@ const fetchOrderDetails = async (orderNumber) => {
         console.warn('No orders found in the database.');
         return {
           styleNumber: 'N/A',
-          italypo: 'N/A',
-          productionpo: 'N/A',
           color: 'N/A',
           colorCode: 'N/A',
         };
@@ -104,8 +108,6 @@ const fetchOrderDetails = async (orderNumber) => {
       console.error('Error fetching order details:', error);
       return {
         styleNumber: 'N/A',
-        italypo: 'N/A',
-        productionpo: 'N/A',
         color: 'N/A',
         colorCode: 'N/A',
       };
