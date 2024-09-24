@@ -116,7 +116,9 @@ const Bundle = () => {
         return set(inQueueRef, {
           orderNumber: bundleData.orderNumber,
           size: bundleData.size,
-          noOfPieces: bundleData.noOfPieces
+          noOfPieces: bundleData.noOfPieces,
+          italyPo:bundleData.italyPo,
+          productionPo:bundleData.productionPo
         });
       })
       .then(() => {

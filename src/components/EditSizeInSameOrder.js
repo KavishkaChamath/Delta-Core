@@ -21,7 +21,7 @@ const EditOrder = () => {
   const [colour, setColour] = useState('');
   const [size, setSize] = useState('');
   const [smv, setSmv] = useState('');
-  const [ithalyPO, setIthalyPO] = useState('');
+  const [italyPO, setItalyPO] = useState('');
   const [orderQuantity, setOrderQuantity] = useState('');
   const [colourCode, setColourCode] = useState('');
   const [productionPO, setProductionPO] = useState('');
@@ -47,7 +47,7 @@ const EditOrder = () => {
      setColour(orderData.colour || '');
      setSize(orderData.size || '');
      setSmv(orderData.smv || '');
-     setIthalyPO(orderData.ithalyPO || '');
+     setItalyPO(orderData.ithalyPO || '');
      setOrderQuantity(orderData.orderQuantity|| '');
      setColourCode(orderData.colourCode|| '');
      setProductionPO(orderData.productionPO|| '');
@@ -70,7 +70,7 @@ const EditOrder = () => {
       colour,
       size,
       smv,
-      ithalyPO,
+      italyPO,
       orderQuantity,
       colourCode,
       productionPO,
@@ -92,7 +92,7 @@ const EditOrder = () => {
         setColour('');
         setSize('');
         setSmv('');
-        setIthalyPO('');
+        setItalyPO('');
         setOrderQuantity('');
         setColourCode('');
         setProductionPO('');
@@ -257,9 +257,9 @@ const EditOrder = () => {
                 onChange={(e) => setSize(e.target.value)} required />
             </div>
             <div className='form-group1'>
-              <label>Ithaly PO</label>
-              <input type='text' placeholder='Ithaly PO' 
-                onChange={(e) => setIthalyPO(e.target.value)} required />
+              <label>Italy PO</label>
+              <input type='text' placeholder='Italy PO' 
+                onChange={(e) => setItalyPO(e.target.value)} required />
             </div>
             <div className='form-group1'>
               <label>Order Quantity</label>
@@ -338,9 +338,9 @@ const EditOrder = () => {
                 onChange={(e) => setSize(e.target.value)} required />
             </div>
             <div className='form-group1'>
-              <label>Ithaly PO</label>
-              <input type='text' placeholder='Ithaly PO' 
-                onChange={(e) => setIthalyPO(e.target.value)} required />
+              <label>Italy PO</label>
+              <input type='text' placeholder='Italy PO' 
+                onChange={(e) => setItalyPO(e.target.value)} required />
             </div>
             <div className='form-group1'>
               <label>Order Quantity</label>
