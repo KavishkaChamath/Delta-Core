@@ -14,7 +14,8 @@ export const AdminLog = () => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const [showPassword, setShowPassword] = useState(false);
+  
   // const handleSignIn = (e) => {
   //   e.preventDefault();
   //   signInWithEmailAndPassword(auth, email, password)
@@ -96,14 +97,12 @@ export const AdminLog = () => {
       });
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <div>
-      {/* Header with photo and gradient background
-      <header className="header">
-        <div className="header-content">
-          {/* Adjust the image source to a relative path */}
-        {/* </div>
-      // </header> */} 
 
       {/* Login Form */}
       <div className='wrapper2'>
@@ -121,14 +120,29 @@ export const AdminLog = () => {
               />
             </div>
             <div className='input-box1'>
+            <div className='password-container'>
               <input
-                type='password'
+                type={showPassword ? 'text' : 'password'}
                 placeholder='Password'
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
+              <button
+                type="button"
+                onClick={togglePasswordVisibility}
+                className="toggle-password"
+              >
+                {showPassword ? (
+                  <i className="fas fa-eye-slash"></i>  
+                ) : (
+                  <i className="fas fa-eye"></i>  
+                )}
+              </button>
             </div>
+          </div>
+
+            
             {/* Transparent box under username-password section */}
 
             <div className="remember-forgot">            
