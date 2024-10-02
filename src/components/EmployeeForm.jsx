@@ -151,17 +151,10 @@ export const EmployeeForm = () => {
       <Titlepic/>
       <SignOut/>
       {/* Header with photo and gradient background */}
-      <header className="header">
-        {/* <img src={deltaapperal2} alt="Logo" className="header-logo" /> */}
-        <div className="header-content">
-          <h1>Employee Management</h1>
-        </div>
-      </header>
-
-      {/* Employee Form */}
-      <div className='holder'>
-      <div className="transparent-box">
-        <center><h2>Add Employee</h2></center>
+      <div className='empholder'>
+      <div className='empwrapper'>
+        <div className="transparent-box">
+          <h2>Add Employee</h2>
         <form className='employee-form' onSubmit={handleSubmit}>
           <div className='form-group2'>
             <label>Employee Number</label>
@@ -309,6 +302,10 @@ export const EmployeeForm = () => {
          
         </form>
       </div>
+      </div>
+    </div>
+    <div className="footer">
+        <p>&copy; 2024 Delta Apparels</p>
       </div>
     </div>
   );

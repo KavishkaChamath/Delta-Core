@@ -14,7 +14,9 @@ export default function EmployeeHome(){
             <Titlepic />
             <SignOut />
             <center><h2> Order List</h2></center>
+            <div className="addButton">
             <button className="AddOrder" onClick={handleClick}>Add Order</button>
+            </div>
             <ShowOrder/>
            
         </div>

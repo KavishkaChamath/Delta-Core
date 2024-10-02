@@ -123,10 +123,10 @@ const EditOrder = () => {
     <div>
       <Titlepic/>
       <SignOut/>
-      <div className='holder'>
-      <div className='wrapper'>
+      <div className='ordholder'>
+      <div className='ordwrapper'>
         <div className="transparent-box">
-          <h2>Add Order</h2>
+          <h2>Edit Order</h2>
           <form className='order-form' onSubmit={handleSubmit}>
             <div className='form-group1'>
               <label>Order Number</label>

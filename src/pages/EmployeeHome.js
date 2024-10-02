@@ -16,7 +16,9 @@ export default function EmployeeHome(){
             <Titlepic/>
             <SignOut/>
             <center><h2>Employee List</h2></center>
+            <div className="addButton">
             <button className="AddEmp" onClick={handleClick}>Add Employee</button>
+            </div>
             <ShowData/>
            
         </div>

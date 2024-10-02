@@ -177,7 +177,7 @@ const ShowOrder = () => {
   };
 
   return (
-    <div>
+    <div className='ordTable'>
       <div>
         <input
           type="text"
@@ -185,11 +185,11 @@ const ShowOrder = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <button onClick={handleSearch}>Search</button>
+        <button className="search" onClick={handleSearch}>Search</button>
       </div>
       {filteredOrders.length > 0 ? (
         <>
-          <table border="1">
+          <table border="1" align='center'>
             <thead>
               <tr>
                 <th>Order Number</th>
@@ -229,9 +229,9 @@ const ShowOrder = () => {
                   <td>{order.colourCode}</td>
                   <td>{order.ped}</td>
                   {showActions && (
-                    <td>
-                      <button onClick={() => handleEdit(order.id)}>Edit</button>
-                      <button onClick={() => handleDelete(order.id)}>Delete</button>
+                    <td width="100px" align='center'>
+                      <button className="editOrd"onClick={() => handleEdit(order.id)}>Edit</button>
+                      <button className="deleteOrd"onClick={() => handleDelete(order.id)}>Delete</button>
                     </td>
                   )}
                 </tr>
@@ -240,7 +240,7 @@ const ShowOrder = () => {
           </table>
           {showActions && (
             <div>
-              <button onClick={handleAddAnotherSize}>Add Another Size</button>
+              <button className="addSize" onClick={handleAddAnotherSize}>Add Another Size</button>
             </div>
           )}
         </>
