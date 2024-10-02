@@ -148,11 +148,12 @@ const EditOrder = () => {
       <SignOut/>
       <div className='holder'>
 
-      <button onClick={handleChangeClick}>
+      <button className="editaddSize"onClick={handleChangeClick}>
         {isChangeClicked ? 'Change size only ' : 'Edit all data'}
       </button>
 
-      <div className='wrapper'>
+      <div className='ordholder'>
+      <div className='ordwrapper'>
         {/* Conditionally render the forms based on isChangeClicked */}
       {isChangeClicked ? (
         <div className="transparent-box">
@@ -360,6 +361,7 @@ const EditOrder = () => {
       </div>
     </div>
     
+    </div>
     </div>
     );
 };

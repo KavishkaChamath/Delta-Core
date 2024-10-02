@@ -114,16 +114,9 @@ const EditEmployeeData = () => {
       <Titlepic/>
       <SignOut/>
       {/* Header with photo and gradient background */}
-      <header className="header">
-        {/* <img src={deltaapperal2} alt="Logo" className="header-logo" /> */}
-        <div className="header-content">
-          <h1>Employee Management</h1>
-        </div>
-      </header>
-
-      {/* Employee Form */}
-      <div className='holder'>
-      <div className="transparent-box">
+      <div className='empholder'>
+      <div className='empwrapper'>
+        <div className="transparent-box">
         <center><h2>Edit Employee Data</h2></center>
         <form className='employee-form' onSubmit={handleSubmit}>
           <div className='form-group2'>
@@ -259,6 +252,7 @@ const EditEmployeeData = () => {
         </form>
       </div>
       </div>
+    </div>
     </div>
     );
 };
