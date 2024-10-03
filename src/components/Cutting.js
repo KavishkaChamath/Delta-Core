@@ -68,6 +68,7 @@ import { ref, onValue,set,get } from 'firebase/database';
 import { database } from '../Firebase'; // Make sure to import your Firebase configuration
 import './Orderdetails.css';
 import Titlepic from '../components/Titlepic'
+import SignOut from './SignOut';
 
 const CuttingDetailsForm = () => {
   const [orders, setOrders] = useState([]);
@@ -389,17 +390,19 @@ const CuttingDetailsForm = () => {
   
 
   return (
-    <div>
+    <div className='holder'>
       <Titlepic/>
+      <SignOut/>
       <div>
         <input
+          className='searchBar'
           type="text"
           placeholder="Search by Order Number or Customer Name"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           required
         />
-        <button onClick={handleSearch}>Search</button>
+        <button className="search"onClick={handleSearch}>Search</button>
       </div>
       
       {noMatchFound && (
@@ -407,8 +410,8 @@ const CuttingDetailsForm = () => {
       )}
 
       {showResults && (
-        <div>
-          <table>
+        <div className='cutTable'>
+          <table border='1' align='center'>
             <thead>
               <tr>
                 <th>Order Number</th>

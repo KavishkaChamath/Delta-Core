@@ -3,6 +3,7 @@ import Titlepic from "../components/Titlepic";
 import { useNavigate } from 'react-router-dom';
 import SignOut from "../components/SignOut";
 import './pages.css'
+import '../components/Cuttingdetails.css'
 
 
 export default function CutHome() {
@@ -12,10 +13,10 @@ export default function CutHome() {
     const handleClick2 = () => navigate('/comp/inqueue');
 
   return (
-    <div>
+    <div className='holder'>
         <Titlepic/>
         <SignOut/>
-        <div>
+        <div className='cutButtons'>
         <button onClick={handleClick}>Cut Detalis</button>
         <button onClick={handleClick1}>Bundle</button>
         <button onClick={handleClick2}>Inqueue</button>
