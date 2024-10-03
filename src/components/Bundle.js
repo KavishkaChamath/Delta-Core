@@ -118,7 +118,7 @@ const Bundle = () => {
           size: bundleData.size,
           noOfPieces: bundleData.noOfPieces,
           italyPo:bundleData.italyPo,
-          productionPo:bundleData.productionPo
+          productionPo:bundleData.productionPo,
         });
       })
       .then(() => {
