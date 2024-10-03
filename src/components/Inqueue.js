@@ -120,7 +120,7 @@ const fetchOrderDetails = async (orderNumber,italyPo,productionPo) => {
     return Object.keys(linesData).map((lineKey) => {
       const bundles = linesData[lineKey];
       return (
-        <div key={lineKey}>
+        <div key={lineKey} className='inqueTbl'>
           <h2>{lineKey}</h2>
           <table border="1">
             <thead>
@@ -152,13 +152,16 @@ const fetchOrderDetails = async (orderNumber,italyPo,productionPo) => {
               ))}
             </tbody>
           </table>
+          <div className="footer">
+        <p>&copy; 2024 Delta Apparels</p>
+      </div>
         </div>
       );
     });
   };
 
   return (
-    <div>
+    <div className='holder'> 
       <Titlepic />
       <SignOut />
       <h1>Inqueue Bundles Data</h1>

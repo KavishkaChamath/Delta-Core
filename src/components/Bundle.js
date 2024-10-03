@@ -143,7 +143,8 @@ const Bundle = () => {
   };
   
   const displayBundlesInTable = (bundles) => (
-    <table border={1}>
+    <div className='bundleTable'>
+    <table border={1} align='center'>
     <thead>
       <tr>
         <th>Bundle ID</th>
@@ -196,6 +197,7 @@ const Bundle = () => {
       )}
     </tbody>
   </table>
+  </div>
   );
 
   
@@ -260,10 +262,10 @@ const handleCutNumberChange = (e) => {
 
 
   return (
-    <div>
+    <div className='holder'>
       <Titlepic/>
       <SignOut/>
-    <h1>Search Cutting Details</h1>
+    <h2>Search Cutting Details</h2>
     <input
       type="text"
       placeholder="Order Number"
