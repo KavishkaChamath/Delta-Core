@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import {AdminLog} from './components/AdminLog';
 import Login from './pages/Login';
-import AdminHome from './pages/AdminHome';
 import {LoginForm} from './components/LoginForm';
 import { ITSecLog } from './components/ITSecLog';
 import LineHome from './pages/LineHome';
@@ -37,7 +36,6 @@ function App() {
        <Route path="/components/LoginForm" element={<LoginForm />} />
        <Route path="/pages/Login" element={<Login />} />
        <Route path="/pages/Home" element={<Home />} />
-       <Route path="/pages/AdminHome" element={<AdminHome />} />
        <Route path="/pages/ItHome" element={<ItHome />} />
        <Route path="/pages/LineHome" element={<LineHome />} />
        
