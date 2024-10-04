@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import SignOut from "../components/SignOut";
 import './pages.css'
 import '../components/Cuttingdetails.css'
+import { Helmet } from 'react-helmet';
 
 
 export default function CutHome() {
@@ -14,6 +15,9 @@ export default function CutHome() {
 
   return (
     <div className='holder'>
+      <Helmet>
+        <title>Cut Home</title>
+      </Helmet>
         <Titlepic/>
         <SignOut/>
         <div className='cutButtons'>

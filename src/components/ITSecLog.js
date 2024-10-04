@@ -6,6 +6,7 @@ import { auth } from '../Firebase';
 import { signInWithEmailAndPassword, sendPasswordResetEmail  } from 'firebase/auth';
 import { ref, query, orderByChild, equalTo, get } from 'firebase/database';
 import { database } from '../Firebase';
+import { Helmet } from 'react-helmet';
 
 export const ITSecLog = () => {
 
@@ -109,7 +110,9 @@ export const ITSecLog = () => {
   return (
     <div>
       {/* Header with photo and gradient background */}
-  
+    <Helmet>
+      <title>It Login</title>
+    </Helmet>
 
       {/* Login Form */}
       <div className='wrapper2'>

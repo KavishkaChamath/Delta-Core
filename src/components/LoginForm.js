@@ -7,6 +7,7 @@ import { signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/aut
 import { ref, query, orderByChild, equalTo, get } from 'firebase/database';
 import { database } from '../Firebase';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 
 export const LoginForm = () => {
@@ -111,7 +112,9 @@ export const LoginForm = () => {
   return (
     <div>
       {/* Header with photo and gradient background */}
-  
+    <Helmet>
+      <title>Line Manager Login</title>
+    </Helmet>
 
       {/* Login Form */}
       <div className='wrapper2'>
@@ -165,7 +168,4 @@ export const LoginForm = () => {
   );
 };
 
-
-
-//mahee@gmail.com mahe123
  
