@@ -372,7 +372,7 @@ const CuttingDetailsForm = () => {
           return set(bundleStoreRef, updatedData);
         })
         .then(() => {
-          alert(`Bundle data for order ${order.orderNumber} saved successfully.`);
+         // alert(`Bundle data for order ${order.orderNumber} saved successfully.`);
           setCutNumbers(''); // Reset states as needed
           setNoOfPieces('');
           setRatios('');
