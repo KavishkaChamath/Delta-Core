@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { auth, database } from '../Firebase'; // Ensure you have configured and exported Firebase properly
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { ref, set } from 'firebase/database';
-import { useNavigate } from 'react-router-dom';
+import { ref, set,get, child } from 'firebase/database';
 import Titlepic from './Titlepic';
 import SignOut from './SignOut';
 import { Helmet } from 'react-helmet';
+import RemoveUser from './Admin/RemoveUser';
 
 export const Signup = () => {
   const [email, setEmail] = useState('');
@@ -13,40 +13,56 @@ export const Signup = () => {
   // const [username, setUsername] = useState('');
   const [occupation, setOccupation] = useState('');
 
-  const navigate = useNavigate();
-
-  const handleSignUp = (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        console.log('User signed up:', user);
 
-        // Write user data to the Realtime Database
-        const userRef = ref(database, `users/${user.uid}`);
-        set(userRef, {
-          username: email,
-          password: password,
-          occupation: occupation,
-        })
-        .then(() => {
-          console.log('User data added to database');
-          alert('New user added suceesfully');
-          navigate('/pages/Admin');
-        })
-        .catch((error) => {
-          console.error('Error adding user data to database:', error);
-        });
-      })
-      .catch((error) => {
-        console.error('Error signing up:', error.code, error.message);
+    try {
+      const dbRef = ref(database);
+      const usersSnapshot = await get(child(dbRef, 'users'));
+      const usersData = usersSnapshot.exists() ? usersSnapshot.val() : {};
+
+      // Check if the username already exists in the users node
+      const usernameExists = Object.values(usersData).some(
+        (user) => user.username === email
+      );
+
+      if (usernameExists) {
+        alert('Username already exists. Please choose a different username.');
+        return;
+      }
+
+      // If username does not exist, proceed with creating the user
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      console.log('User signed up:', user);
+
+      // Write user data to the Realtime Database
+      const userRef = ref(database, `users/${user.uid}`);
+      await set(userRef, {
+        username: email,
+        password: password,
+        occupation: occupation,
       });
+
+      console.log('User data added to database');
+      setEmail("");
+      setOccupation('')
+      setPassword("")
+      alert('New user added successfully');
+    } catch (error) {
+      if (error.code === 'auth/weak-password') {
+        alert('Password should be at least 6 characters long.');
+      } else {
+        console.error('Error during user signup or database operation:', error);
+        alert('An error occurred while adding the user. Please try again.');
+      }
+    }
   };
 
   return (
     <div>
       <Helmet>
-        <title>Add New User</title>
+        <title>Manage Users</title>
       </Helmet>
       <Titlepic/>
       <SignOut/>
@@ -59,12 +75,14 @@ export const Signup = () => {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Email"
+        required
       />
       <input
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Password"
+        required
       />
       {/* <input
         type="text"
@@ -84,8 +102,9 @@ export const Signup = () => {
                 <option value='Line Manager'>Line Manager</option>
               {/* Add options as needed */}
       </select>
-      <button type="submit">Sign Up</button>
-    </form>
+      <button type="submit">Add to the system</button>
+    </form><br></br>
+    <RemoveUser/>
     </div>
   );
 };

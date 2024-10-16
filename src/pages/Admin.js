@@ -95,7 +95,7 @@ function App() {
         <button className="sidebar-button" onClick={() => pageChanger('/admin/ongoing')}>On going operations</button>
         <button className="sidebar-button" onClick={() => pageChanger('/comp/admin/pauseTime')}>Check Pause Time</button>
         <button className="sidebar-button" onClick={() => pageChanger('/admin/summary')}>Order Summary</button>
-        <button className="sidebar-button" onClick={() => pageChanger('/components/AddNewUser')}>Add New User</button>
+        <button className="sidebar-button" onClick={() => pageChanger('/components/AddNewUser')}>Manage Users</button>
       </div>
       <div className="main-content">
         <div className="line-item">
