@@ -34,6 +34,9 @@ const EmployeeTable = () => {
       setFilteredEmployees(employees); // Show all employees if search term is empty
       setSelectedEmployee(null); // Clear the selected employee
       setShowEditButton(false); // Hide the button
+      alert('Please enter an Employee Number or Employee Name to search.');
+      return;
+      
     } else {
       const filtered = employees.filter(emp =>
         emp.employeeNumber.includes(searchTerm) || emp.fullName.toLowerCase().includes(searchTerm.toLowerCase())

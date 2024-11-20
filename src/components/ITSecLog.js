@@ -6,6 +6,7 @@ import { auth } from '../Firebase';
 import { signInWithEmailAndPassword, sendPasswordResetEmail  } from 'firebase/auth';
 import { ref, query, orderByChild, equalTo, get } from 'firebase/database';
 import { database } from '../Firebase';
+import { Helmet } from 'react-helmet';
 
 export const ITSecLog = () => {
 
@@ -73,21 +74,45 @@ export const ITSecLog = () => {
       alert('Please enter your email address to reset your password.');
       return;
     }
-
-    sendPasswordResetEmail(auth, email)
-      .then(() => {
-        alert('Password reset email sent. Please check your inbox.');
+  
+    // Query the database to check if the email exists
+    const userRef = ref(database, 'users');
+    const userQuery = query(userRef, orderByChild('username'), equalTo(email));
+  
+    get(userQuery)
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          // User exists, proceed with password reset
+          sendPasswordResetEmail(auth, email)
+            .then(() => {
+              alert('Password reset email sent. Please check your inbox.');
+            })
+            .catch((error) => {
+              console.error('Error sending password reset email:', error);
+              alert('Error sending password reset email. Please try again.');
+            });
+        } else {
+          // No user data found for this email
+          alert('Invalid username. Please enter a valid email address.');
+        }
       })
       .catch((error) => {
-        console.error('Error sending password reset email:', error);
-        alert('Error sending password reset email. Please try again.');
+        console.error('Error fetching user data:', error);
+        alert('Error checking username. Please try again.');
       });
+  };
+
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
     <div>
       {/* Header with photo and gradient background */}
-  
+    <Helmet>
+      <title>It Login</title>
+    </Helmet>
 
       {/* Login Form */}
       <div className='wrapper2'>
@@ -103,11 +128,26 @@ export const ITSecLog = () => {
                 required/>
           </div>
           <div className='input-box1'>
-            <input type='password'
+          <div className='password-container'>
+              <input
+                type={showPassword ? 'text' : 'password'}
                 placeholder='Password'
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                required/>
+                required
+              />
+              <button
+                type="button"
+                onClick={togglePasswordVisibility}
+                className="toggle-password"
+              >
+                {showPassword ? (
+                  <i className="fas fa-eye-slash"></i>  
+                ) : (
+                  <i className="fas fa-eye"></i>  
+                )}
+              </button>
+              </div>
           </div>
           {/* Transparent box under username-password section */}
           

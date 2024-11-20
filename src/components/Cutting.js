@@ -69,6 +69,7 @@ import { database } from '../Firebase'; // Make sure to import your Firebase con
 import './Orderdetails.css';
 import Titlepic from '../components/Titlepic'
 import SignOut from './SignOut';
+import { Helmet } from 'react-helmet';
 
 const CuttingDetailsForm = () => {
   const [orders, setOrders] = useState([]);
@@ -371,7 +372,7 @@ const CuttingDetailsForm = () => {
           return set(bundleStoreRef, updatedData);
         })
         .then(() => {
-          alert(`Bundle data for order ${order.orderNumber} saved successfully.`);
+         // alert(`Bundle data for order ${order.orderNumber} saved successfully.`);
           setCutNumbers(''); // Reset states as needed
           setNoOfPieces('');
           setRatios('');
@@ -391,6 +392,9 @@ const CuttingDetailsForm = () => {
 
   return (
     <div className='holder'>
+      <Helmet>
+        <title>Cut Details</title>
+      </Helmet>
       <Titlepic/>
       <SignOut/>
       <div>

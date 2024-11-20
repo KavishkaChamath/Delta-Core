@@ -6,6 +6,7 @@ import img21 from './Images/img21.png';
 import './LoginForm.css';
 import { ref, query, orderByChild, equalTo, get } from 'firebase/database';
 import { database } from '../Firebase';
+import { Helmet } from 'react-helmet';
 
 export const AdminLog = () => {
 
@@ -14,7 +15,8 @@ export const AdminLog = () => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const [showPassword, setShowPassword] = useState(false);
+  
   // const handleSignIn = (e) => {
   //   e.preventDefault();
   //   signInWithEmailAndPassword(auth, email, password)
@@ -85,26 +87,44 @@ export const AdminLog = () => {
       alert('Please enter your email address to reset your password.');
       return;
     }
-
-    sendPasswordResetEmail(auth, email)
-      .then(() => {
-        alert('Password reset email sent. Please check your inbox.');
+  
+    // Query the database to check if the email exists
+    const userRef = ref(database, 'users');
+    const userQuery = query(userRef, orderByChild('username'), equalTo(email));
+  
+    get(userQuery)
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          // User exists, proceed with password reset
+          sendPasswordResetEmail(auth, email)
+            .then(() => {
+              alert('Password reset email sent. Please check your inbox.');
+            })
+            .catch((error) => {
+              console.error('Error sending password reset email:', error);
+              alert('Error sending password reset email. Please try again.');
+            });
+        } else {
+          // No user data found for this email
+          alert('Invalid username. Please enter a valid email address.');
+        }
       })
       .catch((error) => {
-        console.error('Error sending password reset email:', error);
-        alert('Error sending password reset email. Please try again.');
+        console.error('Error fetching user data:', error);
+        alert('Error checking username. Please try again.');
       });
+  };
+  
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
     <div>
-      {/* Header with photo and gradient background
-      <header className="header">
-        <div className="header-content">
-          {/* Adjust the image source to a relative path */}
-        {/* </div>
-      // </header> */} 
-
+      <Helmet>
+        <title>Admin Login</title>
+      </Helmet>
       {/* Login Form */}
       <div className='wrapper2'>
         <div className="admintransparent-box">
@@ -121,14 +141,29 @@ export const AdminLog = () => {
               />
             </div>
             <div className='input-box1'>
+            <div className='password-container'>
               <input
-                type='password'
+                type={showPassword ? 'text' : 'password'}
                 placeholder='Password'
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
+              <button
+                type="button"
+                onClick={togglePasswordVisibility}
+                className="toggle-password"
+              >
+                {showPassword ? (
+                  <i className="fas fa-eye-slash"></i>  
+                ) : (
+                  <i className="fas fa-eye"></i>  
+                )}
+              </button>
             </div>
+          </div>
+
+            
             {/* Transparent box under username-password section */}
 
             <div className="remember-forgot">            
