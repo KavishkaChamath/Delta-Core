@@ -181,6 +181,7 @@ const Bundle = () => {
       <tr>
         <th>Bundle ID</th>
         <th>Size</th>
+        <th>Colour</th>
         <th>No of Pieces</th>
         <th>Line</th>
         <th>Download Bundle</th>
@@ -199,6 +200,7 @@ const Bundle = () => {
               />
             </td>
             <td>{bundle.size}</td>
+            <td>{bundle.colour}</td>
             <td>{bundle.noOfPieces}</td>
             <td>
               <select

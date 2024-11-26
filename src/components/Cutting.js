@@ -332,6 +332,7 @@ const CuttingDetailsForm = () => {
       const pieces = noOfPieces[order.id]; // Get the number of pieces for the order
       const productionPoKey = sanitizeKey(order.productionPO); // Assuming you have a productionPO in your order object
       const italyPoKey = sanitizeKey(order.italyPO); 
+      const color = order.colour;
   
       // Only proceed if sizeKey, cutNumberKey, ratio, and pieces are valid
       if (!sizeKey || !cutNumberKey || !ratio || !pieces) {
@@ -359,6 +360,7 @@ const CuttingDetailsForm = () => {
               ratio: ratio,       // Store the ratio in each bundle
               productionPo:productionPoKey ,
               italyPo: italyPoKey,
+              colour:color,
             };
           }
   

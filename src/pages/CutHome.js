@@ -22,7 +22,7 @@ export default function CutHome() {
         <SignOut/>
         <div className='cutButtons'>
         <button onClick={handleClick}>Cut Detalis</button>
-        <button onClick={handleClick1}>Bundle</button>
+        <button onClick={handleClick1}>Bundle Allocation</button>
         <button onClick={handleClick2}>Inqueue</button>
         </div>
     </div>
