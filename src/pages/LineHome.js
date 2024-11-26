@@ -2589,16 +2589,27 @@ const [authSuccessCallback, setAuthSuccessCallback] = useState(null); // Callbac
   };
 
   return (
-    <div>
+    <div className="holder">
+        <div>
       <Helmet>
         <title>Line Home</title>
       </Helmet>
       <Titlepic />
       <SignOut />
 
-      <div>
-      <div>
-      <h2>Select a Line</h2>
+      <div className='welcome'>
+      {serverTime ? (
+        <div className='dateTime'>
+          <table align='center'><tr>
+          <th><p>Date: {serverTime.toLocaleDateString()}</p></th>
+          <th width='10px'></th>
+          <th><p>Time: {serverTime.toLocaleTimeString()}</p></th>
+          </tr></table></div>
+      ) : (
+        <p>Loading server time...</p>
+      )}
+      <div >
+      <h3>Select a Line</h3>
       <select value={selectedLine} onChange={(e) => setSelectedLine(e.target.value)}>
       <option value="">Choose a Line</option>
         {Array.from({ length: 12 }, (_, i) => (
@@ -2608,13 +2619,34 @@ const [authSuccessCallback, setAuthSuccessCallback] = useState(null); // Callbac
         ))}
       </select>
       </div>
-        <h1>Welcome to {selectedLine}</h1>
+        <center><h1>Welcome to {selectedLine}</h1></center>
       </div>
-      <div>
-      <div>
-      
-      <h2>Select an Incomplete Bundle</h2>
-      <select
+      <div className='fullTbl'>
+      <div className='lineBundle'>
+      <table border='0' align='center'>
+    <div>
+      <tr>
+        <th><h4>Select a Bundle</h4></th>  
+        <th><select
+  value={selectedBundle}
+  onChange={handleBundleChange}
+disabled={isStarted}
+>
+<option value="">Choose a bundle</option> {/* Default option */}
+{bundles.length > 0 ? (
+  bundles.map((bundle, index) => (
+    <option key={index} value={bundle}>
+      {bundle}
+    </option>
+  ))
+) : (
+  <option value="">No bundles available</option>
+)}
+</select></th> 
+<th width='10px'></th>
+<th><h4>Select an Incomplete Bundle</h4></th>   
+<th> <select 
+      className="custom-select"
         value={selectedIncompleteBundle}
         onChange={handleIncompleteBundleChange }
         disabled={isStarted}
@@ -2629,33 +2661,17 @@ const [authSuccessCallback, setAuthSuccessCallback] = useState(null); // Callbac
         ) : (
           <option value="">No incomplete bundles available</option>
         )}
-      </select>
-    </div>
-
-        {/* Bundle dropdown */}
-      <h2>Select a Bundle</h2>
-      <select
-        value={selectedBundle}
-        onChange={handleBundleChange}
-        disabled={isStarted}
-      >
-        <option value="">Choose a bundle</option> {/* Default option */}
-        {bundles.length > 0 ? (
-          bundles.map((bundle, index) => (
-            <option key={index} value={bundle}>
-              {bundle}
-            </option>
-          ))
-        ) : (
-          <option value="">No bundles available</option>
-        )}
-      </select>
-
+      </select></th>      
+        
+      </tr>
+      </div>
+      </table>
+      
       {/* Display order details in a table */}
       {orderData &&(
         <div>
-          <h2>Order Details</h2>
-          <table border="1">
+          <h3>Order Details</h3>
+          <table border="1" align='center'>
             <thead>
               <tr>
                 <th>Bundle ID</th>
@@ -2721,36 +2737,34 @@ const [authSuccessCallback, setAuthSuccessCallback] = useState(null); // Callbac
       )}
      
     </div>
-
+   
       <div>
-      {serverTime ? (
-        <div>
-          <p>Date: {serverTime.toLocaleDateString()}</p>
-          <p>Time: {serverTime.toLocaleTimeString()}</p>
-        </div>
-      ) : (
-        <p>Loading server time...</p>
-      )}
 
-        <br />
-        <button onClick={handleStart} disabled={ isStarted && !isFinished}>Start</button>
-        <button
+
+        <br /><div className='lineBtn'>
+        <table align='center' width="90%">
+          <tr>
+            <th><button className='addMemLine'onClick={openModal}  disabled={isStarted && !isPaused} >Add members to the line</button></th>
+            <th width='5%'></th>
+            <th><button className='startLine' onClick={handleStart} disabled={ isStarted && !isFinished}>Start</button></th>
+            <th><button className='pauseLine'
           onClick={handlePauseResume}
           disabled={!isStarted || isFinished}
         >
           {isPaused ? "Resume" : "Pause"}
-        </button>
-
-        <button
+        </button></th> 
+        <th> <button className='stopLine'
           onClick={handleFinish}
           disabled={!isStarted || isPaused}
         >
           Stop
-        </button>
+        </button></th>         
+          </tr>
+        </table>
 
         {/* {isFinished && <p>Time Elapsed: {formatTime(timer)}</p>} */}
       </div>
-      <button onClick={openModal}  disabled={isStarted && !isPaused} >Add members to the line</button>
+      </div>
 
       <Modal isOpen={isModalOpen} onClose={closeModal}>
       <div>
@@ -2783,50 +2797,97 @@ const [authSuccessCallback, setAuthSuccessCallback] = useState(null); // Callbac
       <button onClick={() => removeGuestMember(selectedLine)}>Remove Guest Member</button>
         <button onClick={closeModal}>Close Modal</button>
       </Modal>
+
+    <div className='insenTbl'>
+    <table align='center' border='1'>
+      <tr className='eff'>
+        <th className='eff1'>{parseFloat(effiency).toFixed(2)} %</th>
+
+        <th>{incentive !== "" ? `Rs ${incentive} /=` : "--.--"}</th>
+      </tr>
+      <tr>
+        <th>Efficiency</th>
+
+        <th>Incentive</th>
+      </tr>
+    </table>
+    </div>
       {data ? (
     <div>
-      <p>Host Members: {data.hostMembers ?? 0}</p>
-      <p>Guest Members: {data.guestMembers ?? 0}</p>
-    </div>
-      ) : (
-        <p>No memebers assigend for this {selectedLine} yet.</p>
-      )}
-      <div>
+      <table border='1' align="center" width="90%">
+
+        <tr className='qu'>
+          <th className='th'>{totalFirstQuality}</th>
+
+          <th className='th'>{data.hostMembers ?? 0}</th>
+          <th className='th'>{data.guestMembers ?? 0}</th>
+
+          <th className='th'>      <div>
         {firstQuality !== null ? (
           <div>
-            <p>1st Quality: {firstQuality}</p>
+            {firstQuality}
           </div>
         ) : (
           <p>No 1st Quality value assigned for this order yet.</p>
         )}
-      </div>
-      <div>
+      </div></th>
+        <th className='th'>{pendingValue}</th>
+
+        </tr>
+        <tr>
+          <th>      <div>
+        {totalFirstQuality !== null ? (
+          <p>Total 1st Quality for today </p>
+        ) : (
+          <p className='error'>No Total 1st Quality data available for today.</p>
+        )}
+      </div></th>
+
+          <th>Host Members</th>
+          <th>Guest Members</th>
+
+          <th>1st Quality</th>
+          <th><div>
         {pendingValue !== null ? (
           <div>
-            <p>Pending Pieces: {pendingValue}</p>
+            <p>Pending Pieces </p>
           </div>
         ):(
-          <p> No pending data for this order yet.</p>
+          <p className='error'> No pending data for this order yet.</p>
         )}
-      </div>
-      <button onClick={handleUpdateQuality} disabled={!isStarted || isPaused}>1stQuality +1</button>
-      <button onClick={handleUpdateQualityBy3} disabled={!isStarted || isPaused || isPendingLessThanThree()}>1stQuality +3</button>
-      <div>
-        {totalFirstQuality !== null ? (
-          <p>Total 1st Quality for today: {totalFirstQuality}</p>
-        ) : (
-          <p>No Total 1st Quality data available for today.</p>
-        )}
-      </div>
+      </div></th>
+        </tr>
+      </table>
+    </div>
+      ) : (
+        <p className='error'>No memebers assigend for this {selectedLine} yet.</p>
+      )}
 
-      <div>
-      <button onClick={() => handleOpenPasswordModal(handleUpdateRejection)} disabled={!isStarted || isPaused}>
+      <table align='center'>
+        <tr>
+          <th><button className="qua"onClick={handleUpdateQuality} disabled={!isStarted || isPaused}>1st Quality +1</button></th>
+          <th><button className="qua"onClick={handleUpdateQualityBy3} disabled={!isStarted || isPaused || isPendingLessThanThree()}>1st Quality +3</button></th>
+        </tr>
+      </table>
+
+      <table align='center'>
+        <tr>
+          <th> 
+      <button className="rej"onClick={() => handleOpenPasswordModal(handleUpdateRejection)} disabled={!isStarted || isPaused}>
         Rejection
-      </button>
+      </button></th>
+          <th > <button className="qua2"onClick={() => handleOpenPasswordModal(handleUpdateSecondQuality)} disabled={!isStarted || isPaused}>
+        2nd Quality +1
+      </button></th>
+        </tr>
+      </table>
+      
+      
 
-      <button onClick={() => handleOpenPasswordModal(handleUpdateSecondQuality)} disabled={!isStarted || isPaused}>
-        2nd Quality
-      </button>
+
+
+
+
 
       {/* Modal for password authentication */}
       <RejectionModal
@@ -2834,7 +2895,6 @@ const [authSuccessCallback, setAuthSuccessCallback] = useState(null); // Callbac
         onClose={handleClosePasswordModal}
         onAuthSuccess={handleAuthSuccess} // Call success action after authentication
       />
-    </div>
     
       <p>Runtime: {runTime.hours} hours and {runTime.minutes} minutes</p>
       <div>
@@ -2848,19 +2908,9 @@ const [authSuccessCallback, setAuthSuccessCallback] = useState(null); // Callbac
         </LunchTimeModal>
       </div>
     </div>
-    
-    <div>
-    {effiency !== null && effiency !== undefined && !isNaN(parseFloat(effiency)) ? (
-      <p>Today Efficiency: {parseFloat(effiency).toFixed(2)} %</p>
-    ) : (
-      <p>No data yet.</p>
-    )}
-  </div>
-
-    <div>
-        <p>Incentive: {incentive !== "" ? `Rs ${incentive} /=` : "No incentive calculated"}</p>
+    </div>
+    </div>
     </div>
 
-    </div>
   );
 }

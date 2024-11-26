@@ -82,32 +82,34 @@ const CheckPauseTime = () => {
   };
 
   return (
-    <div>
+    <div className="holder">
+        <div>
       <Titlepic />
       <SignOut />
       <div className="pause-time-container">
-        <h2>Pause Time by Line</h2>
-        <div>
+        <center><h2>Pause Time by Line</h2></center>
+        <div className="date">
           <h3>Today is: {formattedDate}</h3>
         </div>
         <div>
           <label htmlFor="date-picker">Select Date:</label>
-          <input
+          <input 
             type="date"
             id="date-picker"
             value={selectedDate}
             onChange={handleDateChange}
             onBlur={() => validateDateJoined(selectedDate)} 
           />
-          <button onClick={handleCheckPauseTime}>Check Pause Time</button>
+          <button className="pauseTime" onClick={handleCheckPauseTime}>Check Pause Time</button>
         </div>
         {lines.map((line) => (
-          <div key={line.id}>
-            <span>Line {line.id}: </span>
-            <span>Pause Time: {formatPauseTime(line.pauseTime)}</span>
+          <div className="pause"key={line.id}>
+            <p><b><span></span>Line {line.id}: </b>
+            <span>Pause Time: {formatPauseTime(line.pauseTime)}</span></p>
           </div>
         ))}
       </div>
+    </div>
     </div>
   );
 };

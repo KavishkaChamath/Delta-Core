@@ -112,13 +112,14 @@ const Summary = () => {
 
 
   return (
-    <div>
+    <div className="holder">
+        <div>
     <Titlepic/>
     <SignOut/>
     <Helmet>
       <title>Order Summary</title>
     </Helmet>
-      <h2>Order Summary</h2>
+      <center><h2>Order Summary</h2></center>
       <div>
         <input
           type="text"
@@ -140,7 +141,7 @@ const Summary = () => {
           <option value="Full Summary">Full Summary</option>
           <option value="Line Summary">Line Summary</option>
         </select>
-        <button onClick={handleSearch}>Search</button>
+        <button className="search"onClick={handleSearch}>Search</button>
       </div>
 
       {data && (
@@ -251,6 +252,7 @@ const Summary = () => {
     )}
         </div>
       )}
+    </div>
     </div>
   );
 };
