@@ -269,13 +269,13 @@ export const Signup = () => {
       </form>
       <br />
 
-      <h3>Existing Users</h3>
-      {users.length > 0 ? (
-        <table border="1" align="center">
+      <center><h3>Existing Users</h3>
+      </center>      {users.length > 0 ? (
+        <table border="1" align="center" className='exsisUser'>
           <thead>
             <tr>
-              <th>Username</th>
-              <th>Occupation</th>
+              <th className='thExis'>Username</th>
+              <th className='thExis'>Occupation</th>
             </tr>
           </thead>
           <tbody>
@@ -293,12 +293,17 @@ export const Signup = () => {
       
        {/* Occupation Counts */}
        <div className="occupation-counts">
-        <h3>Occupation Counts</h3>
-        <p>Admins: {counts.admin}</p>
-        <p>IT Section: {counts.itSection}</p>
-        <p>Line Managers: {counts.lineManager}</p>
+        <center><h3>User Counts</h3></center>
+        <table align='center' width='80%' className='userCount'>
+        <tr>
+          <th>Admins: {counts.admin}</th>
+          <th>IT Section: {counts.itSection}</th>
+          <th>Line Managers: {counts.lineManager}</th>
+        </tr></table>
       </div>
       <RemoveUser />
+      <br></br>
+      <br></br>
 
       
     </div>
