@@ -127,7 +127,7 @@
 
 
 /*LineHome*/
-.stopLine, .startLine, .pauseLine{
+.stopLine{
   margin-top: 0.5ch;
   margin-left: 0.5ch;
   margin-bottom: 1.5ch;
@@ -136,9 +136,10 @@
   height: 30px; /* Set a fixed height for the buttons */
   text-align: center;
   font-weight:500;
-  border: none; /* Optional: remove the default button border */
+  border-width: 5px;
+  border-color:rgb(189, 4, 4);
   border-radius: 5px; /* Optional: add rounded corners */
-  background-color: rgba(161, 120, 120, 0.795); /* Optional: change the background color */
+  background-color: rgba(120, 142, 161, 0.688); /* Optional: change the background color */
   color: rgb(4, 4, 69); /* Optional: change the text color */
   cursor: pointer;
 }
@@ -154,9 +155,10 @@
   height: 30px; /* Set a fixed height for the buttons */
   text-align: center;
   font-weight:500;
-  border: none; /* Optional: remove the default button border */
+  border-width: 5px;
+  border-color:rgb(13, 189, 4);
   border-radius: 5px; /* Optional: add rounded corners */
-  background-color: rgba(124, 161, 120, 0.795); /* Optional: change the background color */
+  background-color: rgba(120, 142, 161, 0.688);/* Optional: change the background color */
   color: rgb(4, 4, 69); /* Optional: change the text color */
   cursor: pointer;
 }
@@ -172,9 +174,10 @@
   height: 30px; /* Set a fixed height for the buttons */
   text-align: center;
   font-weight:500;
-  border: none; /* Optional: remove the default button border */
+  border-width: 5px;
+  border-color:rgb(154, 171, 3);
   border-radius: 5px; /* Optional: add rounded corners */
-  background-color: rgba(157, 161, 120, 0.795); /* Optional: change the background color */
+  background-color: rgba(120, 142, 161, 0.688); /* Optional: change the background color */
   color: rgb(4, 4, 69); /* Optional: change the text color */
   cursor: pointer;
 }
@@ -197,9 +200,10 @@
   height: 30px; /* Set a fixed height for the buttons */
   text-align: center;
   font-weight:500;
-  border: none; /* Optional: remove the default button border */
+  border-width: 5px;
+  border-color:rgb(0, 56, 105); 
   border-radius: 5px; /* Optional: add rounded corners */
-  background-color: rgba(120, 142, 161, 0.795); /* Optional: change the background color */
+  background-color: rgba(120, 142, 161, 0.688); /* Optional: change the background color */
   color: rgb(4, 4, 69); /* Optional: change the text color */
   cursor: pointer;
 }
@@ -212,6 +216,34 @@ margin-left: 10%;
  .lineBtn table{
   width:90%;
  }
+
+ .btnTbl .addMemLine{
+  width: 90%;
+  height: 80px;
+  max-width: 200px;  
+  font-weight: 700;
+  font-style: italic;
+ }
+
+ .btnTbl .startLine,.stopLine,.pauseLine{
+  width: 90%;
+  max-width: 200px;
+  height: 60px;
+  font-weight: 700;
+  font-style: italic;
+ }
+ .btnTbl .th1{
+  width: 40%;
+ }
+ .btnTbl .th2{
+  width: 20%;
+ }
+ .btnTbl table{
+  max-width: 600px;
+
+ }
+ 
+
  .OngoingTbl table{
   width: 97%; 
   background-color: #9dd7fe9f;
@@ -219,10 +251,21 @@ margin-left: 10%;
   text-align: center;
  }
  .custom-select {
-  width: 220px; /* Change '200px' to your desired width */
+  width: 100% /* Change '200px' to your desired width */
 }
+.custom-select1 {
+  width: 100% /* Change '200px' to your desired width */
+}
+.selTbl{
+  max-width: 400px;
+}
+
+.thSel{
+  width: 20%;
+}
+
 .lineBundle table{
-  width: 97%; 
+  width: 80%; 
   text-align: center;
 }
 .welcome h1{
@@ -230,13 +273,31 @@ margin-left: 10%;
   height: 100%;
   font-style: italic;
   color: #002e80;
+  margin-top: 1%;
+  margin-bottom: 1%;
 }
+.welcome h3{
+  margin-top: 1%;
+  margin-bottom: 1%;
+}
+.welcome p{
+  margin-bottom: 8px;
+  color: #05255d;
+}
+@media (max-width: 600px){
+  .welcome h1{
+    font-size: 2ch;
+  }
+ }
+
+
 
 .insenTbl table{
  font-size:2ch;
  text-align: center;
  width: 50%;
  background-color: #97cfd988;
+ max-width: 500px;
 }
 .eff{
   font-size: 4ch;
@@ -246,7 +307,19 @@ margin-left: 10%;
 .eff1{
 width: 50%;
 }
+.effTxt{
+  height: 30px;
+}
 
+.addQuaTbl{
+  margin-top: 25px;
+  width: 80%;
+  max-width: 600px;
+}
+.rejTbl{
+  width: 80%;
+  max-width: 600px;
+}
 .error{
   color: red;
   font-weight: bold;
@@ -254,45 +327,62 @@ width: 50%;
 .fullTbl{
   background-color: #ffffffaf;
 }
-.qu{
-  font-size: 2ch;
+.quaTbl .th{
   text-align: center;
-  height: 80px;
+  height: 60px;
+  width: 20%;
+  font-size: 2ch;
 }
-.th{
-  width:200px;
+.quaTbl table{
+  max-width: 700px;
+  font-size: 1.5ch;
 }
 .qua{
   margin-top: 0.5ch;
-  margin-left: 1ch;
   margin-bottom: 1.5ch;
   font-size: 15px; /* Increase font size */
-  width: 200px; /* Set a fixed width for the buttons */
-  height: 30px; /* Set a fixed height for the buttons */
+  width: 95%; /* Set a fixed width for the buttons */
+  height: 35px; /* Set a fixed height for the buttons */
   text-align: center;
   font-weight:700;
-  border: 10; /* Optional: remove the default button border */
+  border-width: 3px;
+  border-color:rgb(5, 132, 244); 
   border-radius: 5px; /* Optional: add rounded corners */
-  background-color: rgba(120, 142, 161, 0.795); /* Optional: change the background color */
+  background-color: rgba(182, 202, 219, 0.795); /* Optional: change the background color */
   color: rgb(4, 4, 69); /* Optional: change the text color */
   cursor: pointer;
 }
 .qua:hover{
   background-color: rgba(4, 35, 82, 0.512); /* Optional: change background color on hover */
  }
- .qua2, .rej{
+ .qua2{
   margin-top: 0.5ch;
-  margin-left: 1ch;
   margin-bottom: 1.5ch;
   font-size: 15px; /* Increase font size */
-  width: 200px; /* Set a fixed width for the buttons */
-  height: 30px; /* Set a fixed height for the buttons */
+  width: 95%; /* Set a fixed width for the buttons */
+  height: 35px; /* Set a fixed height for the buttons */
   text-align: center;
   font-weight:700;
-  border: 10; /* Optional: remove the default button border */
+  border-width: 2px;
+  border-color:rgb(135, 144, 10);
   border-radius: 5px; /* Optional: add rounded corners */
-  background-color: rgba(120, 142, 161, 0.795); /* Optional: change the background color */
-  color: rgb(4, 4, 69); /* Optional: change the text color */
+  background-color: rgba(182, 202, 219, 0.795); /* Optional: change the background color */
+  color: rgb(67, 69, 4); /* Optional: change the text color */
+  cursor: pointer;
+}
+.rej{
+  margin-top: 0.5ch;
+  margin-bottom: 1.5ch;
+  font-size: 15px; /* Increase font size */
+  width: 95%; /* Set a fixed width for the buttons */
+  height: 35px; /* Set a fixed height for the buttons */
+  text-align: center;
+  font-weight:700;
+  border-width: 2px;
+  border-color:rgb(144, 10, 10);
+  border-radius: 5px; /* Optional: add rounded corners */
+  background-color: rgba(182, 202, 219, 0.795);  /* Optional: change the background color */
+  color: rgb(69, 4, 4); /* Optional: change the text color */
   cursor: pointer;
 }
 .qua2:hover{
