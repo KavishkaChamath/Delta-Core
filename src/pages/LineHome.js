@@ -2600,7 +2600,7 @@ const [authSuccessCallback, setAuthSuccessCallback] = useState(null); // Callbac
       <div className='welcome'>
       {serverTime ? (
         <div className='dateTime'>
-          <table align='center'><tr>
+          <table align='center' border='0'><tr>
           <th><p>Date: {serverTime.toLocaleDateString()}</p></th>
           <th width='10px'></th>
           <th><p>Time: {serverTime.toLocaleTimeString()}</p></th>
@@ -2609,15 +2609,19 @@ const [authSuccessCallback, setAuthSuccessCallback] = useState(null); // Callbac
         <p>Loading server time...</p>
       )}
       <div >
-      <h3>Select a Line</h3>
-      <select value={selectedLine} onChange={(e) => setSelectedLine(e.target.value)}>
+        <table width='40%' border='0'className='selTbl'>
+          <tr>
+            <th width='50%'>Select a Line</th>
+            <th width='50%'><select className="custom-select1" value={selectedLine} onChange={(e) => setSelectedLine(e.target.value)}>
       <option value="">Choose a Line</option>
         {Array.from({ length: 12 }, (_, i) => (
           <option key={i + 1} value={`Line ${i + 1}`}>
             Line {i + 1}
           </option>
         ))}
-      </select>
+      </select></th>
+          </tr>
+        </table>
       </div>
         <center><h1>Welcome to {selectedLine}</h1></center>
       </div>
@@ -2626,8 +2630,9 @@ const [authSuccessCallback, setAuthSuccessCallback] = useState(null); // Callbac
       <table border='0' align='center'>
     <div>
       <tr>
-        <th><h4>Select a Bundle</h4></th>  
+        <th className='thSel'><h4>Select a Bundle</h4></th>  
         <th><select
+        className="custom-select"
   value={selectedBundle}
   onChange={handleBundleChange}
 disabled={isStarted}
@@ -2644,7 +2649,7 @@ disabled={isStarted}
 )}
 </select></th> 
 <th width='10px'></th>
-<th><h4>Select an Incomplete Bundle</h4></th>   
+<th className='thSel'><h4>Select an Incomplete Bundle</h4></th>   
 <th> <select 
       className="custom-select"
         value={selectedIncompleteBundle}
@@ -2737,23 +2742,19 @@ disabled={isStarted}
       )}
      
     </div>
-   
-      <div>
-
-
-        <br /><div className='lineBtn'>
-        <table align='center' width="90%">
+       <div>
+        <div className='btnTbl'>
+        <table align='center' width="80%" border='0'>
           <tr>
-            <th><button className='addMemLine'onClick={openModal}  disabled={isStarted && !isPaused} >Add members to the line</button></th>
-            <th width='5%'></th>
-            <th><button className='startLine' onClick={handleStart} disabled={ isStarted && !isFinished}>Start</button></th>
-            <th><button className='pauseLine'
+            <th className='th1'><button className='addMemLine'onClick={openModal}  disabled={isStarted && !isPaused} >Add members to the line</button></th>
+            <th className='th2'><button className='startLine' onClick={handleStart} disabled={ isStarted && !isFinished}>Start</button></th>
+            <th className='th2'><button className='pauseLine'
           onClick={handlePauseResume}
           disabled={!isStarted || isFinished}
         >
           {isPaused ? "Resume" : "Pause"}
         </button></th> 
-        <th> <button className='stopLine'
+        <th className='th2'> <button className='stopLine'
           onClick={handleFinish}
           disabled={!isStarted || isPaused}
         >
@@ -2761,7 +2762,6 @@ disabled={isStarted}
         </button></th>         
           </tr>
         </table>
-
         {/* {isFinished && <p>Time Elapsed: {formatTime(timer)}</p>} */}
       </div>
       </div>
@@ -2803,17 +2803,17 @@ disabled={isStarted}
       <tr className='eff'>
         <th className='eff1'>{parseFloat(effiency).toFixed(2)} %</th>
 
-        <th>{incentive !== "" ? `Rs ${incentive} /=` : "--.--"}</th>
+        <th className='eff1'>{incentive !== "" ? `Rs ${incentive} /=` : "--.--"}</th>
       </tr>
       <tr>
-        <th>Efficiency</th>
+        <th className='effTxt'>Efficiency</th>
 
-        <th>Incentive</th>
+        <th className='effTxt'>Incentive</th>
       </tr>
     </table>
-    </div>
+    </div><br></br>
       {data ? (
-    <div>
+    <div className='quaTbl'>
       <table border='1' align="center" width="90%">
 
         <tr className='qu'>
@@ -2835,7 +2835,7 @@ disabled={isStarted}
 
         </tr>
         <tr>
-          <th>      <div>
+          <th className='thTot'>      <div>
         {totalFirstQuality !== null ? (
           <p>Total 1st Quality for today </p>
         ) : (
@@ -2843,11 +2843,11 @@ disabled={isStarted}
         )}
       </div></th>
 
-          <th>Host Members</th>
-          <th>Guest Members</th>
+          <th className='thTot'>Host Members</th>
+          <th className='thTot'>Guest Members</th>
 
-          <th>1st Quality</th>
-          <th><div>
+          <th className='thTot'>1st Quality</th>
+          <th className='thTot'><div>
         {pendingValue !== null ? (
           <div>
             <p>Pending Pieces </p>
@@ -2862,17 +2862,16 @@ disabled={isStarted}
       ) : (
         <p className='error'>No memebers assigend for this {selectedLine} yet.</p>
       )}
-
-      <table align='center'>
+      <table align='center' className='addQuaTbl' border='0'>
         <tr>
           <th><button className="qua"onClick={handleUpdateQuality} disabled={!isStarted || isPaused}>1st Quality +1</button></th>
           <th><button className="qua"onClick={handleUpdateQualityBy3} disabled={!isStarted || isPaused || isPendingLessThanThree()}>1st Quality +3</button></th>
         </tr>
       </table>
 
-      <table align='center'>
+      <table align='center' className='rejTbl' border='0'>
         <tr>
-          <th> 
+          <th width='50%'> 
       <button className="rej"onClick={() => handleOpenPasswordModal(handleUpdateRejection)} disabled={!isStarted || isPaused}>
         Rejection
       </button></th>
