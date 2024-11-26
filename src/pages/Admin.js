@@ -54,7 +54,7 @@ function App() {
             return {
               ...line,
               efficiency: lineData?.CurrentEffiency ? `${lineData.CurrentEffiency.toFixed(2)}%` : "0%",
-              quality: totalQuality, // Set the total sum of Quality
+              quality: totalQuality+lineData?.total1stQuality || "0", // Set the total sum of Quality
               incentive: lineData?.Incentive || "0/=",
             };
           } else {
