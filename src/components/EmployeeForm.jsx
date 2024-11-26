@@ -175,18 +175,62 @@ const validateEmployeeNumber = (number) => {
   // };
   
   const handleGenerateQRCode = () => {
+    if(employeeNumber==="" || callingName===""){
+      alert("Add deatils to the download QR")
+      return
+    }
     setShowQRCode(true);
     setTimeout(handleDownloadQRCode, 100); // Delay to ensure QR code renders before download
   };
 
+  // const handleDownloadQRCode = () => {
+  //   const canvas = qrRef.current.querySelector('canvas');
+  //   const url = canvas.toDataURL('image/png');
+  //   const a = document.createElement('a');
+  //   a.href = url;
+  //   a.download = `${employeeNumber}_${callingName}_QRCode.png`;
+  //   a.click();
+  // };
+
   const handleDownloadQRCode = () => {
-    const canvas = qrRef.current.querySelector('canvas');
-    const url = canvas.toDataURL('image/png');
+    const qrCanvas = qrRef.current.querySelector('canvas');
+    const tempCanvas = document.createElement('canvas');
+    const tempCtx = tempCanvas.getContext('2d');
+  
+    const canvasSize = 256; // Size of the QR code
+    const padding = 20; // Space between QR code and text
+    const textHeight = 30; // Space allocated for the text
+  
+    // Set canvas dimensions
+    tempCanvas.width = canvasSize;
+    tempCanvas.height = canvasSize + padding + textHeight;
+  
+    // Fill background with white color
+    tempCtx.fillStyle = '#FFFFFF';
+    tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+  
+    // Draw the QR code onto the canvas
+    tempCtx.drawImage(qrCanvas, 0, 0, canvasSize, canvasSize);
+  
+    // Add the employee number text below the QR code
+    tempCtx.font = '16px Arial';
+    tempCtx.fillStyle = '#000000'; // Black text
+    tempCtx.textAlign = 'center';
+    tempCtx.fillText(
+      `Employee Number: ${employeeNumber}`,
+      canvasSize / 2, // Center horizontally
+      canvasSize + padding // Position below the QR code
+    );
+  
+    // Convert to image and download
+    const url = tempCanvas.toDataURL('image/png');
     const a = document.createElement('a');
     a.href = url;
     a.download = `${employeeNumber}_${callingName}_QRCode.png`;
     a.click();
   };
+  
+  
 
   const generateQRCodeValue = () => {
     return `Employee Number: ${employeeNumber}, Calling Name: ${callingName}`;
@@ -334,12 +378,12 @@ const validateEmployeeNumber = (number) => {
                 <option value='Line 4'>Line 4</option>
                 <option value='Line 5'>Line 5</option>
                 <option value='Line 6'>Line 6</option>
-                <option value='Line 7'>Line 1</option>
-                <option value='Line 8'>Line 2</option>
-                <option value='Line 9'>Line 3</option>
-                <option value='Line 10'>Line 4</option>
-                <option value='Line 11'>Line 5</option>
-                <option value='Line 12'>Line 6</option>
+                <option value='Line 7'>Line 7</option>
+                <option value='Line 8'>Line 8</option>
+                <option value='Line 9'>Line 9</option>
+                <option value='Line 10'>Line 10</option>
+                <option value='Line 11'>Line 11</option>
+                <option value='Line 12'>Line 12</option>
               {/* Add options as needed */}
             </select>
           </div>
