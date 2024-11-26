@@ -358,9 +358,6 @@ export const Orderdetails = () => {
         </div>
       </div>
     </div>
-    <div className="footer">
-        <p>&copy; 2024 Delta Apparels</p>
-      </div>
     </div>
   );
 };
