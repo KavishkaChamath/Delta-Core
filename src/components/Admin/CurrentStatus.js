@@ -223,7 +223,9 @@ const LineOperationsTable = () => {
   }
 
   return (
-    <div>
+
+      <div className="holder">
+            <div>
       <Helmet>
         <title>Order Status</title>
       </Helmet>
@@ -250,13 +252,13 @@ const LineOperationsTable = () => {
           <option value="Full Summary">Full Summary</option>
           <option value="Line Summary">Line Summary</option>
         </select>
-        <button onClick={handleSearch}>Search</button>
-        <button onClick={() => fetchAndDisplayData(orderNumber, productionPo)}>Load Current Bundle Data</button>
+        <button className="search" onClick={handleSearch}>Search</button>
+        <button className="load" onClick={() => fetchAndDisplayData(orderNumber, productionPo)}>Load Current Bundle Data</button>
 
       </div>
-
-      <h3>Ongoing Operations Data</h3>
-      <table border="1" style={{ borderCollapse: 'collapse', width: '100%' }}>
+      <div className='OngoingTbl'>
+      <center><h3>Ongoing Operations Data</h3></center>
+      <table border="1" align="center" style={{ borderCollapse: 'collapse', width: '100%' }}>
         <thead>
           <tr>
             <th>Order Number</th>
@@ -317,7 +319,7 @@ const LineOperationsTable = () => {
           )}
         </tbody>
       </table>
-
+      </div>
     {data && (
   <div>
     <h3>Search Results</h3>
@@ -439,6 +441,7 @@ const LineOperationsTable = () => {
         </div>
       )}
 
+  </div>
   </div>
     
   );

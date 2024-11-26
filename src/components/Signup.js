@@ -60,7 +60,7 @@ export const Signup = () => {
   };
 
   return (
-    <div>
+    <div className='holder'>
       <Helmet>
         <title>Manage Users</title>
       </Helmet>
@@ -102,7 +102,7 @@ export const Signup = () => {
                 <option value='Line Manager'>Line Manager</option>
               {/* Add options as needed */}
       </select>
-      <button type="submit">Add to the system</button>
+      <button className="addUser"type="submit">Add to the system</button>
     </form><br></br>
     <RemoveUser/>
     </div>

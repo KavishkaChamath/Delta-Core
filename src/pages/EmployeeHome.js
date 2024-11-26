@@ -26,9 +26,7 @@ export default function EmployeeHome(){
             <ShowData/>
            
         </div>
-        <div className="footer">
-        <p>&copy; 2024 Delta Apparels</p>
-      </div>
+
         </div>
         
     )
