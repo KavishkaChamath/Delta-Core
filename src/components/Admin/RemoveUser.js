@@ -55,7 +55,7 @@ const RemoveUser = () => {
   return (
     <div>
         <center><h3>Remove User from the System </h3></center>
-        <p>Enter user name to remove from the system.</p>
+        <p><b>Enter user name to remove from the system.</b></p>
       <input
         type="text"
         placeholder="Username"

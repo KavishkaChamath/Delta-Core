@@ -402,13 +402,10 @@ const validateEmployeeNumber = (number) => {
         </div>
       )}
          
-        </form>
+        </form><br></br><br></br>
       </div>
       </div>
     </div>
-    <div className="footer">
-        <p>&copy; 2024 Delta Apparels</p>
-      </div>
     </div>
   );
 };
