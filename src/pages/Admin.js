@@ -78,15 +78,14 @@ function App() {
 
   return (
     
-    <div className="App">
+    <div className="holder">
+      <div>
       <Helmet>
         <title>Admin Home</title>
       </Helmet>
       <Titlepic />
       <SignOut />
-      <header className="App-header">
-        <h1>Admin Home</h1>
-      </header>
+
       <div className="sidebar">
         <button className="sidebar-button" onClick={() => pageChanger('/pages/EmployeeHome')}>Employee Details</button>
         <button className="sidebar-button" onClick={() => pageChanger('/pages/OrderHome')}>Order Details</button>
@@ -97,8 +96,9 @@ function App() {
         <button className="sidebar-button" onClick={() => pageChanger('/admin/summary')}>Order Summary</button>
         <button className="sidebar-button" onClick={() => pageChanger('/components/AddNewUser')}>Manage Users</button>
       </div>
+      <center><h2>Admin Home</h2></center>
       <div className="main-content">
-        <div className="line-item">
+        <div className="line-item1">
           <div className="line-name1">Line</div>
           <div className="line-detail1">Efficiency</div>
           <div className="line-detail1">Incentive</div>
@@ -113,6 +113,7 @@ function App() {
           </div>
         ))}
       </div>
+    </div>
     </div>
   );
 }

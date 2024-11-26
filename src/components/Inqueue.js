@@ -185,9 +185,6 @@ const fetchOrderDetails = async (orderNumber, italyPo, productionPo) => {
               ))}
             </tbody>
           </table>
-          <div className="footer">
-        <p>&copy; 2024 Delta Apparels</p>
-      </div>
         </div>
       );
     });
