@@ -15,6 +15,7 @@ const Summary = () => {
 
   const [productionPoOptions, setProductionPoOptions] = useState([]);
   const [ordersData, setOrdersData] = useState({});
+  const [showSearchResult, setShowSearchResult] = useState(false);
   
   useEffect(() => {
     if (orderNumber) {
@@ -154,6 +155,7 @@ const Summary = () => {
       }
 
       await fetchCutDetails(orderNumber,productionPo);
+      setShowSearchResult(true);
 
 
     }
@@ -199,25 +201,29 @@ const Summary = () => {
     }
   };
 
-
   return (
     <div className="holder">
-        <div>
-    <Titlepic/>
-    <SignOut/>
-    <Helmet>
-      <title>Order Summary</title>
-    </Helmet>
-      <center><h2>Order Summary</h2></center>
       <div>
-        <input
-          type="text"
-          placeholder="Enter Order Number"
-          value={orderNumber}
-          onChange={(e) => setOrderNumber(e.target.value)}
-        />
-        {productionPoOptions.length > 0 ? (
-            <select value={productionPo} onChange={(e) => setProductionPo(e.target.value)}>
+        <Titlepic />
+        <SignOut />
+        <Helmet>
+          <title>Order Summary</title>
+        </Helmet>
+        <center>
+          <h2>Order Summary</h2>
+        </center>
+        <div>
+          <input
+            type="text"
+            placeholder="Enter Order Number"
+            value={orderNumber}
+            onChange={(e) => setOrderNumber(e.target.value)}
+          />
+          {productionPoOptions.length > 0 ? (
+            <select
+              value={productionPo}
+              onChange={(e) => setProductionPo(e.target.value)}
+            >
               <option value="">Select Production PO</option>
               {productionPoOptions.map((po, index) => (
                 <option key={index} value={po}>
@@ -228,24 +234,28 @@ const Summary = () => {
           ) : (
             <p>Checking for Production PO</p>
           )}
-        <select
-          value={summaryType}
-          onChange={(e) => setSummaryType(e.target.value)}
-        >
-          <option value="">Select Summary Type</option>
-          <option value="Full Summary">Full Summary</option>
-          <option value="Line Summary">Line Summary</option>
-        </select>
-        <button className="search"onClick={handleSearch}>Search</button>
-      </div>
-
-      {data && (
-        <div >
-          <center><h3>Order Details</h3></center>
-          {summaryType === 'Full Summary' ? (
-
-            <div className="summary-box"><center>
-            <form className='order-form'>
+          <select
+            value={summaryType}
+            onChange={(e) => setSummaryType(e.target.value)}
+          >
+            <option value="">Select Summary Type</option>
+            <option value="Full Summary">Full Summary</option>
+            <option value="Line Summary">Line Summary</option>
+          </select>
+          <button className="search" onClick={handleSearch}>
+            Search
+          </button>
+        </div>
+  
+        {showSearchResult ? (
+          data && (
+            <div>
+              <center>
+                <h3>Order Details</h3>
+              </center>
+              {summaryType === "Full Summary" ? (
+                <div className="summary-box"><center>
+                  <form className='order-form'>
             <div className='form-group1'>
             <p><span style={{marginRight:'52px'}}><label>Order Number : </label></span>
               {orderNumber}</p>
@@ -319,119 +329,153 @@ const Summary = () => {
             </div>
             
           </form></center>
-          <div style={{ marginTop: '20px' }}>
-              <h3>Cut Details</h3>
-              {cutDetails.length > 0 ? (
-                cutDetails.map((cut, index) => (
-                  <div key={index} style={{ border: '1px solid black', padding: '10px', marginBottom: '10px' }}>
-                    <p><strong>Cut Number:</strong> {cut.cutNumber}</p>
-                    <p><strong>No of Pieces:</strong> {cut.noOfPieces}</p>
-                    <p><strong>Ratio:</strong> {cut.ratio}</p>
+                  {/* Full Summary Logic */}
+                  <div style={{ marginTop: "20px" }}>
+                    <h3>Cut Details</h3>
+                    {cutDetails.length > 0 ? (
+                      cutDetails.map((cut, index) => (
+                        <div
+                          key={index}
+                          style={{
+                            border: "1px solid black",
+                            padding: "10px",
+                            marginBottom: "10px",
+                          }}
+                        >
+                          <p>
+                            <strong>Cut Number:</strong> {cut.cutNumber}
+                          </p>
+                          <p>
+                            <strong>No of Pieces:</strong> {cut.noOfPieces}
+                          </p>
+                          <p>
+                            <strong>Ratio:</strong> {cut.ratio}
+                          </p>
+                        </div>
+                      ))
+                    ) : (
+                      <p>No cut details available.</p>
+                    )}
                   </div>
-                ))
+                </div>
               ) : (
-                <p>No cut details available.</p>
+                // Display data for each line in a separate table
+                Object.entries(data).map(([line, details]) => {
+                  const firstQuality = details["1stQuality"] || 0;
+                  const secondQuality = details["2ndQuality"] || 0;
+                  const rejection = details["Rejection"] || 0;
+                  const totalSum = firstQuality + secondQuality + rejection;
+  
+                  // Calculate percentages
+                  const firstQualityPercentage =
+                    totalSum > 0
+                      ? ((firstQuality / totalSum) * 100).toFixed(2)
+                      : "N/A";
+                  const rejectionPercentage =
+                    totalSum > 0
+                      ? ((rejection / totalSum) * 100).toFixed(2)
+                      : "N/A";
+  
+                  return (
+                    <div key={line}>
+                      <h4>{line}</h4>
+                      <table border="1">
+                        <thead>
+                          <tr>
+                            <th>Order Number</th>
+                            <th>Production PO</th>
+                            <th>1st Quality</th>
+                            <th>2nd Quality</th>
+                            <th>Rejection</th>
+                            <th>First Quality Percentage</th>
+                            <th>Rejection Percentage</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>{orderNumber}</td>
+                            <td>{productionPo}</td>
+                            <td>{details["1stQuality"]}</td>
+                            <td>{details["2ndQuality"]}</td>
+                            <td>{details["Rejection"]}</td>
+                            <td>{firstQualityPercentage}%</td>
+                            <td>{rejectionPercentage}%</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  );
+                })
               )}
             </div>
-            </div>
-          
-          ) : (
-            // Display data for each line in a separate table
-      Object.entries(data).map(([line, details]) => {
-        const firstQuality = details['1stQuality'] || 0;
-        const secondQuality = details['2ndQuality'] || 0;
-        const rejection = details['Rejection'] || 0;
-        const totalSum = firstQuality + secondQuality + rejection;
-
-        // Calculate percentages
-        const firstQualityPercentage = totalSum > 0 ? ((firstQuality / totalSum) * 100).toFixed(2) : 'N/A';
-        const rejectionPercentage = totalSum > 0 ? ((rejection / totalSum) * 100).toFixed(2) : 'N/A';
-
-        return ( // Added the return statement here
-          <div key={line}>
-            <h4>{line}</h4>
-            <table border="1">
-              <thead>
-                <tr>
-                  <th>Order Number</th>
-                  <th>Production PO</th>
-                  <th>1st Quality</th>
-                  <th>2nd Quality</th>
-                  <th>Rejection</th>
-                  <th>First Quality Percentage</th>
-                  <th>Rejection Percentage</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>{orderNumber}</td>
-                  <td>{productionPo}</td>
-                  <td>{details['1stQuality']}</td>
-                  <td>{details['2ndQuality']}</td>
-                  <td>{details['Rejection']}</td>
-                  <td>{firstQualityPercentage}%</td>
-                  <td>{rejectionPercentage}%</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        );
-      })
-    )}
-        </div>
-      )}
-      <div>
-      {completeOrdersData ? (
-        <table border={1} width='95%' align='center' className='summaryTbl'>
-          <thead>
-            <tr>
-              <th>Order Number</th>
-              <th>Size</th>
-              <th>Style Number</th>
-              <th>Colour</th>
-              <th>Colour Code</th>
-              <th>Production PO</th>
-              <th>Italy PO</th>
-              <th>Rejection</th>
-              <th>1st Quality</th>
-              <th>2nd Quality</th>
-              <th>Start Date</th>
-              <th>End Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Object.keys(completeOrdersData).map((orderNumber) =>
-              Object.keys(completeOrdersData[orderNumber]).map((orderId) => {
-                const order = completeOrdersData[orderNumber][orderId];
-                return (
-                  
-                  <tr key={orderId}>
-
-                    <td>{orderNumber}</td>
-                    <td>{order.size}</td>
-                    <td>{order.styleNumber}</td>
-                    <td>{order.colour}</td>
-                    <td>{order.colourCode}</td>
-                    <td>{order.productionPO}</td>
-                    <td>{order.italyPo}</td>
-                    <td>{order.Rejection}</td>
-                    <td>{order['1stQuality']}</td>
-                    <td>{order['2ndQuality']}</td>
-                    <td>{order.OrderStartDate}</td>
-                    <td>{order.endDate ? new Date(order.endDate).toISOString().slice(0,10):'N/A'}</td>
+          )
+        ) : (
+          <div>
+            {completeOrdersData ? (
+              <table
+                border={1}
+                width="95%"
+                align="center"
+                className="summaryTbl"
+              >
+                <thead>
+                  <tr>
+                    <th>Order Number</th>
+                    <th>Size</th>
+                    <th>Style Number</th>
+                    <th>Colour</th>
+                    <th>Colour Code</th>
+                    <th>Production PO</th>
+                    <th>Italy PO</th>
+                    <th>Rejection</th>
+                    <th>1st Quality</th>
+                    <th>2nd Quality</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
                   </tr>
-                );
-              })
+                </thead>
+                <tbody>
+                  {Object.keys(completeOrdersData).map((orderNumber) =>
+                    Object.keys(completeOrdersData[orderNumber]).map(
+                      (orderId) => {
+                        const order =
+                          completeOrdersData[orderNumber][orderId];
+                        return (
+                          <tr key={orderId}>
+                            <td>{orderNumber}</td>
+                            <td>{order.size}</td>
+                            <td>{order.styleNumber}</td>
+                            <td>{order.colour}</td>
+                            <td>{order.colourCode}</td>
+                            <td>{order.productionPO}</td>
+                            <td>{order.italyPo}</td>
+                            <td>{order.Rejection}</td>
+                            <td>{order["1stQuality"]}</td>
+                            <td>{order["2ndQuality"]}</td>
+                            <td>{order.OrderStartDate}</td>
+                            <td>
+                              {order.endDate
+                                ? new Date(order.endDate)
+                                    .toISOString()
+                                    .slice(0, 10)
+                                : "N/A"}
+                            </td>
+                          </tr>
+                        );
+                      }
+                    )
+                  )}
+                </tbody>
+              </table>
+            ) : (
+              <p>No orders available.</p>
             )}
-          </tbody>
-        </table>
-      ) : (
-        <p>No orders available.</p>
-      )}
+          </div>
+        )}
       </div>
     </div>
-    </div>
   );
+  
 };
 
 export default Summary;
