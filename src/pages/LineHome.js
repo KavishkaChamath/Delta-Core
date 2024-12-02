@@ -43,6 +43,7 @@ export default function LineHome() {
     retrieveTotalFirstQuality(selectedLine);
     retrieveEffiency(selectedLine);
     retrieveIncentive(selectedLine);
+    fetchMembers();
   }, [selectedLine]);
 
     const validateInputs = () => {
@@ -857,7 +858,204 @@ const firstTotalRunTime = async(selectedLine)=>{
 }
 
 
-  const updateCurrentOperations = (id, selectedLine) => {
+  // // const updateCurrentOperations = async(id, selectedLine) => {
+  //   const employeesRef = ref(database, 'employees');
+  
+  //   // Query to check if the employee exists
+  //   const employeeQuery = query(
+  //     employeesRef,
+  //     orderByChild('employeeNumber'),
+  //     equalTo(id)
+  //   );
+  //   const employeeSnapshot = await get(employeeQuery);
+  //   // get(employeeQuery)
+  //   //   .then((employeeSnapshot) => {
+  //       if (employeeSnapshot.exists()) {
+  //         // Employee exists, now check line allocation
+  //         let lineAllocation = null;
+  //         let employeeName = null;
+  
+  //         // Since snapshot may have multiple children, iterate over them to get the employee data
+  //         employeeSnapshot.forEach((childSnapshot) => {
+  //           //lineAllocation = childSnapshot.val().lineAllocation;
+  //           const employeeData = childSnapshot.val();
+  //           lineAllocation = employeeData.lineAllocation;
+  //           employeeName = employeeData.callingName;
+  //         });
+
+  //         const saveResult = await saveEmployee(id, employeeName);
+  //         if (!saveResult) {
+  //             return; // Stop further processing
+  //         }
+  //         const currentDate = new Date().toISOString().split('T')[0];
+  //         // Define the reference for dailyUpdates using the current date and selected line
+  //         const dailyUpdatesRef = ref(database, `dailyUpdates/${currentDate}/${selectedLine}`);
+  
+  //         get(dailyUpdatesRef)
+  //           .then((dailySnapshot) => {
+  //             if (dailySnapshot.exists()) {
+  //               // Daily data exists
+  //               const dailyData = dailySnapshot.val();
+  //               const currentHostMembers = dailyData.hostMembers || 0;
+  //               const currentGuestMembers = dailyData.guestMembers || 0;
+  //               const status = dailyData.isPaused;
+  
+  //               if (status) {
+  //                 if (lineAllocation === selectedLine) {
+  //                   // Update hostMembers
+  //                   const updatedHostMembers = currentHostMembers + 1;
+  
+  //                   update(dailyUpdatesRef, { hostMembers: updatedHostMembers })
+  //                     .then(() => {
+  //                       console.log('Host members count updated successfully!');
+  //                       setId("");
+  //                       firstTotalRunTime(selectedLine);
+  //                     })
+  //                     .catch((error) => {
+  //                       console.error('Error updating host members count:', error);
+  //                     });
+  //                 } else {
+  //                   // Update guestMembers
+  //                   const updatedGuestMembers = currentGuestMembers + 1;
+  
+  //                   update(dailyUpdatesRef, { guestMembers: updatedGuestMembers })
+  //                     .then(() => {
+  //                       console.log('Guest members count updated successfully!');
+  //                       setId("");
+  //                       firstTotalRunTime(selectedLine);
+  //                     })
+  //                     .catch((error) => {
+  //                       console.error('Error updating guest members count:', error);
+  //                     });
+  //                 }
+  //               } else {
+  //                 getCurrentRunTime(selectedLine);
+  //                 if (lineAllocation === selectedLine) {
+  //                   // Update hostMembers
+  //                   const updatedHostMembers = currentHostMembers + 1;
+  
+  //                   update(dailyUpdatesRef, { hostMembers: updatedHostMembers })
+  //                     .then(() => {
+  //                       console.log('Host members count updated successfully!');
+  //                       setId("");
+  //                       firstTotalRunTime(selectedLine);
+  //                     })
+  //                     .catch((error) => {
+  //                       console.error('Error updating host members count:', error);
+  //                     });
+  //                 } else {
+  //                   // Update guestMembers
+  //                   const updatedGuestMembers = currentGuestMembers + 1;
+  
+  //                   update(dailyUpdatesRef, { guestMembers: updatedGuestMembers })
+  //                     .then(() => {
+  //                       console.log('Guest members count updated successfully!');
+  //                       setId("");
+  //                       firstTotalRunTime(selectedLine);
+  //                     })
+  //                     .catch((error) => {
+  //                       console.error('Error updating guest members count:', error);
+  //                     });
+  //                 }
+  //               }
+  //             } else {
+  //               // Daily data does not exist, initialize it with 0 for hostMembers and guestMembers
+  //               const initialData = {
+  //                 hostMembers: 0,
+  //                 guestMembers: 0,
+  //                 isPaused: true,
+  //               };
+  
+  //               set(dailyUpdatesRef, initialData)
+  //                 .then(() => {
+  //                   console.log('Daily data initialized successfully!');
+  
+  //                   // Set totalMembers to 1
+  //                   const totalMembers = 1;
+  
+  //                   // After initializing, update based on the lineAllocation
+  //                   if (lineAllocation === selectedLine) {
+  //                     // Update hostMembers
+  //                     update(dailyUpdatesRef, { 
+  //                       hostMembers: 1,
+  //                       startTime:"",
+  //                       endTime:"",
+  //                       pauseTime: "",
+  //                       Smv: "",
+  //                       CurrentEffiency: "",
+  //                       Incentive:"",
+  //                     })
+  //                       .then(() => {
+  //                         console.log('Host members count set to 1.');
+  //                         setId("");
+  
+  //                         // Update runTime to 0 for the totalMembers
+  //                         const totalRunTimeRef = ref(database, `dailyUpdates/${currentDate}/${selectedLine}/runTime/${totalMembers}`);
+  //                         set(totalRunTimeRef, {
+  //                           runTime: 0,
+  //                         }
+  //                         )
+  //                           .then(() => {
+  //                             console.log('RunTime initialized to 0 for totalMembers 1.');
+  //                           })
+  //                           .catch((error) => {
+  //                             console.error('Error initializing runTime for totalMembers 1:', error);
+  //                           });
+  //                       })
+  //                       .catch((error) => {
+  //                         console.error('Error setting host members count:', error);
+  //                       });
+  //                   } else {
+  //                     // Update guestMembers
+  //                     update(dailyUpdatesRef, { 
+  //                       guestMembers: 1,
+  //                       startTime:"",
+  //                       endTime:"",
+  //                       pauseTime: "",
+  //                       Smv: "",
+  //                       CurrentEffiency:"",
+  //                       Incentive:"",
+  //                      })
+  //                       .then(() => {
+  //                         console.log('Guest members count set to 1.');
+  //                         setId("");
+  
+  //                         // Update runTime to 0 for the totalMembers
+  //                         const totalRunTimeRef = ref(database, `dailyUpdates/${currentDate}/${selectedLine}/runTime/${totalMembers}`);
+  //                         set(totalRunTimeRef, {
+  //                           runTime: 0,
+  //                         })
+  //                           .then(() => {
+  //                             console.log('RunTime initialized to 0 for totalMembers 1.');
+  //                           })
+  //                           .catch((error) => {
+  //                             console.error('Error initializing runTime for totalMembers 1:', error);
+  //                           });
+  //                       })
+  //                       .catch((error) => {
+  //                         console.error('Error setting guest members count:', error);
+  //                       });
+  //                   }
+  //                 })
+  //                 .catch((error) => {
+  //                   console.error('Error initializing daily data:', error);
+  //                 });
+  //             }
+  //           })
+  //           .catch((error) => {
+  //             console.error('Error fetching daily data:', error);
+  //           });
+  //       } else {
+  //         console.log('No employee found with the given ID.');
+  //         alert('No employee found with the given ID.');
+  //       }
+  //     // })
+  //     // .catch((error) => {
+  //     //   console.error('Error fetching employee data:', error);
+  //     // });
+  // };
+
+  const updateCurrentOperations = async (id, selectedLine) => {
     const employeesRef = ref(database, 'employees');
   
     // Query to check if the employee exists
@@ -867,186 +1065,279 @@ const firstTotalRunTime = async(selectedLine)=>{
       equalTo(id)
     );
   
-    get(employeeQuery)
-      .then((employeeSnapshot) => {
-        if (employeeSnapshot.exists()) {
-          // Employee exists, now check line allocation
-          let lineAllocation = null;
+    try {
+      const employeeSnapshot = await get(employeeQuery);
   
-          // Since snapshot may have multiple children, iterate over them to get the employee data
-          employeeSnapshot.forEach((childSnapshot) => {
-            lineAllocation = childSnapshot.val().lineAllocation;
-          });
+      if (employeeSnapshot.exists()) {
+        // Employee exists, now check line allocation
+        let lineAllocation = null;
+        let employeeName = null;
   
-          const currentDate = new Date().toISOString().split('T')[0];
-          // Define the reference for dailyUpdates using the current date and selected line
-          const dailyUpdatesRef = ref(database, `dailyUpdates/${currentDate}/${selectedLine}`);
+        // Since snapshot may have multiple children, iterate over them to get the employee data
+        employeeSnapshot.forEach((childSnapshot) => {
+          const employeeData = childSnapshot.val();
+          lineAllocation = employeeData.lineAllocation;
+          employeeName = employeeData.callingName;
+        });
   
-          get(dailyUpdatesRef)
-            .then((dailySnapshot) => {
-              if (dailySnapshot.exists()) {
-                // Daily data exists
-                const dailyData = dailySnapshot.val();
-                const currentHostMembers = dailyData.hostMembers || 0;
-                const currentGuestMembers = dailyData.guestMembers || 0;
-                const status = dailyData.isPaused;
-  
-                if (status) {
-                  if (lineAllocation === selectedLine) {
-                    // Update hostMembers
-                    const updatedHostMembers = currentHostMembers + 1;
-  
-                    update(dailyUpdatesRef, { hostMembers: updatedHostMembers })
-                      .then(() => {
-                        console.log('Host members count updated successfully!');
-                        setId("");
-                        firstTotalRunTime(selectedLine);
-                      })
-                      .catch((error) => {
-                        console.error('Error updating host members count:', error);
-                      });
-                  } else {
-                    // Update guestMembers
-                    const updatedGuestMembers = currentGuestMembers + 1;
-  
-                    update(dailyUpdatesRef, { guestMembers: updatedGuestMembers })
-                      .then(() => {
-                        console.log('Guest members count updated successfully!');
-                        setId("");
-                        firstTotalRunTime(selectedLine);
-                      })
-                      .catch((error) => {
-                        console.error('Error updating guest members count:', error);
-                      });
-                  }
-                } else {
-                  getCurrentRunTime(selectedLine);
-                  if (lineAllocation === selectedLine) {
-                    // Update hostMembers
-                    const updatedHostMembers = currentHostMembers + 1;
-  
-                    update(dailyUpdatesRef, { hostMembers: updatedHostMembers })
-                      .then(() => {
-                        console.log('Host members count updated successfully!');
-                        setId("");
-                        firstTotalRunTime(selectedLine);
-                      })
-                      .catch((error) => {
-                        console.error('Error updating host members count:', error);
-                      });
-                  } else {
-                    // Update guestMembers
-                    const updatedGuestMembers = currentGuestMembers + 1;
-  
-                    update(dailyUpdatesRef, { guestMembers: updatedGuestMembers })
-                      .then(() => {
-                        console.log('Guest members count updated successfully!');
-                        setId("");
-                        firstTotalRunTime(selectedLine);
-                      })
-                      .catch((error) => {
-                        console.error('Error updating guest members count:', error);
-                      });
-                  }
-                }
-              } else {
-                // Daily data does not exist, initialize it with 0 for hostMembers and guestMembers
-                const initialData = {
-                  hostMembers: 0,
-                  guestMembers: 0,
-                  isPaused: true,
-                };
-  
-                set(dailyUpdatesRef, initialData)
-                  .then(() => {
-                    console.log('Daily data initialized successfully!');
-  
-                    // Set totalMembers to 1
-                    const totalMembers = 1;
-  
-                    // After initializing, update based on the lineAllocation
-                    if (lineAllocation === selectedLine) {
-                      // Update hostMembers
-                      update(dailyUpdatesRef, { 
-                        hostMembers: 1,
-                        startTime:"",
-                        endTime:"",
-                        pauseTime: "",
-                        Smv: "",
-                        CurrentEffiency: "",
-                        Incentive:"",
-                      })
-                        .then(() => {
-                          console.log('Host members count set to 1.');
-                          setId("");
-  
-                          // Update runTime to 0 for the totalMembers
-                          const totalRunTimeRef = ref(database, `dailyUpdates/${currentDate}/${selectedLine}/runTime/${totalMembers}`);
-                          set(totalRunTimeRef, {
-                            runTime: 0,
-                          }
-                          )
-                            .then(() => {
-                              console.log('RunTime initialized to 0 for totalMembers 1.');
-                            })
-                            .catch((error) => {
-                              console.error('Error initializing runTime for totalMembers 1:', error);
-                            });
-                        })
-                        .catch((error) => {
-                          console.error('Error setting host members count:', error);
-                        });
-                    } else {
-                      // Update guestMembers
-                      update(dailyUpdatesRef, { 
-                        guestMembers: 1,
-                        startTime:"",
-                        endTime:"",
-                        pauseTime: "",
-                        Smv: "",
-                        CurrentEffiency:"",
-                        Incentive:"",
-                       })
-                        .then(() => {
-                          console.log('Guest members count set to 1.');
-                          setId("");
-  
-                          // Update runTime to 0 for the totalMembers
-                          const totalRunTimeRef = ref(database, `dailyUpdates/${currentDate}/${selectedLine}/runTime/${totalMembers}`);
-                          set(totalRunTimeRef, {
-                            runTime: 0,
-                          })
-                            .then(() => {
-                              console.log('RunTime initialized to 0 for totalMembers 1.');
-                            })
-                            .catch((error) => {
-                              console.error('Error initializing runTime for totalMembers 1:', error);
-                            });
-                        })
-                        .catch((error) => {
-                          console.error('Error setting guest members count:', error);
-                        });
-                    }
-                  })
-                  .catch((error) => {
-                    console.error('Error initializing daily data:', error);
-                  });
-              }
-            })
-            .catch((error) => {
-              console.error('Error fetching daily data:', error);
-            });
-        } else {
-          console.log('No employee found with the given ID.');
-          alert('No employee found with the given ID.');
+        const saveResult = await saveEmployee(id, employeeName,selectedLine);
+        if (!saveResult) {
+          return; // Stop further processing
         }
-      })
-      .catch((error) => {
-        console.error('Error fetching employee data:', error);
-      });
+  
+        const currentDate = new Date().toISOString().split('T')[0];
+        const dailyUpdatesRef = ref(database, `dailyUpdates/${currentDate}/${selectedLine}`);
+  
+        const dailySnapshot = await get(dailyUpdatesRef);
+        
+        if (dailySnapshot.exists()) {
+          // Daily data exists
+          const dailyData = dailySnapshot.val();
+          const currentHostMembers = dailyData.hostMembers || 0;
+          const currentGuestMembers = dailyData.guestMembers || 0;
+          const status = dailyData.isPaused;
+  
+          if (status) {
+            if (lineAllocation === selectedLine) {
+              const updatedHostMembers = currentHostMembers + 1;
+              await update(dailyUpdatesRef, { hostMembers: updatedHostMembers });
+              console.log('Host members count updated successfully!');
+              setId("");
+              firstTotalRunTime(selectedLine);
+            } else {
+              const updatedGuestMembers = currentGuestMembers + 1;
+              await update(dailyUpdatesRef, { guestMembers: updatedGuestMembers });
+              console.log('Guest members count updated successfully!');
+              setId("");
+              firstTotalRunTime(selectedLine);
+            }
+          } else {
+            getCurrentRunTime(selectedLine);
+            if (lineAllocation === selectedLine) {
+              const updatedHostMembers = currentHostMembers + 1;
+              await update(dailyUpdatesRef, { hostMembers: updatedHostMembers });
+              console.log('Host members count updated successfully!');
+              setId("");
+              firstTotalRunTime(selectedLine);
+            } else {
+              const updatedGuestMembers = currentGuestMembers + 1;
+              await update(dailyUpdatesRef, { guestMembers: updatedGuestMembers });
+              console.log('Guest members count updated successfully!');
+              setId("");
+              firstTotalRunTime(selectedLine);
+            }
+          }
+        } else {
+         
+          // Daily data does not exist, initialize it
+          const initialData = {
+            hostMembers: 0,
+            guestMembers: 0,
+            isPaused: true,
+          };
+  
+          await set(dailyUpdatesRef, initialData);
+          console.log('Daily data initialized successfully!');
+  
+          const totalMembers = 1;
+          if (lineAllocation === selectedLine) {
+            await update(dailyUpdatesRef, {
+              hostMembers: 1,
+              startTime: "",
+              endTime: "",
+              pauseTime: "",
+              Smv: "",
+              CurrentEffiency: "",
+              Incentive: "",
+            });
+            console.log('Host members count set to 1.');
+            setId("");
+  
+            const totalRunTimeRef = ref(
+              database,
+              `dailyUpdates/${currentDate}/${selectedLine}/runTime/${totalMembers}`
+            );
+            await set(totalRunTimeRef, { runTime: 0 });
+            console.log('RunTime initialized to 0 for totalMembers 1.');
+          } else {
+            await update(dailyUpdatesRef, {
+              guestMembers: 1,
+              startTime: "",
+              endTime: "",
+              pauseTime: "",
+              Smv: "",
+              CurrentEffiency: "",
+              Incentive: "",
+            });
+            console.log('Guest members count set to 1.');
+            setId("");
+  
+            const totalRunTimeRef = ref(
+              database,
+              `dailyUpdates/${currentDate}/${selectedLine}/runTime/${totalMembers}`
+            );
+            await set(totalRunTimeRef, { runTime: 0 });
+            console.log('RunTime initialized to 0 for totalMembers 1.');
+          }
+        }
+      } else {
+        console.log('No employee found with the given ID.');
+        alert('No employee found with the given ID.');
+      }
+    } catch (error) {
+      console.error('Error processing operation:', error);
+    }
   };
   
   
+  const saveEmployee = async (employeeNumber, employeeName, selectedLine) => {
+    const currentDate = new Date().toISOString().split('T')[0]; // Get current date in YYYY-MM-DD format
+    console.log("Checking for employee:", employeeNumber);
+  
+    // Define the reference to check if the employee exists in any line for the day
+    const workRef = ref(database, `workingMembers/${currentDate}`);
+    console.log("Database reference:", workRef);
+  
+    try {
+      const snapshot = await get(workRef);
+  
+      if (snapshot.exists()) {
+        let isEmployeeAssigned = false;
+  
+        // Iterate through all lines for the current date
+        snapshot.forEach((lineSnapshot) => {
+          const lineData = lineSnapshot.val();
+          console.log("Line data for:", lineSnapshot.key, lineData);
+  
+          // Check if the workingMembers exists for the selected line and if the employeeNumber is assigned
+          if (lineData && lineData[employeeNumber]) {
+            console.log(`Employee ${employeeNumber} is already assigned in line ${lineSnapshot.key}`);
+            isEmployeeAssigned = true;
+          }
+        });
+  
+        if (isEmployeeAssigned) {
+          console.log("Employee is already assigned for today.");
+          alert("This employee is already assigned for today!");
+          return false; // Stop further processing
+        } else {
+          // Save the employee data if they are not assigned to any line for today
+          const workingMembersRef = ref(
+            database,
+            `workingMembers/${currentDate}/${selectedLine}/${employeeNumber}`
+          );
+  
+          try {
+            await set(workingMembersRef, {
+              employeeNumber,
+              employeeName,
+            });
+            console.log("Employee saved successfully!");
+            fetchMembers();
+            return true;
+          } catch (error) {
+            console.error("Error saving employee data:", error);
+            return false;
+          }
+        }
+      } else {
+        // No data for the day, save directly
+        const workingMembersRef = ref(
+          database,
+          `workingMembers/${currentDate}/${selectedLine}/${employeeNumber}`
+        );
+  
+        try {
+          await set(workingMembersRef, {
+            employeeNumber,
+            employeeName,
+          });
+          console.log("Employee saved successfully!");
+          return true;
+        } catch (error) {
+          console.error("Error saving employee data:", error);
+          return false;
+        }
+      }
+    } catch (error) {
+      console.error("Error checking existing employee data:", error);
+      return false;
+    }
+  };
+  
+  const [members, setMembers] = useState([]);
+
+const fetchMembers = async () => {
+  const currentDate = new Date().toISOString().split('T')[0]; 
+  const lineRef = ref(database, `workingMembers/${currentDate}/${selectedLine}`);
+  try {
+    const snapshot = await get(lineRef);
+
+    if (snapshot.exists()) {
+      const data = snapshot.val();
+      const membersArray = Object.keys(data).map((key) => ({
+        employeeNumber: key,
+        ...data[key],
+      }));
+      setMembers(membersArray); // Update state with members data
+    } else {
+      setMembers([]); // No members assigned for the line
+    }
+  } catch (error) {
+    console.error("Error fetching members:", error);
+  }
+};
+
+// Remove member from the database
+const handleRemoveMember = async (employeeNumber) => {
+  const confirmed = window.confirm('Are you sure you want to remove this employee');
+    if (confirmed) {
+  const currentDate = new Date().toISOString().split('T')[0]; 
+  
+  const employeesRef = ref(database, 'employees');
+  
+    // Query to check if the employee exists
+    const employeeQuery = query(
+      employeesRef,
+      orderByChild('employeeNumber'),
+      equalTo(employeeNumber)
+    );
+    let lineAllocation = null;
+    try {
+      const employeeSnapshot = await get(employeeQuery);
+  
+      if (employeeSnapshot.exists()) {
+        // Employee exists, now check line allocation
+        let lineAllocation = null;
+        
+  
+        // Since snapshot may have multiple children, iterate over them to get the employee data
+        employeeSnapshot.forEach((childSnapshot) => {
+          const employeeData = childSnapshot.val();
+          lineAllocation = employeeData.lineAllocation;
+        });}
+      } catch (error) {
+          console.error('Error processing operation:', error);
+        }
+  const memberRef = ref(
+    database,
+    `workingMembers/${currentDate}/${selectedLine}/${employeeNumber}`
+  );
+  try {
+    await remove(memberRef);
+    if(lineAllocation===selectedLine){
+      removeHostMember(selectedLine);
+    }else{
+      removeGuestMember(selectedLine);
+    }
+    //alert("Member removed successfully!");
+    fetchMembers(); // Refresh the table after removal
+  } catch (error) {
+    console.error("Error removing member:", error);
+    alert("Failed to remove member.");
+  }
+}
+};
   
   const updateGuest = () => {
     updateCurrentOperations(id, selectedLine);
@@ -1563,8 +1854,8 @@ useEffect(() => {
             
             // Check if current time is within break periods
             const isBreakTime = (
-              (currentTime.getHours() === 20 && currentTime.getMinutes() >= 0 && currentTime.getMinutes() < 1) ||
-              (currentTime.getHours() === 18 && currentTime.getMinutes() >= 23 && currentTime.getMinutes() < 24)
+              (currentTime.getHours() === 10 && currentTime.getMinutes() >= 0 && currentTime.getMinutes() < 15) ||
+              (currentTime.getHours() === 15 && currentTime.getMinutes() >= 0 && currentTime.getMinutes() < 15)
             );
 
             if (isBreakTime && !isBreakTimeModalOpen) {
@@ -1691,7 +1982,7 @@ const updatePauseTime = async (selectedLine) => {
     const snapshot = await get(dailyUpdatesRef);
     if(!snapshot.exists()){
       await update(dailyUpdatesRef, {
-        pauseTime: 60,
+        pauseTime: 900,
         isPaused: true,
         startTime: serverTimestamp(),
         endTime: serverTimestamp(),
@@ -1704,7 +1995,7 @@ const updatePauseTime = async (selectedLine) => {
       const currentPauseTime = currentData?.pauseTime || 0; // Use 0 if pauseTime does not exist
 
     // Add 15 minutes (15 * 60 * 1000 milliseconds)
-    const updatedPauseTime = currentPauseTime + (60);
+    const updatedPauseTime = currentPauseTime + (900);
 
     // Update Firebase with the new pause time
     await update(dailyUpdatesRef, {
@@ -2487,7 +2778,7 @@ const [authSuccessCallback, setAuthSuccessCallback] = useState(null); // Callbac
         }
   
         console.log("Order data successfully updated in Line Operations and daily runtime updated.");
-        retrieveOrderData(orderData.orderId, orderData.italyPo, orderData.productionPO);
+        await retrieveOrderData(orderData.orderId, orderData.italyPo, orderData.productionPO);
         alert("Bundle completed successfully.");
         handleFinish();
         await remove(currentOperationsRef); // Remove the current operation after completion
@@ -2563,7 +2854,7 @@ const [authSuccessCallback, setAuthSuccessCallback] = useState(null); // Callbac
 
         const quantityNumber = Number(quantity);
         const totalSum = firstQuality + secondQuality + rejection;
-        if(quantityNumber===totalSum){
+        if(quantityNumber<=totalSum){
           const currentDate = new Date();
           const formattedDate = currentDate.toISOString().split('T')[0]; 
           const updatedData = {
@@ -2779,7 +3070,6 @@ disabled={isStarted}
         placeholder="Enter your ID"
       />
       <button className='addGuest' onClick={updateGuest}>Add memeber to Line</button>
-      <h2>Employees assigned to {selectedLine}</h2>
       {/* {employees.length > 0 ? (
         <ul>
           {employees.map((employee) => (
@@ -2793,8 +3083,7 @@ disabled={isStarted}
         <p>No employees found for this line.</p>
       )} */}
     </div>
-      <button onClick={() => removeHostMember(selectedLine)}>Remove Host Member</button>
-      <button onClick={() => removeGuestMember(selectedLine)}>Remove Guest Member</button>
+      
         <button onClick={closeModal}>Close Modal</button>
       </Modal>
 
@@ -2895,7 +3184,7 @@ disabled={isStarted}
         onAuthSuccess={handleAuthSuccess} // Call success action after authentication
       />
     
-      <p>Runtime: {runTime.hours} hours and {runTime.minutes} minutes</p>
+      
       <div>
       <BreakTimeModal isOpen={isBreakTimeModalOpen} onClose={() => setIsBreakTimeModalOpen(false)}>
       <h2>Break Time!</h2>
@@ -2906,6 +3195,43 @@ disabled={isStarted}
           <p>The Lunch time is from 12:37 PM to 12:40 PM and 3:00 PM to 3:15 PM.</p>
         </LunchTimeModal>
       </div>
+
+      <div>
+    <h2>Working Members for {selectedLine}</h2>
+    <table border="1" style={{ width: "100%", textAlign: "left" }}>
+      <thead>
+        <tr>
+          <th>Employee Number</th>
+          <th>Employee Name</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {members.length > 0 ? (
+          members.map((member) => (
+            <tr key={member.employeeNumber}>
+              <td>{member.employeeNumber}</td>
+              <td>{member.employeeName}</td>
+              <td>
+                <button
+                  onClick={() => handleRemoveMember(member.employeeNumber)}
+                >
+                  Remove
+                </button>
+              </td>
+            </tr>
+          ))
+        ) : (
+          <tr>
+            <td colSpan="3" style={{ textAlign: "center" }}>
+              No members assigned to this line.
+            </td>
+          </tr>
+        )}
+      </tbody>
+    </table>
+  </div>
+  <p>Runtime: {runTime.hours} hours and {runTime.minutes} minutes</p>
     </div>
     </div>
     </div>

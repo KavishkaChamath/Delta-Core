@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import { useLocation,useNavigate } from 'react-router-dom';
 import { ref, push } from 'firebase/database';
 import { database } from '../Firebase'; 
 
 import Titlepic from './Titlepic';
 import SignOut from './SignOut';
+
+import { UserContext } from '../components/UserDetails';
+
 
 const EditOrder = () => {
   const location = useLocation();
@@ -32,6 +35,8 @@ const EditOrder = () => {
 
   const navigate = useNavigate();
 
+  const { user } = useContext(UserContext);
+
   const [isChangeClicked, setIsChangeClicked] = useState(false);
 
   useEffect(() => {
@@ -56,6 +61,21 @@ const EditOrder = () => {
 
     }
   }, [orderData]);
+
+
+  const navigateHome = ()=>{
+    if (user && user.occupation) { // Check if `user` and `occupation` exist
+      if (user.occupation === "IT Section") {
+        navigate('/pages/ItHome');
+      } else if (user.occupation === "Admin") {
+        navigate('/pages/Admin');
+      } else {
+        console.log("User occupation not recognized!");
+      }
+    } else {
+      alert("User data is not available. Please try again.");
+    }
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -147,7 +167,11 @@ const EditOrder = () => {
       <Titlepic/>
       <SignOut/>
       <div className='holder'>
-
+      <h1>{user?.username || 'User'}</h1>
+      <button className='' onClick={navigateHome}>
+              Home
+      </button>
+      
       <button className="editaddSize"onClick={handleChangeClick}>
         {isChangeClicked ? 'Change size only ' : 'Edit all data'}
       </button>

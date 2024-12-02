@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import { ref, get, remove, set, query, orderByChild,equalTo } from 'firebase/database';
 import { database } from '../Firebase'; // Ensure correct Firebase configuration import
 import Titlepic from './Titlepic';
 import SignOut from './SignOut';
+import { UserContext } from '../components/UserDetails';
+import { useNavigate } from 'react-router-dom';
 
 const Bundle = () => {
   const [orderNumber, setOrderNumber] = useState('');
@@ -13,6 +15,23 @@ const Bundle = () => {
 
   const [cutNumbers, setCutNumbers] = useState([]); 
   const [noCutNumbers, setNoCutNumbers] = useState(false); 
+
+  const { user } = useContext(UserContext);
+
+  const navigate = useNavigate()
+  const navigateHome = ()=>{
+    if (user && user.occupation) { // Check if `user` and `occupation` exist
+      if (user.occupation === "IT Section") {
+        navigate('/pages/ItHome');
+      } else if (user.occupation === "Admin") {
+        navigate('/pages/Admin');
+      } else {
+        console.log("User occupation not recognized!");
+      }
+    } else {
+      alert("User data is not available. Please try again.");
+    }
+  }
 
   const loadBundles = (orderNumber, selectedCutNumber) => {
     if (!orderNumber || !selectedCutNumber) {
@@ -394,6 +413,10 @@ const retrieveOrderData = async (bundleData) => {
     <div className='holder'>
       <Titlepic/>
       <SignOut/>
+      <h1>{user?.username || 'User'}</h1>
+      <button className='' onClick={navigateHome}>
+              Home
+      </button>
     <h2>Search Cutting Details</h2>
     <input
       type="text"

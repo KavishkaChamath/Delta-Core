@@ -8,6 +8,9 @@ import { ref, query, orderByChild, equalTo, get } from 'firebase/database';
 import { database } from '../Firebase';
 import { Helmet } from 'react-helmet';
 
+import { useContext } from 'react';
+import { UserContext } from './UserDetails';
+
 export const ITSecLog = () => {
 
   const navigate = useNavigate();
@@ -15,6 +18,8 @@ export const ITSecLog = () => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const { setUser } = useContext(UserContext);
 
   const handleSignIn = (e) => {
     e.preventDefault();
@@ -42,6 +47,7 @@ export const ITSecLog = () => {
               // Check if the occupation is 'IT'
               if (userData.occupation === 'IT Section') {
                 console.log('User is a IT:', userData);
+                setUser(userData);
                 pageHandle();  //Call the pageHandle function to navigate or perform further actions
               } else {
                 console.error('User is not a IT');
