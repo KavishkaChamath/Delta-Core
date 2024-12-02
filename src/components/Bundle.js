@@ -5,6 +5,7 @@ import Titlepic from './Titlepic';
 import SignOut from './SignOut';
 import { UserContext } from '../components/UserDetails';
 import { useNavigate } from 'react-router-dom';
+import welcome from '../components/Images/img101.png';
 
 const Bundle = () => {
   const [orderNumber, setOrderNumber] = useState('');
@@ -413,11 +414,19 @@ const retrieveOrderData = async (bundleData) => {
     <div className='holder'>
       <Titlepic/>
       <SignOut/>
-      <h1>{user?.username || 'User'}</h1>
-      <button className='' onClick={navigateHome}>
+      <table border={0} width='100%' align="right" >
+        <tr>
+            <th></th>
+            <th width='300px'></th>
+            <th></th>
+            <th className='welImg' width='50px'><img src={welcome} alt="Description of the image"/></th>
+          <th width='100px'><p className='welcomeName'>{user?.username || 'User'}</p></th>
+        </tr>
+        </table>
+      <button className='homeBtn' onClick={navigateHome}>
               Home
       </button>
-    <h2>Search Cutting Details</h2>
+    <p className='searchTxt'>Search Cutting Details</p>
     <input
       type="text"
       placeholder="Enter Order Number to see available cut numbers"

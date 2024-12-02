@@ -109,6 +109,7 @@ const CheckPauseTime = () => {
           </div>
         ))}
       </div>
+      <br></br>
     </div>
     </div>
   );

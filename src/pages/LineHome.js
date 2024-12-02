@@ -3003,7 +3003,7 @@ disabled={isStarted}
       {incompleteBundleData && (
         <div>
           <h2>Order Details</h2>
-          <table border="1">
+          <table border="1" align='center'>
             <thead>
               <tr>
                 <th>Bundle ID</th>
@@ -3196,11 +3196,11 @@ disabled={isStarted}
         </LunchTimeModal>
       </div>
 
-      <div>
+      <div className='workingTbl'>
     <h2>Working Members for {selectedLine}</h2>
-    <table border="1" style={{ width: "100%", textAlign: "left" }}>
+    <table border="1" width='90%' align='center'>
       <thead>
-        <tr>
+        <tr className='workingTblTR'>
           <th>Employee Number</th>
           <th>Employee Name</th>
           <th>Action</th>
@@ -3213,7 +3213,7 @@ disabled={isStarted}
               <td>{member.employeeNumber}</td>
               <td>{member.employeeName}</td>
               <td>
-                <button
+                <button className='removeBtn' disabled={isStarted && !isPaused}
                   onClick={() => handleRemoveMember(member.employeeNumber)}
                 >
                   Remove

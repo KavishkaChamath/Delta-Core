@@ -110,8 +110,7 @@ useEffect(() => {
 
   return (
     <div className='ordTable'>
-      <h1>{user?.username || 'User'}</h1>
-      <button className='' onClick={navigateHome}>
+      <button className='homeBtn' onClick={navigateHome}>
               Home
       </button>
       <div>

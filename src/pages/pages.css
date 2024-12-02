@@ -345,3 +345,24 @@
 .select-line-button:hover {
   background-color: #45a049;
 }
+
+.workingTbl h2{
+  font-size: large;
+  text-align: center;
+}
+.workingTbl table{
+  text-align: center;
+  background-color: #9dd7fe9f;
+  border-color: blue;
+}
+.workingTblTR {
+  background-color: #78c5f9;
+}
+
+.workingTbl .removeBtn{
+  background-color: #d98484b6;
+  border-radius: 10px;
+}
+.workingTbl .removeBtn:hover{
+  background-color: #ff8585b6;
+}

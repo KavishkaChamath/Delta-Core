@@ -24,7 +24,7 @@ export default function ItHome(){
             <Titlepic/>
             <SignOut/>
             <div className="Ithome2">
-            <h1>Welcome, {user?.username || 'User'}!</h1>
+
             <button className="empbutton" onClick={handleClick}>Employee Detalis</button>
             <button className="orderbutton" onClick={handleClick1}>Order Detalis</button>
             <button className="cutbutton" onClick={handleClick2}>Cut Detalis</button>
