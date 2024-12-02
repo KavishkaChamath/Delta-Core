@@ -21,6 +21,47 @@ const LineOperationsTable = () => {
 
   const [matchingBundles, setMatchingBundles] = useState([]);
 
+  const [productionPoOptions, setProductionPoOptions] = useState([]);
+  
+  useEffect(() => {
+    if (orderNumber) {
+      // Call the function to set production Po options when orderNumber changes
+      setProductionPoOptionsFromOrders(ordersData); // Pass the ordersData as a parameter
+    }
+  }, [orderNumber]);
+
+  const setProductionPoOptionsFromOrders = (ordersData) => {
+    console.log(orderNumber); // Debugging the entered order number
+  
+    if (ordersData && orderNumber) {
+      const productionPoList = [];
+      
+      // Loop through the orders data to find the specific order by orderNumber
+      Object.keys(ordersData).forEach(orderId => {
+        const order = ordersData[orderId];
+  
+        // Check if the order matches the entered orderNumber
+        if (order.orderNumber === orderNumber) {
+          if (order.productionPO) {
+            // If productionPo exists, push it into the list
+            productionPoList.push(order.productionPO);
+          }
+        }
+      });
+  
+      // If we found productionPo values, update the state
+      if (productionPoList.length > 0) {
+        setProductionPoOptions(productionPoList);
+        console.log('Available Production PO:', productionPoList);
+      } else {
+        // No production PO found for the entered order number
+        setProductionPoOptions([]);
+        console.log('No Production PO available for this order number');
+      }
+    }
+  };
+  
+
   useEffect(() => {
     // Fetch data from Line Operations node
     const lineOperationsRef = ref(database, 'Line Operations');
@@ -40,6 +81,7 @@ const LineOperationsTable = () => {
       if (snapshot.exists()) {
         console.log('Orders Data:', snapshot.val());
         setOrdersData(snapshot.val());
+        setProductionPoOptionsFromOrders(snapshot.val());
       } else {
         console.log('No data available in Orders');
         setOrdersData({});
@@ -80,7 +122,7 @@ const LineOperationsTable = () => {
     return <p>No data available</p>;
   }
 
-  
+
 
   const handleSearch = async () => {
     if (!orderNumber || !productionPo) {
@@ -222,6 +264,8 @@ const LineOperationsTable = () => {
     }
   }
 
+
+
   return (
 
       <div className="holder">
@@ -238,12 +282,18 @@ const LineOperationsTable = () => {
           value={orderNumber}
           onChange={(e) => setOrderNumber(e.target.value)}
         />
-        <input
-          type="text"
-          placeholder="Enter Production PO"
-          value={productionPo}
-          onChange={(e) => setProductionPo(e.target.value)}
-        />
+            {productionPoOptions.length > 0 ? (
+            <select value={productionPo} onChange={(e) => setProductionPo(e.target.value)}>
+              <option value="">Select Production PO</option>
+              {productionPoOptions.map((po, index) => (
+                <option key={index} value={po}>
+                  {po}
+                </option>
+              ))}
+            </select>
+          ) : (
+            <p>Checking for Production PO</p>
+          )}
         <select
           value={summaryType}
           onChange={(e) => setSummaryType(e.target.value)}

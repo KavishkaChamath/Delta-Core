@@ -1,18 +1,39 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useContext } from 'react';
 import { ref, get } from 'firebase/database';
 import { database } from '../Firebase'; // Assuming you've initialized Firebase
 import Titlepic from './Titlepic';
 import SignOut from './SignOut';
 import { Helmet } from 'react-helmet';
+import { UserContext } from '../components/UserDetails';
+import { useNavigate } from 'react-router-dom';
 
 const InqueueTable = () => {
   const [linesData, setLinesData] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const navigate = useNavigate();
+  const { user } = useContext(UserContext);
+
   useEffect(() => {
     fetchInqueueData();
   }, []);
+
+  const navigateHome = ()=>{
+    if (user && user.occupation) { // Check if `user` and `occupation` exist
+      if (user.occupation === "IT Section") {
+        navigate('/pages/ItHome');
+      } else if (user.occupation === "Admin") {
+        navigate('/pages/Admin');
+      } else {
+        console.log("User occupation not recognized!");
+      }
+    } else {
+      alert("User data is not available. Please try again.");
+    }
+  }
+
+
 
 // Fetch data from the Inqueue node in Firebase
 const fetchInqueueData = async () => {
@@ -197,6 +218,10 @@ const fetchOrderDetails = async (orderNumber, italyPo, productionPo) => {
     </Helmet>
       <Titlepic />
       <SignOut />
+      <button className='' onClick={navigateHome}>
+              Home
+      </button>
+      <h1>{user?.username || 'User'}</h1>
       <h1>Inqueue Bundles Data</h1>
       {loading && <p>Loading data...</p>}
       {error && <p>{error}</p>}

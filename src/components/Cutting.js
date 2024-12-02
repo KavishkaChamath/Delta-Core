@@ -1,75 +1,12 @@
-// import React, { useEffect, useState } from 'react';
-// import { ref, onValue } from 'firebase/database';
-// import { database } from '../Firebase';// Make sure to import your Firebase configuration
-// import './Orderdetails.css'; 
-
-
-// const CuttingDetailsForm = () => {
-//   const [orders, setOrders] = useState([]);
-//   const [searchTerm, setSearchTerm] = useState('');
-//   const [filteredOrders, setFilteredOrders] = useState([]);
-//   const [showActions, setShowActions] = useState(false);
-
-
-//   useEffect(() => {
-//     const orderRef = ref(database, 'orders');
-//     onValue(orderRef, (snapshot) => {
-//       const data = snapshot.val();
-//       if (data) {
-//         const orderList = Object.keys(data).map((key) => ({
-//           id: key,
-//           ...data[key],
-//         }));
-//         // Sort orders by date in descending order (newest first)
-//         const sortedOrders = orderList.sort((a, b) => new Date(b.psd) - new Date(a.psd));
-//         setOrders(sortedOrders);
-
-//       }
-//     });
-//   }, []);
-
-//   const handleSearch = () => {
-//     if (searchTerm.trim() === '') {
-//       // Sort orders by date in descending order (newest first)
-//       const sortedOrders = [...orders].sort((a, b) => new Date(b.psd) - new Date(a.psd));
-//       setFilteredOrders(sortedOrders); // Show all orders if search term is empty
-//       setShowActions(false); // Hide actions column
-//     } else {
-//       const filtered = orders.filter(order =>
-//         order.orderNumber.includes(searchTerm) || 
-//         order.customer.toLowerCase().includes(searchTerm.toLowerCase())
-//       );
-//       // Sort filtered results by date in descending order (newest first)
-//       const sortedFiltered = filtered.sort((a, b) => new Date(b.psd) - new Date(a.psd));
-//       setFilteredOrders(sortedFiltered);
-//       setShowActions(sortedFiltered.length > 0); // Show actions column only if there are matching results
-//     }
-//   };
-
-//   return (
-//     <div>
-//      <div>
-//         <input
-//           type="text"
-//           placeholder="Search by Order Number or Customer Name"
-//           value={searchTerm}
-//           onChange={(e) => setSearchTerm(e.target.value)}
-//         />
-//         <button onClick={handleSearch}>Search</button>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default CuttingDetailsForm;
-
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useContext   } from 'react';
 import { ref, onValue,set,get } from 'firebase/database';
 import { database } from '../Firebase'; // Make sure to import your Firebase configuration
 import './Orderdetails.css';
 import Titlepic from '../components/Titlepic'
 import SignOut from './SignOut';
 import { Helmet } from 'react-helmet';
+import { UserContext } from './UserDetails';
+import { useNavigate } from 'react-router-dom';
 
 const CuttingDetailsForm = () => {
   const [orders, setOrders] = useState([]);
@@ -85,6 +22,23 @@ const CuttingDetailsForm = () => {
   const [ratios, setRatios] = useState({});
   const [cutQuantities, setCutQuantities] = useState({});
 
+  const { user } = useContext(UserContext);
+
+  const navigate = useNavigate()
+
+  const navigateHome = ()=>{
+    if (user && user.occupation) { // Check if `user` and `occupation` exist
+      if (user.occupation === "IT Section") {
+        navigate('/pages/ItHome');
+      } else if (user.occupation === "Admin") {
+        navigate('/pages/Admin');
+      } else {
+        console.log("User occupation not recognized!");
+      }
+    } else {
+      alert("User data is not available. Please try again.");
+    }
+  }
 
   useEffect(() => {
     const orderRef = ref(database, 'orders');
@@ -109,6 +63,13 @@ const CuttingDetailsForm = () => {
       setNoMatchFound(false);
     }, [searchTerm]);
 
+    // Call this whenever `filteredOrders` changes
+    useEffect(() => {
+      if (filteredOrders.length > 0) {
+        calculateAndSetCutQuantities();
+      }
+    }, [filteredOrders]);
+
   const handleSearch = () => {
 
     if (searchTerm.trim() === '') {
@@ -128,6 +89,8 @@ const CuttingDetailsForm = () => {
       setFilteredOrders(filtered); // Update the filtered orders
       setShowResults(true); // Show the results table
       setNoMatchFound(false); // Ensure the no match message is hidden
+      console.log("Filtered orders:", filtered);
+
     }
   };
 
@@ -138,6 +101,8 @@ const CuttingDetailsForm = () => {
       [orderId]: value,
     }));
   };
+
+  
 
   // Calculate cut quantity when no of pieces or ratio changes
   useEffect(() => {
@@ -389,103 +354,239 @@ const CuttingDetailsForm = () => {
     handleSave();
     saveBundle();
   }
-  
-  
 
-  return (
-    <div className='holder'>
-      <Helmet>
-        <title>Cut Details</title>
-      </Helmet>
-      <Titlepic/>
-      <SignOut/>
-      <div>
-        <input
-          className='searchBar'
-          type="text"
-          placeholder="Search by Order Number or Customer Name"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          required
-        />
-        <button className="search"onClick={handleSearch}>Search</button>
-      </div>
-      
-      {noMatchFound && (
-        <p>No order with that order number.</p> // Display no match message
-      )}
+  const [remainingBalances, setRemainingBalances] = useState({});
 
-      {showResults && (
-        <div className='cutTable'>
-          <table border='1' align='center'>
-            <thead>
-              <tr>
-                <th>Order Number</th>
-                <th>Size</th>
-                <th>Style</th>
-                <th>Color</th>
-                <th>Color Code</th>
-                <th>Production PO</th>
-                <th>Italy PO</th>
-                <th>Cut No</th>
-                <th>No of Pieces</th>
-                <th>Ratio</th>
-                <th>Cut Quantity</th>
-                {showActions && <th>Actions</th>}
-              </tr>
-            </thead>
-            <tbody>
-              {filteredOrders.map(order => (
+async function calculateCutQuantity(orderNumber, productionPO) {
+  const orderRef = ref(database, `Cuttingdetails/${orderNumber}/productionPOs/${productionPO}`);
+  console.log(`Fetching data for Order Number: ${orderNumber}, Production PO: ${productionPO}`);
+
+  try {
+    const snapshot = await get(orderRef);
+
+    if (!snapshot.exists()) {
+      console.log(`Production PO ${productionPO} does not exist for Order Number ${orderNumber}.`);
+      return `Production PO ${productionPO} does not exist for order number ${orderNumber}.`;
+    }
+
+    const productionData = snapshot.val();
+    console.log(`Fetched data for Production PO ${productionPO}:`, productionData);
+
+    const cutNumbers = productionData.cutNumbers;
+
+    if (!cutNumbers) {
+      console.log(`No cut details available for Production PO ${productionPO}.`);
+      return `No cut details available for Production PO ${productionPO} in order number ${orderNumber}.`;
+    }
+
+    let totalCutQuantity = 0;
+
+    if (Array.isArray(cutNumbers)) {
+      for (const cut of cutNumbers) {
+        if (cut) {
+          const noOfPieces = parseInt(cut.noOfPieces, 10) || 0;
+          const ratio = parseInt(cut.ratio, 10) || 0;
+          console.log(`Processing cut (Array): noOfPieces=${noOfPieces}, ratio=${ratio}`);
+          totalCutQuantity += noOfPieces * ratio;
+        }
+      }
+    } else {
+      for (const key in cutNumbers) {
+        if (cutNumbers[key]) {
+          const noOfPieces = parseInt(cutNumbers[key].noOfPieces, 10) || 0;
+          const ratio = parseInt(cutNumbers[key].ratio, 10) || 0;
+          console.log(`Processing cut (Object, key=${key}): noOfPieces=${noOfPieces}, ratio=${ratio}`);
+          totalCutQuantity += noOfPieces * ratio;
+        }
+      }
+    }
+
+    console.log(`Total cut quantity for Production PO ${productionPO}: ${totalCutQuantity}`);
+    return ` ${totalCutQuantity}`;
+  } catch (error) {
+    console.error("Error fetching data from Firebase:", error);
+    return "An error occurred while calculating cut quantity.";
+  }
+}
+
+const calculateAndSetCutQuantities = async () => {
+  const updatedCutQuantities = {};
+  const updatedRemainingBalances = {};
+
+  for (const order of filteredOrders) {
+    const { orderNumber, productionPO, orderQuantity } = order;
+    console.log("data", orderNumber, productionPO);
+
+    if (productionPO) {
+      // Ensure productionPO is an object or array before iterating over it
+      if (typeof productionPO === 'object' && !Array.isArray(productionPO)) {
+        console.log("productionPO:", productionPO);
+
+        updatedRemainingBalances[orderNumber] = updatedRemainingBalances[orderNumber] || {}; // Ensure nested structure
+
+        for (const poKey of Object.keys(productionPO)) {
+          console.log("poKey:", poKey);  // Check each key
+          const sanitizedPO = sanitizeKey(poKey);
+
+          const quantity = await calculateCutQuantity(orderNumber, sanitizedPO);
+          console.log(`Calculated quantity for Order Number ${orderNumber}, Production PO ${sanitizedPO}:`, quantity);
+          updatedCutQuantities[`${orderNumber}_${sanitizedPO}`] = quantity;
+
+          console.log("or qun"+orderQuantity)
+          // Calculate remaining balance
+          const remainingBalance = orderQuantity - quantity;
+          console.log(`Remaining balance for Order Number ${orderNumber}, Production PO ${sanitizedPO}:`, remainingBalance);
+
+          // Properly nest the remaining balance
+          updatedRemainingBalances[orderNumber][sanitizedPO] = remainingBalance;
+          
+        }
+      } else {
+        // If productionPO is a single value (like a number), handle it differently
+        console.log(`Production PO ${productionPO} is a single value, skipping keys loop.`);
+        const sanitizedPO = sanitizeKey(productionPO.toString());  // Treat as a string key
+        const quantity = await calculateCutQuantity(orderNumber, sanitizedPO);
+        updatedCutQuantities[`${orderNumber}_${sanitizedPO}`] = quantity;
+        console.log("order qun"+orderQuantity)
+        // Calculate remaining balance
+        const remainingBalance = orderQuantity - quantity;
+        console.log(`Remaining balance for Order Number ${orderNumber}, Production PO ${sanitizedPO}:`, remainingBalance);
+
+        // Properly nest the remaining balance
+        updatedRemainingBalances[orderNumber] = updatedRemainingBalances[orderNumber] || {};
+        updatedRemainingBalances[orderNumber][sanitizedPO] = remainingBalance;
+        console.log("balance" + remainingBalance);
+      }
+    } else {
+      console.log(`No productionPO for Order Number ${orderNumber}`);
+    }
+  }
+
+  console.log("Updated cut quantities:", updatedCutQuantities);
+  console.log("Updated remaining balances:", updatedRemainingBalances);
+  setCutQuantities(updatedCutQuantities);
+  setRemainingBalances(updatedRemainingBalances);
+};
+
+
+return (
+  <div className="holder">
+    <Helmet>
+      <title>Cut Details</title>
+    </Helmet>
+    <Titlepic />
+    <SignOut />
+    <h1>{user?.username || 'User'}</h1>
+    <button className="" onClick={navigateHome}>
+      Home
+    </button>
+    <div>
+      <input
+        className="searchBar"
+        type="text"
+        placeholder="Search by Order Number or Customer Name"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        required
+      />
+      <button className="search" onClick={handleSearch}>
+        Search
+      </button>
+    </div>
+
+    {noMatchFound && <p>No order with that order number.</p>}
+
+    {showResults && (
+      <div className="cutTable">
+        <table border="1" align="center">
+          <thead>
+            <tr>
+              <th>Order Number</th>
+              <th>Size</th>
+              <th>Style</th>
+              <th>Color</th>
+              <th>Color Code</th>
+              <th>Remaning Balance</th>
+              <th>Production PO</th>
+              <th>Italy PO</th>
+              <th>Cut No</th>
+              <th>No of Pieces</th>
+              <th>Ratio</th>
+              <th>Cut Quantity</th>
+              {showActions && <th>Actions</th>}
+            </tr>
+          </thead>
+          <tbody>
+            {filteredOrders.map((order) => {
+              const sanitizedPO = sanitizeKey(order.productionPO); // Sanitize production PO for key formatting
+              const calculatedCutQuantity =
+                cutQuantities[`${order.orderNumber}_${sanitizedPO}`] || 0;
+                const remainingBalance = remainingBalances[`${order.orderNumber}_${sanitizedPO}`] ?? "N/A";
+                console.log(remainingBalance)
+              return (
                 <tr key={order.id}>
                   <td>{order.orderNumber}</td>
                   <td>{order.size}</td>
                   <td>{order.styleNumber}</td>
                   <td>{order.colour}</td>
                   <td>{order.colourCode}</td>
+                  <td>
+                    {remainingBalances[order.orderNumber]?.[sanitizeKey(order.productionPO)] !== undefined 
+                      ? remainingBalances[order.orderNumber]?.[sanitizeKey(order.productionPO)] < 0 
+                        ? `Overcut: ${Math.abs(remainingBalances[order.orderNumber]?.[sanitizeKey(order.productionPO)])}` 
+                        : remainingBalances[order.orderNumber]?.[sanitizeKey(order.productionPO)]
+                      : "Calculating..."}
+                  </td>
                   <td>{order.productionPO}</td>
                   <td>{order.italyPO}</td>
                   <td>
                     <input
                       type="text"
                       value={cutNumbers[order.id] || ''}
-                      onChange={(e) => handleInputChange(e, order.id, 'cutNumbers', setCutNumbers)}
+                      onChange={(e) =>
+                        handleInputChange(e, order.id, 'cutNumbers', setCutNumbers)
+                      }
                     />
                   </td>
                   <td>
                     <input
                       type="text"
                       value={noOfPieces[order.id] || ''}
-                      onChange={(e) => handleInputChange(e, order.id, 'noOfPieces', setNoOfPieces)}
+                      onChange={(e) =>
+                        handleInputChange(e, order.id, 'noOfPieces', setNoOfPieces)
+                      }
                     />
                   </td>
                   <td>
                     <input
                       type="text"
                       value={ratios[order.id] || ''}
-                      onChange={(e) => handleInputChange(e, order.id, 'ratios', setRatios)}
+                      onChange={(e) =>
+                        handleInputChange(e, order.id, 'ratios', setRatios)
+                      }
                     />
                   </td>
-                  <td>
-                    {cutQuantities[order.id] || 0} {/* Display calculated cut quantity */}
-                  </td>
+                  <td>{cutQuantities[order.id] || 0}</td>
                   {showActions && (
                     <td>
                       {/* Add your action buttons here */}
                     </td>
                   )}
                 </tr>
-              ))}
-            </tbody>
-          </table>
-          {/* Save Button */}
-          <button onClick={saveData} className="save-button">
-            Create Bunndle
-          </button>
-        </div>
-      )}
-    </div>
-  );
+              );
+            })}
+          </tbody>
+        </table>
+        {/* Save Button */}
+        <button onClick={saveData} className="save-button">
+          Create Bundle
+        </button>
+      </div>
+    )}
+  </div>
+);
 };
+
 
 export default CuttingDetailsForm;
 

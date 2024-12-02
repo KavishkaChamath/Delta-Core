@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState,useEffect,useContext } from 'react';
 import './Admin.css';
 import { useNavigate } from 'react-router-dom';
 import SignOut from '../components/SignOut';
@@ -6,12 +6,13 @@ import Titlepic from '../components/Titlepic';
 import { database } from '../Firebase'; // Adjust the import path as needed
 import { ref, onValue, } from 'firebase/database';
 import { Helmet } from 'react-helmet';
-
-
+import { UserContext } from '../components/UserDetails';
 
 
 function App() {
   const navigate = useNavigate();
+
+  const { user } = useContext(UserContext);
 
   const currentDate = new Date().toISOString().split('T')[0]; // Format current date as YYYY-MM-DD
 
@@ -85,7 +86,8 @@ function App() {
       </Helmet>
       <Titlepic />
       <SignOut />
-
+      <h1>Welcome, {user?.username || 'User'}!</h1>
+      
       <div className="sidebar">
         <button className="sidebar-button" onClick={() => pageChanger('/pages/EmployeeHome')}>Employee Details</button>
         <button className="sidebar-button" onClick={() => pageChanger('/pages/OrderHome')}>Order Details</button>

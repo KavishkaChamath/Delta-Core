@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { get, ref } from 'firebase/database';
+import React, { useState,useEffect } from 'react';
+import { get, ref,onValue } from 'firebase/database';
 import { database } from '../../Firebase'; // Adjust this import according to your Firebase configuration file
 import Titlepic from '../Titlepic';
 import SignOut from '../SignOut';
@@ -12,6 +12,94 @@ const Summary = () => {
   const [data, setData] = useState(null);
   const [extraData, setExtraData] = useState(null);
   const [cutDetails, setCutDetails] = useState([]);
+
+  const [productionPoOptions, setProductionPoOptions] = useState([]);
+  const [ordersData, setOrdersData] = useState({});
+  
+  useEffect(() => {
+    if (orderNumber) {
+      // Call the function to set production Po options when orderNumber changes
+      setProductionPoOptionsFromOrders(ordersData); // Pass the ordersData as a parameter
+    }
+  }, [orderNumber]);
+
+  const setProductionPoOptionsFromOrders = (ordersData) => {
+    console.log(orderNumber); // Debugging the entered order number
+    if (ordersData && orderNumber) {
+      const productionPoList = [];
+      
+      // Loop through the orders data to find the specific order by orderNumber
+      Object.keys(ordersData).forEach(orderId => {
+        const order = ordersData[orderId];
+  
+        // Check if the order matches the entered orderNumber
+        if (order.orderNumber === orderNumber) {
+          if (order.productionPO) {
+            // If productionPo exists, push it into the list
+            productionPoList.push(order.productionPO);
+          }
+        }
+      });
+  
+      // If we found productionPo values, update the state
+      if (productionPoList.length > 0) {
+        setProductionPoOptions(productionPoList);
+        console.log('Available Production PO:', productionPoList);
+      } else {
+        // No production PO found for the entered order number
+        setProductionPoOptions([]);
+        console.log('No Production PO available for this order number');
+      }
+    }
+  };
+
+  useEffect(() => {
+
+    // Fetch data from Orders node
+    const ordersRef = ref(database, 'orders');
+    const unsubscribeOrders = onValue(ordersRef, (snapshot) => {
+      if (snapshot.exists()) {
+        console.log('Orders Data:', snapshot.val());
+        setOrdersData(snapshot.val());
+        setProductionPoOptionsFromOrders(snapshot.val());
+      } else {
+        console.log('No data available in Orders');
+        setOrdersData({});
+      }
+    });
+
+    // Cleanup subscriptions on unmount
+    return () => {
+      unsubscribeOrders();
+    };
+  }, []);
+
+  const [completeOrdersData, setCompleteOrdersData] = useState(null); // State to store orders data
+  const [loading, setLoading] = useState(true); // State to manage loading state
+
+  useEffect(() => {
+    
+    const ordersRef = ref(database, 'Complete Orders'); // Reference to the orders node
+
+    // Fetch data from Firebase when the component loads
+    const unsubscribe = onValue(ordersRef, (snapshot) => {
+      if (snapshot.exists()) {
+        setCompleteOrdersData(snapshot.val()); // Set orders data to state
+      } else {
+        console.log('No data available');
+        setCompleteOrdersData(null); // Set null if no data is available
+      }
+      setLoading(false); // Set loading to false after data is fetched
+    });
+
+    // Cleanup the subscription when the component is unmounted
+    return () => unsubscribe();
+  }, []); // Empty dependency array ensures this effect runs only once when the component mounts
+
+  // Render loading message while data is being fetched
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   const handleSearch = async () => {
     if (!orderNumber || !productionPo) {
@@ -41,6 +129,7 @@ const Summary = () => {
     
       if (ordersSnapshot.exists()) {
         const ordersData = ordersSnapshot.val();
+        setOrdersData(snapshot.val());
         let additionalData = null;
 
         // Loop through orders to find the matching order number and production PO
@@ -127,12 +216,18 @@ const Summary = () => {
           value={orderNumber}
           onChange={(e) => setOrderNumber(e.target.value)}
         />
-        <input
-          type="text"
-          placeholder="Enter Production PO"
-          value={productionPo}
-          onChange={(e) => setProductionPo(e.target.value)}
-        />
+        {productionPoOptions.length > 0 ? (
+            <select value={productionPo} onChange={(e) => setProductionPo(e.target.value)}>
+              <option value="">Select Production PO</option>
+              {productionPoOptions.map((po, index) => (
+                <option key={index} value={po}>
+                  {po}
+                </option>
+              ))}
+            </select>
+          ) : (
+            <p>Checking for Production PO</p>
+          )}
         <select
           value={summaryType}
           onChange={(e) => setSummaryType(e.target.value)}
@@ -252,6 +347,53 @@ const Summary = () => {
     )}
         </div>
       )}
+      <div>
+      {completeOrdersData ? (
+        <table>
+          <thead>
+            <tr>
+              <th>Order Number</th>
+              <th>Size</th>
+              <th>Style Number</th>
+              <th>Colour</th>
+              <th>Colour Code</th>
+              <th>Production PO</th>
+              <th>Italy PO</th>
+              <th>Rejection</th>
+              <th>1st Quality</th>
+              <th>2nd Quality</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Object.keys(completeOrdersData).map((orderNumber) =>
+              Object.keys(completeOrdersData[orderNumber]).map((orderId) => {
+                const order = completeOrdersData[orderNumber][orderId];
+                return (
+                  <tr key={orderId}>
+                    <td>{order.productionPO}</td>
+                    <td>{order.size}</td>
+                    <td>{order.styleNumber}</td>
+                    <td>{order.colour}</td>
+                    <td>{order.colourCode}</td>
+                    <td>{order.productionPO}</td>
+                    <td>{order.italyPo}</td>
+                    <td>{order.Rejection}</td>
+                    <td>{order['1stQuality']}</td>
+                    <td>{order['2ndQuality']}</td>
+                    <td>{order.OrderStartDate}</td>
+                    <td>{order.endDate}</td>
+                  </tr>
+                );
+              })
+            )}
+          </tbody>
+        </table>
+      ) : (
+        <p>No orders available.</p>
+      )}
+      </div>
     </div>
     </div>
   );

@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import { ref, onValue, remove } from 'firebase/database';
 import { database } from '../Firebase';
 import { useNavigate } from 'react-router-dom';
 
+import { UserContext } from '../components/UserDetails';
 
 const ShowOrder = () => {
   const [orders, setOrders] = useState([]);
@@ -12,6 +13,19 @@ const ShowOrder = () => {
 
   const navigate = useNavigate();
 
+  const { user } = useContext(UserContext);
+
+//Filter orders when search term changes
+useEffect(() => {
+  if (searchTerm) {
+    const filtered = orders.filter((order) =>
+      order.orderNumber.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredOrders(filtered);
+  } else {
+    setFilteredOrders(orders);
+  }
+}, [searchTerm, orders]);
   useEffect(() => {
     const orderRef = ref(database, 'orders');
     onValue(orderRef, (snapshot) => {
@@ -28,6 +42,21 @@ const ShowOrder = () => {
       }
     });
   }, []);
+
+  const navigateHome = ()=>{
+    if (user && user.occupation) { // Check if `user` and `occupation` exist
+      if (user.occupation === "IT Section") {
+        navigate('/pages/ItHome');
+      } else if (user.occupation === "Admin") {
+        navigate('/pages/Admin');
+      } else {
+        console.log("User occupation not recognized!");
+      }
+    } else {
+      alert("User data is not available. Please try again.");
+    }
+  }
+
 
   const handleSearch = () => {
     if (searchTerm.trim() === '') {
@@ -81,6 +110,10 @@ const ShowOrder = () => {
 
   return (
     <div className='ordTable'>
+      <h1>{user?.username || 'User'}</h1>
+      <button className='' onClick={navigateHome}>
+              Home
+      </button>
       <div>
         <input
           type="text"
@@ -154,5 +187,6 @@ const ShowOrder = () => {
   );
 };
 
-
 export default ShowOrder;
+
+

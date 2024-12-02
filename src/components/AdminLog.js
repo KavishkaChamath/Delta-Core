@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import { auth } from '../Firebase';
 import { signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
@@ -7,6 +7,7 @@ import './LoginForm.css';
 import { ref, query, orderByChild, equalTo, get } from 'firebase/database';
 import { database } from '../Firebase';
 import { Helmet } from 'react-helmet';
+import { UserContext } from './UserDetails';
 
 export const AdminLog = () => {
 
@@ -17,6 +18,8 @@ export const AdminLog = () => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   
+  const { setUser } = useContext(UserContext);
+
   // const handleSignIn = (e) => {
   //   e.preventDefault();
   //   signInWithEmailAndPassword(auth, email, password)
@@ -55,6 +58,7 @@ export const AdminLog = () => {
               // Check if the occupation is 'Admin'
               if (userData.occupation === 'Admin') {
                 console.log('User is an admin:', userData);
+                setUser(userData);
                 pageHandle(); // Call the pageHandle function to navigate or perform further actions
               } else {
                 console.error('User is not an admin');
