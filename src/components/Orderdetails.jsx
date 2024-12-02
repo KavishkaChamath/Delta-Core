@@ -6,6 +6,7 @@ import Titlepic from './Titlepic';
 import SignOut from './SignOut';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../components/UserDetails';
+import welcome from '../components/Images/img101.png';
 
 export const Orderdetails = () => {
   const [orderNumber, setOrderNumber] = useState('');
@@ -202,14 +203,26 @@ export const Orderdetails = () => {
       <SignOut/>
       {/* Header with photo and gradient background */}
 
-      <h1> {user?.username || 'User'}</h1>
-      <button className='' onClick={navigateHome}>
+
+      {/* Order details */}
+      <div className='holder'>
+      <table border={0} width='100%' align="right" >
+        <tr>
+            <th></th>
+            <th width='300px'></th>
+            <th></th>
+            <th className='welImg' width='50px'><img src={welcome} alt="Description of the image"/></th>
+          <th width='100px'><p className='welcomeName'>{user?.username || 'User'}</p></th>
+        </tr>
+        </table>
+      <button className='homeBtn' onClick={navigateHome}>
               Home
       </button>
-      {/* Order details */}
-      <div className='ordholder'>
+
       <div className='ordwrapper'>
+
         <div className="transparent-box">
+
           <h2>Add Order</h2>
           <form className='order-form' onSubmit={handleSubmit}>
             <div className='form-group1'>
@@ -347,7 +360,8 @@ export const Orderdetails = () => {
             <button type='submit'>Add</button>
           </form>
         </div>
-      </div>
+       
+      </div> <br></br><br></br>
     </div>
     </div>
   );

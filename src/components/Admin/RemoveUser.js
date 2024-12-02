@@ -53,17 +53,19 @@ const RemoveUser = () => {
   };
 
   return (
-    <div>
-        <center><h3>Remove User from the System </h3></center>
+    <center><div className='remUser' >
+        <h3>Remove User from the System </h3>
         <p><b>Enter user name to remove from the system.</b></p>
       <input
+        
         type="text"
         placeholder="Username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       />
       <button type='submit' onClick={handleDeleteUser}>Remove User</button>
-    </div>
+      <br></br><br></br><br></br>
+    </div></center>
   );
 };
 

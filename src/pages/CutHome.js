@@ -6,6 +6,7 @@ import './pages.css'
 import '../components/Cuttingdetails.css'
 import { Helmet } from 'react-helmet';
 import { UserContext } from '../components/UserDetails';
+import welcome from '../components/Images/img101.png';
 
 
 export default function CutHome() {
@@ -23,7 +24,7 @@ export default function CutHome() {
       </Helmet>
         <Titlepic/>
         <SignOut/>
-        <h1>{user?.username || 'User'}</h1>
+
         <div className='cutButtons'>
         <button onClick={handleClick}>Cut Detalis</button>
         <button onClick={handleClick1}>Bundle Allocation</button>

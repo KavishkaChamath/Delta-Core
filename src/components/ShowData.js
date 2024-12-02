@@ -3,6 +3,8 @@ import { ref, onValue, remove } from 'firebase/database';
 import { database } from '../Firebase';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../components/UserDetails';
+import welcome from './Images/img101.png';
+
 
 const EmployeeTable = () => {
   const [employees, setEmployees] = useState([]);
@@ -131,9 +133,10 @@ const EmployeeTable = () => {
   };
 
   return (
+    
     <div className="empTable">
-      <h1>{user?.username || 'User'}</h1>
-      <button className='editEmp' onClick={navigateHome}>
+
+      <button className='homeBtn' onClick={navigateHome}>
               Home
       </button>
       <div>

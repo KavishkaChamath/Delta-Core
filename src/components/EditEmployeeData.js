@@ -7,6 +7,7 @@ import Titlepic from './Titlepic';
 import SignOut from './SignOut';
 import { Helmet } from 'react-helmet';
 import { UserContext } from '../components/UserDetails';
+import welcome from '../components/Images/img101.png';
 
 
 const EditEmployeeData = () => {
@@ -167,12 +168,21 @@ const EditEmployeeData = () => {
       </Helmet>
       <Titlepic/>
       <SignOut/>
-      <h1>{user?.username || 'User'}</h1>
-      <button className='editEmp' onClick={navigateHome}>
+
+      {/* Header with photo and gradient background */}
+      <div className='holder'>
+      <table border={0} width='100%' align="right" >
+        <tr>
+            <th></th>
+            <th width='300px'></th>
+            <th></th>
+            <th className='welImg' width='50px'><img src={welcome} alt="Description of the image"/></th>
+          <th width='100px'><p className='welcomeName'>{user?.username || 'User'}</p></th>
+        </tr>
+        </table>
+      <button className='homeBtn' onClick={navigateHome}>
              Home
       </button>
-      {/* Header with photo and gradient background */}
-      <div className='empholder'>
       <div className='empwrapper'>
         <div className="transparent-box">
         <center><h2>Edit Employee Data</h2></center>

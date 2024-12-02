@@ -25,7 +25,7 @@
     width: 100%;
     padding: 8px;
     margin: 25px 0;
-    background-color: #1761a5db;
+    background-color: #047aadb7;
     border: none;
     color: #000;
     text-align: left;
@@ -115,7 +115,7 @@
   background-color: rgba(4, 35, 82, 0.512); /* Optional: change background color on hover */
  }
  .pause{
-  background-color: rgba(160, 214, 214, 0.611);
+  background-color: rgba(86, 92, 92, 0.33);
   height: 25px;
  }
  .pause span{
@@ -414,3 +414,84 @@ width: 50%;
   border-color: blue;
   text-align: center;
  }
+
+ .welcomeName{
+  text-align: right;
+  font-weight: 600;
+  color: #15556f;
+  font-style: italic;
+ }
+
+ .welImg img{
+  width: 60%;
+  border-radius: 500px;
+  border-color: #15556f;
+  border-style: double;
+  align-items:end;
+ }
+
+.homeBtn{
+  margin-top: 0.5ch;
+ margin-left: 0.5ch;
+ margin-bottom: 1.5ch;
+ font-size: 14px; /* Increase font size */
+ width: 90px; /* Set a fixed width for the buttons */
+ height: 25px; /* Set a fixed height for the buttons */
+ text-align: center;
+ font-weight:500;
+ border: none; /* Optional: remove the default button border */
+ border-radius: 40px; /* Optional: add rounded corners */
+ background-color: rgba(159, 161, 120, 0.795); /* Optional: change the background color */
+ color: rgb(69, 24, 4); /* Optional: change the text color */
+ cursor: pointer;
+ font-style: italic;
+}
+.homeBtn:hover{
+  background-color: rgba(82, 82, 4, 0.512);
+}
+
+.summaryTbl{
+  text-align: center;
+  background-color: #9dd7fe9f;
+  border-color: blue;
+}
+
+.summary-box{
+  align-items: center;
+}
+.remUser{
+  background-color: rgba(255, 255, 255, 0.571); /* Adjust transparency as needed */
+  padding: 0.1em; /* Adjust padding as needed */
+  border-radius: 30px; /* Optional: add border radius */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: add shadow for depth */
+  align-items: center;
+  justify-content: center;
+  width: 60%; /* Adjust width as needed */
+  color: #000e27;
+}
+.remUser input{
+  width: 70%;
+  border-radius: 10px;
+  background-color: rgba(165, 247, 255, 0.193);
+  border-color: rgb(73, 104, 131);
+  border-width: 2px;
+  text-align: center;
+}
+.remUser select{
+  width: 70%;
+  border-radius: 10px;
+  background-color: rgba(149, 169, 171, 0.592);
+}
+.remUser button{
+  width: 40%;
+  border-radius: 10px;
+  height: 40px;
+  text-align: center;
+  font-size: medium;
+  margin-top: 5px;
+  background-color: rgba(1, 26, 29, 0.725);
+}
+.remUser h3{
+  font-weight: 600;
+}
+
