@@ -236,8 +236,9 @@ export const Signup = () => {
       </Helmet>
       <Titlepic />
       <SignOut />
-
-      <center><h3>Add new user to the system</h3></center>
+      <br></br>
+      <center>
+        <div className='remUser'><h3>Add new user to the system</h3>
 
       <form onSubmit={handleSignUp}>
         <input
@@ -267,7 +268,7 @@ export const Signup = () => {
         </select>
         <button className="addUser" type="submit">Add to the system</button>
       </form>
-      <br />
+      <br /></div></center>
 
       <center><h3>Existing Users</h3>
       </center>      {users.length > 0 ? (
@@ -299,7 +300,7 @@ export const Signup = () => {
           <th>Admins: {counts.admin}</th>
           <th>IT Section: {counts.itSection}</th>
           <th>Line Managers: {counts.lineManager}</th>
-        </tr></table>
+        </tr></table><br></br>
       </div>
       <RemoveUser />
       <br></br>

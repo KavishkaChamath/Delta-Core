@@ -6,6 +6,7 @@ import SignOut from './SignOut';
 import { Helmet } from 'react-helmet';
 import { UserContext } from '../components/UserDetails';
 import { useNavigate } from 'react-router-dom';
+import welcome from '../components/Images/img101.png';
 
 const InqueueTable = () => {
   const [linesData, setLinesData] = useState({});
@@ -173,8 +174,8 @@ const fetchOrderDetails = async (orderNumber, italyPo, productionPo) => {
       const bundles = linesData[lineKey];
       return (
         <div key={lineKey} className='inqueTbl'>
-          <h2>{lineKey}</h2>
-          <table border="1">
+          <h3 className='lineKey'>{lineKey}</h3>
+          <table border="1" align='center'>
             <thead>
               <tr>
                 <th>Bundle ID</th>
@@ -218,14 +219,23 @@ const fetchOrderDetails = async (orderNumber, italyPo, productionPo) => {
     </Helmet>
       <Titlepic />
       <SignOut />
-      <button className='' onClick={navigateHome}>
+      <table border={0} width='100%' align="right" >
+        <tr>
+            <th></th>
+            <th width='300px'><h2 className="empList">Inqueue Bundles Data</h2></th>
+            <th></th>
+            <th className='welImg' width='50px'><img src={welcome} alt="Description of the image"/></th>
+          <th width='100px'><p className='welcomeName'>{user?.username || 'User'}</p></th>
+        </tr>
+        </table>
+      <button className='homeBtn' onClick={navigateHome}>
               Home
       </button>
-      <h1>{user?.username || 'User'}</h1>
-      <h1>Inqueue Bundles Data</h1>
+
       {loading && <p>Loading data...</p>}
       {error && <p>{error}</p>}
       {!loading && !error && renderTablesForLines()}
+      <br></br>
     </div>
   );
 };

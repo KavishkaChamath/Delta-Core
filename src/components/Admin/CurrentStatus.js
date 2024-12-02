@@ -276,6 +276,7 @@ const LineOperationsTable = () => {
       <Titlepic />
       <SignOut />
       <div>
+        <br></br>
         <input
           type="text"
           placeholder="Enter Order Number"
@@ -308,7 +309,7 @@ const LineOperationsTable = () => {
       </div>
       <div className='OngoingTbl'>
       <center><h3>Ongoing Operations Data</h3></center>
-      <table border="1" align="center" style={{ borderCollapse: 'collapse', width: '100%' }}>
+      <table border="1" align="center" style={{ borderCollapse: 'collapse', width: '95%' }}>
         <thead>
           <tr>
             <th>Order Number</th>
@@ -374,31 +375,82 @@ const LineOperationsTable = () => {
   <div>
     <h3>Search Results</h3>
     {summaryType === 'Full Summary' ? (
-                  <div style={{ border: '1px solid black', padding: '10px', marginBottom: '10px' }}>
-                  <div style={{ display: 'grid', gridTemplateColumns: '150px 1fr', gap: '10px 20px' }}>
-                    
-                    
-                    
-                    <p><strong>Order Number:</strong></p> <p>{orderNumber}</p>
-                    <p><strong>Production PO:</strong></p> <p>{productionPo}</p>
-                    <p><strong>Italy Po:</strong></p> <p>{data?.italyPo || 'N/A'}</p>
-                    <p><strong>Colour:</strong></p> <p>{data?.colour || 'N/A'}</p>
-                    <p><strong>Colour Code:</strong></p> <p>{data?.colourCode || 'N/A'}</p>
-                    <p><strong>Size:</strong></p> <p>{data?.size || 'N/A'}</p>
-                    <p><strong>Style Number:</strong></p> <p>{data?.styleNumber || 'N/A'}</p>
-                    <p><strong>Quantity:</strong></p> <p>{extraData?.orderQuantity || 'N/A'}</p>
-                    <p><strong>Quantity:</strong></p> <p>{extraData?.orderQuantity || 'N/A'}</p>
-                    <p><strong>Order Start Date:</strong></p> <p>{data?.OrderStartDate || 'N/A'}</p>
-                    <p><strong>Order End Date:</strong></p> <p>{data?.endDate || 'N/A'}</p>
-                    <p><strong>1st Quality:</strong></p> <p>{data?.['1stQuality'] || '0'}</p>
-                    <p><strong>2nd Quality:</strong></p> <p>{data?.['2ndQuality'] || '0'}</p>
-                    <p><strong>Rejection:</strong></p> <p>{data?.Rejection || '0'}</p>
-                    <p><strong>Customer:</strong></p> <p>{extraData?.customer || 'N/A'}</p>
-                    <p><strong>Order Category:</strong></p> <p>{extraData?.orderCategory || 'N/A'}</p>
-                    <p><strong>Order Type:</strong></p> <p>{extraData?.orderType || 'N/A'}</p>
-                    <p><strong>SMV:</strong></p> <p>{extraData?.smv || 'N/A'}</p>
-                    <p><strong>Product Category:</strong></p> <p>{extraData?.productCategory || 'N/A'}</p>
-                    <div style={{ marginTop: '20px' }}>
+                  <div className="summary-box"><center>
+                  <form className='order-form'>
+                  <div className='form-group1'>
+                  <p><span style={{marginRight:'52px'}}><label>Order Number : </label></span>
+                    {orderNumber}</p>
+                  </div>
+                  <div className='form-group1'>
+                  <p><span style={{marginRight:'55px'}}><label>Production PO :</label></span>
+                    {productionPo}</p>
+                  </div>
+                  <div className='form-group1'>
+                  <p><span style={{marginRight:'106px'}}><label>Italy PO :</label></span>
+                    {data?.italyPo || 'N/A'}</p>
+                  </div>
+                  <div className='form-group1'>
+                  <p><span style={{marginRight:'115px'}}><label>Colour :</label></span>
+                    {data?.colour || 'N/A'}</p>
+                  </div>
+                  <div className='form-group1'>
+                    <p><span style={{marginRight:'70px'}}><label>Colour Code :</label></span>
+                    {data?.colourCode || 'N/A'}</p>
+                  </div>
+                  <div className='form-group1'>
+                    <p><span style={{marginRight:'135px'}}><label>Size :</label></span>
+                    {data?.size || 'N/A'}</p>
+                  </div>
+                  <div className='form-group1'>
+                    <p><span style={{marginRight:'63px'}}><label>Style Number :</label></span>
+                    {data?.styleNumber || 'N/A'}</p>
+                  </div>
+                  <div className='form-group1'>
+                    <p><span style={{marginRight:'52px'}}><label>Order Quantity :</label></span>
+                    {extraData?.orderQuantity || 'N/A'}</p>
+                  </div>
+                  <div className='form-group1'>
+                    <p><span style={{marginRight:'42px'}}><label>Order Start Date :</label></span>
+                    {data?.OrderStartDate || 'N/A'}</p>
+                  </div>
+                  <div className='form-group1'>
+                  <p><span style={{marginRight:'46px'}}><label>Order End Date :</label></span>
+                    {data?.endDate ? new Date(data.endDate).toISOString().slice(0,10):'Not finsh yet'}</p>
+                  </div>
+                  <div className='form-group1'>
+                  <p><span style={{marginRight:'80px'}}><label>1st Quality :</label></span>
+                    {data?.['1stQuality'] || '0'}</p>
+                  </div>
+                  <div className='form-group1'>
+                    <p><span style={{marginRight:'80px'}}><label>2nd Quality :</label></span>
+                    {data?.['2ndQuality'] || '0'}</p>
+                  </div>
+                  <div className='form-group1'>
+                    <p><span style={{marginRight:'93px'}}><label>Rejection :</label></span>
+                    {data?.Rejection || '0'}</p>
+                  </div>
+                  <div className='form-group1'>
+                    <p><span style={{marginRight:'85px'}}><label>Customer :</label></span>
+                    {extraData?.customer || 'N/A'}</p>
+                  </div>
+                  <div className='form-group1'>
+                  <p><span style={{marginRight:'40px'}}><label>Order Category :</label></span>
+                  {extraData?.orderCategory || 'N/A'}</p>
+                    </div>
+      
+               {/* Order Type Field */}
+               <div className='form-group1'>
+               <p><span style={{marginRight:'73px'}}><label>Order Type :</label></span>
+                       {extraData?.orderType || 'N/A'}</p>
+                    </div>
+      
+                  <div className='form-group1'>
+                    <p><span style={{marginRight:'125px'}}><label>SMV :</label></span>
+                    {extraData?.smv || 'N/A'}</p>
+                  </div>
+                  
+                </form></center>
+                <div style={{ marginTop: '20px' }}>
                     <h3>Cut Details</h3>
                     {cutDetails.length > 0 ? (
                       cutDetails.map((cut, index) => (
@@ -412,9 +464,8 @@ const LineOperationsTable = () => {
                       <p>No cut details available.</p>
                     )}
                   </div>
-      
                   </div>
-                </div>
+                
     ) : (
       // Display data for each line in a separate table
       Object.entries(data).map(([line, details]) => {

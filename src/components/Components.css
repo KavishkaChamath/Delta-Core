@@ -140,5 +140,14 @@ background-blend-mode: lighten;
   background-color: #0056b3; /* Darker blue when hovering */
 }
 
+.searchTxt{
+  color: #052344;
+  font-size: large;
+  font-weight: 600;
+  margin-left: 5px;
+  margin-bottom: 8px;
+}
 
-
+.lineKey{
+  background-color: #497a8500;
+}

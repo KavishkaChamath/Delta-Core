@@ -8,6 +8,7 @@ import SignOut from './SignOut';
 import { Helmet } from 'react-helmet';
 
 import { UserContext } from '../components/UserDetails';
+import welcome from '../components/Images/img101.png';
 
 const EditOrder = () => {
   const location = useLocation();
@@ -149,11 +150,20 @@ const EditOrder = () => {
       </Helmet>
       <Titlepic/>
       <SignOut/>
-      <h1>{user?.username || 'User'}</h1>
-      <button className='' onClick={navigateHome}>
+
+      <div className='holder'>
+      <table border={0} width='100%' align="right" >
+        <tr>
+            <th></th>
+            <th width='300px'></th>
+            <th></th>
+            <th className='welImg' width='50px'><img src={welcome} alt="Description of the image"/></th>
+          <th width='100px'><p className='welcomeName'>{user?.username || 'User'}</p></th>
+        </tr>
+        </table>
+      <button className='homeBtn' onClick={navigateHome}>
               Home
       </button>
-      <div className='ordholder'>
       <div className='ordwrapper'>
         <div className="transparent-box">
           <h2>Edit Order</h2>

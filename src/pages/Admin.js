@@ -7,6 +7,7 @@ import { database } from '../Firebase'; // Adjust the import path as needed
 import { ref, onValue, } from 'firebase/database';
 import { Helmet } from 'react-helmet';
 import { UserContext } from '../components/UserDetails';
+import welcome from '../components/Images/img101.png';
 
 
 function App() {
@@ -86,9 +87,15 @@ function App() {
       </Helmet>
       <Titlepic />
       <SignOut />
-      <h1>Welcome, {user?.username || 'User'}!</h1>
+
       
       <div className="sidebar">
+      <table border={0}>
+        <tr>
+          <th className='welImg'><img src={welcome} alt="Description of the image"/></th>
+          <th><p className='welcomeName'>{user?.username || 'User'}</p></th>
+        </tr>
+      </table>
         <button className="sidebar-button" onClick={() => pageChanger('/pages/EmployeeHome')}>Employee Details</button>
         <button className="sidebar-button" onClick={() => pageChanger('/pages/OrderHome')}>Order Details</button>
         <button className="sidebar-button" onClick={() => pageChanger('/pages/CutHome')}>Cutting</button>
@@ -104,7 +111,7 @@ function App() {
           <div className="line-name1">Line</div>
           <div className="line-detail1">Efficiency</div>
           <div className="line-detail1">Incentive</div>
-          <div className="line-detail1">Quality</div>
+          <div className="line-detail1">1st Quality</div>
         </div>
         {lines.map(line => (
           <div className="line-item" key={line.id}>
@@ -115,6 +122,7 @@ function App() {
           </div>
         ))}
       </div>
+      <br></br><br></br><br></br><br></br>
     </div>
     </div>
   );
@@ -122,72 +130,3 @@ function App() {
 
 export default App;
 
-
-// import React, { useState } from 'react';
-// import './Admin.css';
-// import { useNavigate } from 'react-router-dom';
-// function App() {
-//   const navigate = useNavigate();
-//   const [lines, setLines] = useState([
-//     { id: 1, efficiency: "68%", incentive: "110/=", quality: "75" },
-//     { id: 2, efficiency: "72%", incentive: "129/=", quality: "80" },
-//     { id: 3, efficiency: "74%", incentive: "134/=", quality: "81" },
-//     { id: 4, efficiency: "63%", incentive: "105/=", quality: "73" },
-//     { id: 5, efficiency: "79%", incentive: "139/=", quality: "87" },
-//     { id: 6, efficiency: "77%", incentive: "135/=", quality: "84" },
-//   ]);
-//   const pageChanger = () => navigate('/components/Employee');
-//   const pageChanger2 = () => navigate('/components/Orderdetails');
-//   const handleChange = (id, field, value) => {
-//     setLines(lines.map(line => line.id === id ? { ...line, [field]: value } : line));
-//   };
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <h1>Admin Home</h1>
-//       </header>
-//       <div className="sidebar">
-//         <button className="sidebar-button" onClick={pageChanger}>Employee Details</button>
-//         <button className="sidebar-button" onClick={pageChanger2}>Orderdetails</button>
-//         <button className="sidebar-button">Cutting</button>
-//         <button className="sidebar-button">Bundle</button>
-//         <button className="sidebar-button">Shift</button>
-//       </div>
-//       <div className="main-content">
-//         <div className="line-item">
-//           <div className="line-name1">Line</div>
-//           <div className="line-detail1">Efficiency</div>
-//           <div className="line-detail1">Incentive</div>
-//           <div className="line-detail1">Quality</div>
-//         </div>
-//         {lines.map(line => (
-//           <div className="line-item" key={line.id}>
-//             <div className="line-name">Line {line.id}</div>
-//             <div className="line-detail">
-//               <input
-//                 type="text"
-//                 value={line.efficiency}
-//                 onChange={(e) => handleChange(line.id, 'efficiency', e.target.value)}
-//               />
-//             </div>
-//             <div className="line-detail">
-//               <input
-//                 type="text"
-//                 value={line.incentive}
-//                 onChange={(e) => handleChange(line.id, 'incentive', e.target.value)}
-//               />
-//             </div>
-//             <div className="line-detail">
-//               <input
-//                 type="text"
-//                 value={line.quality}
-//                 onChange={(e) => handleChange(line.id, 'quality', e.target.value)}
-//               />
-//             </div>
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// }
-// export default App;
