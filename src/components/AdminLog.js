@@ -20,17 +20,7 @@ export const AdminLog = () => {
   
   const { setUser } = useContext(UserContext);
 
-  // const handleSignIn = (e) => {
-  //   e.preventDefault();
-  //   signInWithEmailAndPassword(auth, email, password)
-  //     .then((userCredential) => {
-  //       console.log('User signed in:', userCredential.user);
-  //       pageHandle();
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error signing in:', error.code, error.message);
-  //     });
-  // };
+  
 
   const handleSignIn = (e) => {
     e.preventDefault();
@@ -91,32 +81,36 @@ export const AdminLog = () => {
       alert('Please enter your email address to reset your password.');
       return;
     }
+    else{
+      sendPasswordResetEmail(auth, email)
+      alert("Check your e-mail to reset password.")
+    }
   
-    // Query the database to check if the email exists
-    const userRef = ref(database, 'users');
-    const userQuery = query(userRef, orderByChild('username'), equalTo(email));
+    // // Query the database to check if the email exists
+    // const userRef = ref(database, 'users');
+    // const userQuery = query(userRef, orderByChild('username'), equalTo(email));
   
-    get(userQuery)
-      .then((snapshot) => {
-        if (snapshot.exists()) {
-          // User exists, proceed with password reset
-          sendPasswordResetEmail(auth, email)
-            .then(() => {
-              alert('Password reset email sent. Please check your inbox.');
-            })
-            .catch((error) => {
-              console.error('Error sending password reset email:', error);
-              alert('Error sending password reset email. Please try again.');
-            });
-        } else {
-          // No user data found for this email
-          alert('Invalid username. Please enter a valid email address.');
-        }
-      })
-      .catch((error) => {
-        console.error('Error fetching user data:', error);
-        alert('Error checking username. Please try again.');
-      });
+    // get(userQuery)
+    //   .then((snapshot) => {
+    //     if (snapshot.exists()) {
+    //       // User exists, proceed with password reset
+    //       sendPasswordResetEmail(auth, email)
+    //         .then(() => {
+    //           alert('Password reset email sent. Please check your inbox.');
+    //         })
+    //         .catch((error) => {
+    //           console.error('Error sending password reset email:', error);
+    //           alert('Error sending password reset email. Please try again.');
+    //         });
+    //     } else {
+    //       // No user data found for this email
+    //       alert('Invalid username. Please enter a valid email address.');
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.error('Error fetching user data:', error);
+    //     alert('Error checking username. Please try again.');
+    //   });
   };
   
 
